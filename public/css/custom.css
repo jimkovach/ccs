@@ -1,0 +1,87 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+img{
+    opacity: 0.5;
+}
+
+body {
+    margin-bottom: 90px;
+    padding: 50px;
+    background-size: cover;
+}
+p{
+    margin-bottom: 4px;
+}
+
+a {
+    color: black;
+}
+a:hover{
+    color: gray;
+    text-decoration: underline;
+}
+
+ul.event{
+    list-style-type: none;
+}
+
+ul.event li{
+    padding-top : 5px;
+}
+
+.padded {
+    padding-top : 30px;
+}
+.page-header{
+    margin-top: 0px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    padding-top : 10px;
+    background-color : gray;
+    color: silver;
+    text-align : center;
+}
+
+.form-group{
+    margin-bottom:1;
+}
+
+input{
+    padding: 1px 8px;
+}
+
+.form-control{
+    padding: 1px 8px;
+    height: 30 px;
+    color: black;
+}
+
+.program {
+    font-family: "Times";
+}
+
+.program h3{
+    text-align: center;
+}
+
+.program p{
+    font-size: 1.2em;
+    margin-bottom: 1px;
+}
+
+.program-description{
+    font-style : italic;
+}
+
+.program-pull-right {
+    text-align : right;
+}

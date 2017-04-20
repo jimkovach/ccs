@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .row.page-header
+    h1= pageHeader.title
+    p= pageHeader.strapline
+  table.table.table-striped
+    thead.thead-inverse
+      th
+        a(href='/presenters?sort=presenterLast') Presenter
+      th
+        a(href='/presenters?sort=presenterInstitution') Institution
+      th Location
+      th Email
+    tbody
+      each item in events
+        tr
+          td= item.presenterLast + ", " + item.presenterFirst
+          td= item.presenterInstitution
+          td= item.presenterCity + " " + item.presenterState
+          td= item.presenterEmail

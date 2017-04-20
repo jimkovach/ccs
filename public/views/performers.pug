@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .row.page-header
+    h1= pageHeader.title
+    p= pageHeader.strapline
+  form
+    table.table.table-striped
+      thead.thead-inverse
+        th select
+        th
+          a(href='/performers?sort=performerName') Performer
+        th
+          a(href='/performers?sort=performerDirector') Director
+        th
+          a(href='/performers?sort=performerInstitution') Institution
+        th location
+        th Email
+        th Title
+      tbody
+        each item in events
+          tr
+            td
+              input(type="checkbox" name=item.checked value=item.checked)
+            td= item.performerName
+            td= item.performerDirector
+            td= item.performerInstitution
+            td= item.performerCity + " " + item.performerState
+            td= item.performerEmail
+            td
+              a(href='/event/' + item._id)= item.title

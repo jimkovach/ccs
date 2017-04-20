@@ -1,0 +1,39 @@
+mixin formatTime(dateString)
+  -var date = new Date(dateString);
+  -var h = date.getHours();
+  -var mn = date.getMinutes();
+  -var l = mn.toString().length;
+  -var output = h + : mn;
+  -if(l < 2)
+    -output = h + ':0' + mn;
+  =output
+
+mixin formatDate(dateString)
+  -var date = new Date(dateString);
+  -var monthNames = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November", "December"];
+  -var d = date.getDate();
+  -var m = monthNames[date.getMonth()];
+  -var y = date.getFullYear();
+  -var h = date.getHours();
+  -var mn = date.getMinutes();
+  -var ap = "";
+  -if(h < 12)
+    -ap = "AM";
+  -else
+    -ap = "PM";
+  if(h == 0)
+    -h = 12;
+  if(h > 12)
+    -h = h - 12;
+  -var l = mn.toString().length;
+  -var output = m + ' ' + d + ', ' + y + ' - ' + h + ':' + mn + ap;
+  -if(l < 2)
+    -output = m + ' ' + d + ', ' + y + ' - ' + h + ':0' + mn + ap;
+  =output
+
+mixin formatProgramDate(dateString)
+  -var date = new Date(dateString);
+  -var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  -var d = dayNames[date.getDay()];
+  -var output = d;
+  =output

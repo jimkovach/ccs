@@ -1,0 +1,151 @@
+    {
+        "title" : "Band Reading Session",
+        "date" : "02/16/2017",
+        "start" : "07:00 PM",
+        "building" : "Westin",
+        "room" : "Grand Ballroom ABC",
+        "category" : "Band"
+    },
+    {
+        "title" : "Choral Reading Session",
+        "date" : "02/16/2017",
+        "start" : "07:00 PM",
+        "building" : "Hyatt",
+        "room" : "Grand Ballroom ABC",
+        "category" : "Choir"
+    },
+    {
+        "title" : "Orchestra Reading Session",
+        "date" : "02/16/2017",
+        "start" : "07:00 PM",
+        "building" : "Hyatt",
+        "room" : "Grand Ballroom EFG",
+        "category" : "Orchestra"
+    },
+    {
+        "title" : "Calling All World Brother and Sisters",
+        "date" : "02/17/2017",
+        "start" : "08:30AM",
+        "building" : "Hyatt",
+        "room" : "Cedar Ballroom",
+        "category" : "Elementary"
+    },
+    {
+        "title" : "Conquer the Quiver: Steps to Relaxed Violin/Viola Vibrato",
+        "date" : "02/17/2017",
+        "start" : "08:30AM",
+        "building" : "Westin",
+        "room" : "Lake Sammamish",
+        "category" : "Orchestra"
+    },
+    {
+        "title" : "Critical Thinking Strategies to Supplement Your Rehearsal",
+        "date" : "02/17/2017",
+        "start" : "08:30AM",
+        "building" : "Hyatt",
+        "room" : "Larch",
+        "category" : "General Interest"
+    },
+    {
+        "title" : "Enhancing the Student Teacher Experience",
+        "date" : "02/17/2017",
+        "start" : "08:30AM",
+        "building" : "Westin",
+        "room" : "Lake Couer D'Alene",
+        "category" : "General Interst"
+    },
+    {
+        "title": "Establish Solid Rhythn, Intonation and Tone From the Beginning",
+        "date" : "02/17/2017",
+        "start" : "08:30AM",
+        "building" : "Hyatt",
+        "room" : "Regency Ballroom EFG",
+        "category" : "Orchestra"
+    },
+    {
+        "title": "How Your Garden Grows - Early Childhood",
+        "data" : "02/17/2017",
+        "start" : "08:30AM",
+        "building" : "Hyatt",
+        "room" : "Regency Ballroom AB",
+        "category" : "Elementary"
+    },
+    { "title" : "Jazz Rehearsals with Intent",
+      "date" : "02/17/2017",
+      "start" : "08:30 AM",
+      "building" : "Hyatt",
+      "room" : "Auditorium",
+      "category" : "Jazz"
+    },
+    {
+        "title" : "Living to Learn, Learning to Teach",
+        "date" : "02/17/2017",
+        "start" : "08:30 AM",
+        "building" : "Hyatt",
+        "room" : "Grand Ballroom 1",
+        "category" : "Choir"
+    },
+    {
+        "title" : "Making the Musical Athlete Work for You",
+        "date" : "02/17/2017",
+        "start" : "08:30 AM",
+        "building" : "Hyatt",
+        "room" : "Laurel",
+        "category" : "Small Schools"
+    },
+    {
+        "title" : "Navigating Your First Job",
+        "date" : "02/17/2017",
+        "start" : "08:30 AM",
+        "building" : "Hyatt",
+        "room" : "Maple",
+        "category" : "Collegiate"
+    },
+    {
+        "title" : "Starting From Scratch",
+        "date" : "02/17/2017",
+        "start" : "08:30 AM",
+        "building" : "Westin",
+        "room" : "Fort Peck",
+        "category" : "Choir"
+    },
+    {
+        "title" : "The Art of Pacing",
+        "date" : "02/17/2017",
+        "start" : "08:30 AM",
+        "building" : "Hyatt",
+        "room" : "Juniper",
+        "category" : "Band"
+    },
+    {
+        "title" : "Things I've Learned",
+        "date" : "02/17/2017",
+        "start" : "08:30 AM",
+        "building" : "Westin",
+        "room" : "Lake Washington A",
+        "category" : "Band"
+    },
+    {
+        "title" : "Band Cocert Hourt",
+        "date" : "02/17/2017",
+        "start" : "9:50 AM",
+        "building" : "Westin",
+        "room" : "Grand Ballroom ABC",
+        "category" : "NAfME-NE"
+    },
+    {
+        "title" : "Becoming Tuneful, Beatful, Artful through Singing Lower Elementary",
+        "date" : "02/17/2017",
+        "start" : "9:50 AM",
+        "building" : "Hyatt",
+        "room" : "Cedar Ballroom",
+        "category" : "Elementary"
+    },
+    {
+        "title" : "Breezin' Thru Teory: Anywhere, Any Device",
+        "date" : "02/17/2017",
+        "start" : "09:50 AM",
+        "building" : "Hyatt",
+        "room" : "Madrona",
+        "category" : "Industry Showcase"
+    }

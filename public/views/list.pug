@@ -1,0 +1,37 @@
+extends layout
+
+
+block content
+  .row.page-header
+    h1= pageHeader.title
+    p= pageHeader.strapline
+    .error= message
+  table.table.table-striped
+    thead.thead-inverse
+      th
+        a(href="/list?sort=title") Title
+      th
+        a(href="list?sort=category") Category
+      th
+        a(href="list?sort=date") Date
+      th
+        a(href="list?sort=time") Time
+      th
+        a(href="list?sort=building") Building
+      th
+        a(href="list?sort=room") Room
+    tbody
+      each item in events
+        tr
+          td
+            a(href="/event/" + item._id)= item.title
+          td
+            a(href="/list?findkey=category&findvalue=" + item.category)= item.category
+          td
+            a(href="/list?findkey=date&findvalue=" + item.date)= item.date
+          td
+            a(href="/list?findkey=start&findvalue=" + item.start)= item.start
+          td
+            a(href="/list?findkey=building&findvalue=" + item.building)= item.building
+          td
+            a(href="/list?findkey=room&findvalue=" + item.room)= item.room

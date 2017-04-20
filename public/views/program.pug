@@ -1,0 +1,36 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= 'CCS - Program View'
+      p= pageHeader.strapline
+  .row
+    .col-lg-2
+    .col-lg-8.program
+      .row
+        .col-lg-6
+          p= event.start
+          p= event.category
+        .col-lg-6.pull-right.program-pull-right
+          p= event.building
+          p= event.room
+      .row
+        .col-lg-12
+          h3.program= event.title
+      .row
+        .col-lg-12
+          p= 'Presenter: ' + event.presenterFirst + ' ' + event.presenterLast
+          p= 'Host: ' + event.hostName + ', ' + event.hostInstitution + ', ' + event.hostCity + ' ' + event.hostState
+          p.program-description= event.description
+  .row
+    hr
+  .row
+    .col-lg-12
+      .col-lg-4
+      .col-lg-4
+        a.btn.btn-default(href='/event/' + event._id role='button') back
+        a.btn.btn-default(href='/update/' + event._id role='button') update
+        a.btn.btn-default(href='/delete/' + event._id role='button') delete

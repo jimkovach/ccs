@@ -1,0 +1,46 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    link(rel='stylesheet', href='../css/bootstrap.min.css')
+    link(rel='stylesheet', href='../css/custom.css')
+  body
+    .navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          a.navbar-brand(href='/') WMEA-CCS
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        #navbar-main.navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/list') List
+            li
+              a(href='/presenters') Presenters
+            li
+              a(href='/performers') Performers
+            li
+              a(href='/conflicts') Conflicts
+            li
+              a(href='/list') My Conference
+            li
+              a(href='/new') New Event
+            li
+              a(href='/api/events') Get All
+            li
+              a(href='/api/events/58da811695d1f2cca324cc57') ReadOne
+              
+    .container          
+      block content
+    footer
+      .row
+        .col-xs-12
+          small &copy; 2017 - wmea - jim kovach
+    script(src='../js/conflicts.js')
+    script(src='../js/jquery.min.js')
+    script(src='../node_modules/angular/angular.js')
+    script(src='../node_modules/angular-route/angular-route.js')
+    script(src='../js/angular.min.js')
