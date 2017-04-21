@@ -28,15 +28,15 @@ var _showError = function(req, res, status) {
     });
 };
 
-renderList = function(req, res, events, page) {
+renderList = function(req, res, events, page, msg) {
     var message, events, page
     if(!(events instanceof Array)){
         message = "API lookup error: responseBody must be an array";
         events = [];
-    } else {
-        if (!events.length) {
+    } else if (!events.length) {
             message = "No items found";
-        }
+    } else {
+        message = msg;
     }
     res.render(page, {
         title: 'CCS - ' + page,
@@ -205,7 +205,7 @@ module.exports.eventNew = function (req, res){
 
 module.exports.doEventNew = function(req, res){
     console.log("APP_SERVER/CONTROLLERS/CON_EVENT DOEVENTNEW: ");
-    var requestOptions, path;
+    var requestOptions, path, message;
     path = "/api/events" ;
     var postData = {
         title: req.body.title,
@@ -246,9 +246,11 @@ module.exports.doEventNew = function(req, res){
             console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS DO_EVENT_NEW REQUEST RESPONSE.STATUS_CODE: "+ response.statusCode);
             if (response.statusCode === 200) {
                 console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS DO_EVENT_NEW: SUCCESSFULLY POSTED: " + postData.title + " WITH A STATUS OF 200");
+                message = "Successfully posted " + postData.title;
                 res.redirect('/list');
             } else if (response.statusCode === 201) {
                 console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS DO_EVENT_NEW: SUCCESFULLY CREATED NEW EVENT WITH A STATUS OF 201");
+                message = "Successfully posted " + postData.title;
                 res.redirect('/list');
             } else {
                 _showError(req, res, response.statusCode);
