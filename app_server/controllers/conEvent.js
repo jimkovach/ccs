@@ -147,6 +147,37 @@ module.exports.performers = function(req, res){
     );
 };
 
+/*
+module.exports.conflicts = function(req, res){
+    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS");
+    var requestOptions, path, sortQuery, findQuery, page;
+    page = 'conflicts';
+    path= '/api/conflicts';
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {}
+    }
+    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST");
+    request(
+        requestOptions,
+        function(err, response, body) {
+            console.log(body);
+            if (err) {
+                console.log("CONFLICTS REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST response === 200");
+                showConflicts(body);
+                renderList(req, res, body, page);
+            } else {
+                console.log("CONFLICTS REQUEST STATUS: " + response.status.code);
+            }
+        }
+    );
+};
+*/
+
 // GET SINGLE EVENT
 var renderEventPage = function (req, res, page, event) {
     console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS RENDER_EVENT_PAGE");
@@ -235,6 +266,11 @@ module.exports.doEventNew = function(req, res){
         modified : false,
         checked : false
     };
+    if(!postData.title){
+        console.log("title is required");
+        _showError(req, res, "title is required");
+        return;
+    }
     requestOptions = {
         url : apiOptions.server + path,
         method : "POST",

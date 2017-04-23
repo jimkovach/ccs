@@ -9,8 +9,9 @@ var conflict_p = function(base, event){
     console.log("APP_SERVER/CONTROLLERS/CONFLICTS.JS CONFLICT_P");
     if (conflictString(base) == conflictString(event)){
         return(true);
+    } else {
+        return(false);
     }
-    return(false);
 };
 
 var testForConflicts = function(collection){

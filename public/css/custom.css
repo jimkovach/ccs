@@ -24,6 +24,14 @@ a:hover{
     text-decoration: underline;
 }
 
+.navbar .btn{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+}
+
 ul.event{
     list-style-type: none;
 }

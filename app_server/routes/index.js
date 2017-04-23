@@ -24,4 +24,6 @@ router.get('/program/:eventid', ctrlEvent.program);
 router.get('/presenters', ctrlEvent.presenters);
 router.get('/performers', ctrlEvent.performers);
 
+//router.get('/conflicts', ctrlEvent.conflicts);
+
 module.exports = router;

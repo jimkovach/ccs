@@ -9,7 +9,7 @@ block content
   .row
     .col-xs-12.col-md-12
       form.form-horizontal(action="", method="post", role="form")
-        .col-xs-12.col-md-4
+        .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
               input#title.form-control(name="title", placeholder="title")
@@ -24,20 +24,18 @@ block content
               input#hostEmail.form-control(name="hostEmail", placeholder="email")
               input#hostInstitution.form-control(name="hostInstitution", placeholder="institution")
               input#hostCity.form-control(name="hostCity", placeholder="city")
-              input#hostState.form-control(name="hostState", placeholder="state", value="WA")
-        .col-xs-8.col-md-4
+              input#hostState.form-control(name="hostState", placeholder="state")
+        .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
-              input#presenterFirst.form-control(name="presenterFirst", placeholder="first")
-              input#presenterLast.form-control(name="presenterLast", placeholder="last")
+              input#presenterFirst.form-control(name="presenterFirst", placeholder="presenter first")
+              input#presenterLast.form-control(name="presenterLast", placeholder="presenter last")
               input#presenterEmail.form-control(name="presenterEmail", placeholder="email")
               input#presenterInstitution.form-control(name="presenterInstitution", placeholder="institution")
               input#presenterCity.form-control(name="presenterCity", placeholder="city")
-              input#presenterState.form-control(name="presenterState", placeholder="state", value="WA")
+              input#presenterState.form-control(name="presenterState", placeholder="state")
             .col-xs-12.col-sm-12
-              p
-              textarea#description.form-control(name="description", placeholder="description", rows="7")
-        .col-xs-8.col-md-4
+        .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
               input#performerName.form-control(name="performerName", placeholder="performer")
@@ -45,8 +43,10 @@ block content
               input#performerEmail.form-control(name="performerEmail", placeholder="email")
               input#performerInstitution.form-control(name="performerInstitution", placeholder="institution")
               input#performerCity.form-control(name="performerCity", placeholder="city")
-              input#performerState.form-control(name="performerState", placeholder="state" value="WA")
+              input#performerState.form-control(name="performerState", placeholder="state")
           .form-group
             .col-xs-12.col-sm-12
+              p
+              textarea#description.form-control(name="description", placeholder="description", rows="7")
+              p
               button.btn.btn-default(type="Submit" value='Submit') Submit
-              button.btn.btn-default.pull-right Add Another

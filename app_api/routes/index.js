@@ -17,6 +17,8 @@ router.get('/delete/:eventid', ctrlEvents.eventsDelete);
 router.get('/presenters', ctrlEvents.eventsGetPresenters);
 router.get('/performers', ctrlEvents.eventsGetPerformers);
 
+//router.get('/conflicts', ctrlEvents.eventsGetConflicts);
+
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 

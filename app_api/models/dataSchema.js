@@ -2,7 +2,7 @@ console.log("APP_API/MODELS/DATA_SCHEMA.JS");
 var mongoose = require( 'mongoose' )
 
 var dataSchema = new mongoose.Schema({
-    title: {type: String, required: true},
+    title: {type: String, required: 'a title is required'},
     date: String,
     start: String,
     building: String,

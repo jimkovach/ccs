@@ -16,22 +16,28 @@ html
             span.icon-bar
         #navbar-main.navbar-collapse.collapse
           ul.nav.navbar-nav
-            li
-              a(href='/list') List
-            li
-              a(href='/presenters') Presenters
-            li
-              a(href='/performers') Performers
-            li
-              a(href='/conflicts') Conflicts
-            li
-              a(href='/list') My Conference
+            li.dropdown
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Lists
+              ul.dropdown-menu
+                li
+                  a(href='/list') Events
+                li
+                  a(href='/presenters') Presenters
+                li
+                  a(href='/performers') Performers
+                li
+                  a(href='/conflicts') Conflicts
             li
               a(href='/new') New Event
-            li
-              a(href='/api/events') Get All
-            li
-              a(href='/api/events/58da811695d1f2cca324cc57') ReadOne
+            li.dropdown
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
+              ul.dropdown-menu
+                li
+                  a(href='/list') My Conference
+                li
+                  a(href='/api/events') Get All
+                li
+                  a(href='/api/events/58da811695d1f2cca324cc57') ReadOne
               
     .container          
       block content
