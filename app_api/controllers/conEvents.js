@@ -1,6 +1,9 @@
-console.log("APP_API/CONTROLLERS/CON_EVENTS.JS");
+var flString = "APP_AI/CONTROLLERS/CON_EVENTS.JS: ";
+console.log(flString);
+
 var request = require('request');
 var mongoose = require('mongoose');
+var conflicts = require('./conflicts.js');
 var Event = mongoose.model('Event');
 
 var sendJsonResponse = function(res, status, content) {
@@ -10,29 +13,19 @@ var sendJsonResponse = function(res, status, content) {
 
 module.exports.eventsGetAll = function(req, res) {
     console.log("EVENTSGETALL");
-    console.log("REQ.QUERY: ", req.query);
     var findQueryObject = {};
     var findValue = req.query.findvalue;
     var findKey = req.query.findkey;
     if(findValue){
         findQueryObject[findKey] = findValue;
     }
-    
-
     var sortQuery = req.query.sort + " : " + 1;
     var results = [];
-    console.log("EVENTS_GET_ALL FIND_KEY: ", findKey);
-    console.log("EVENTS_GET_ALL FIND_VALUE: ", findValue);
-    console.log("EVENTS_GET_ALL SORT_QUERY: ", sortQuery);
-
     if (findKey != ""){
-        console.log("EVENTS_GET_ALL FIND_KEY: ", findKey);
-        console.log("EVENTS_GET_ALL FIND_VALUE: ", findValue);
         Event
             .find(findQueryObject)
             .sort(sortQuery)
             .exec(function(err, events) {
-//                console.log("EVENTS_GET_ALL EVENT:", events);
                 if (err) {
                     console.log("EVENTSGETALL ERROR" + err);
                     sendJsonResponse(res, 404, err);
@@ -54,8 +47,28 @@ module.exports.eventsGetAll = function(req, res) {
     }
 };
 
+module.exports.eventsGetConflicts = function(req, res){
+    var fString = flString + "EVENTS_GET_CONFLICTS: ";
+    console.log(fString);
+    var sortQuery = req.query.sort;
+    console.log(fString + "sortQuery: " + sortQuery);
+    var results = [];
+        Event
+            .find()
+            .exec(function(err, events) {
+                if (err) {
+                    console.log("APP_API/CONTROLLERS/CON_EVENTS.JS EVENTS_GET_CONFLICTS ERROR 404");
+                    sendJsonResponse(res, 404, err);
+                } else {
+                    console.log("APP_API/CONTROLLERS/CON_EVENTS.JS EVENTS_GET_CONFLICTS SHOW_CONFLICTS(EVENTS)");
+                    results = conflicts.showConflicts(events, sortQuery);
+                    sendJsonResponse(res, 200, results);
+                }
+            });
+};
+
 module.exports.eventsGetPresenters = function(req, res) {
-    console.log("EVENTSGET_PRESNETERS");
+    console.log("EVENTSGET_PRESENTERS");
     var sortQuery = req.query.sort + " : " + 1;
     var findQuery = {'presenterLast': {$gt : ""}};
     var  results = [];
@@ -207,10 +220,8 @@ module.exports.eventsUpdate = function(req, res) {
                 events.modificationDate = new Date();
                 events.save(function(err, events) {
                     if (err) {
-                        console.log("CON_EVENTS EVENTS_UPDATE AFTER SAVE ERR: " + err);
                         sendJsonResponse(res, 404, err);
                     } else {
-                        console.log("CON_EVENTS EVENTS_UPDATE AFTER SAVE DATE " + new Date());
                         sendJsonResponse(res, 200, events);
                     }
                 });

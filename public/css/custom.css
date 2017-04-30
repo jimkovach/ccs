@@ -14,6 +14,7 @@ body {
 }
 p{
     margin-bottom: 4px;
+    color: black;
 }
 
 a {
@@ -45,6 +46,10 @@ ul.event li{
 }
 .page-header{
     margin-top: 0px;
+}
+
+.list-page-header h1::before{
+    content: "Conference Construction Set - ";
 }
 
 footer {
@@ -92,4 +97,8 @@ input{
 
 .program-pull-right {
     text-align : right;
+}
+
+.error{
+    color: red;
 }

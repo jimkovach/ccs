@@ -1,5 +1,7 @@
-console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS");
+var flString = "APP_SERVER/CONTROLLERS/CON_EVENT.JS ";
+console.log(flString);
 var request = require('request');
+var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : "http://localhost:3000"
 };
@@ -9,6 +11,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 var _showError = function(req, res, status) {
+    var fString = (flString + "_SHOWeRROR: ");
+    console.log(flString + fString);
     var title, content;
     if (status === 404) {
         title = "404, page not found";
@@ -20,7 +24,7 @@ var _showError = function(req, res, status) {
         title = status + ", something's gone wrong";
         content = "something, somewhere, has gone just a bit wrong";
     }
-    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS _SHOW_ERROR: " + title + " " + content);
+    console.log(fString + title + " " + content);
     res.status(status);
     res.render('main', {
         title : title,
@@ -29,19 +33,23 @@ var _showError = function(req, res, status) {
 };
 
 renderList = function(req, res, events, page, msg) {
+    fString = flString + "RENDER_LIST: "
+    console.log ("APP_SERVER/CON_EVENT.JS RENDER_LIST PAGE: " + page);
     var message, events, page
     if(!(events instanceof Array)){
+        console.log ("APP_SERVER/CON_EVENT.JS RENDER_LIST IF 1");
         message = "API lookup error: responseBody must be an array";
         events = [];
     } else if (!events.length) {
+console.log ("APP_SERVER/CON_EVENT.JS RENDER_LIST IF 2");
             message = "No items found";
     } else {
-        message = msg;
+        console.log ("APP_SERVER/CON_EVENT.JS RENDER_LIST IF 3");
     }
     res.render(page, {
         title: 'CCS - ' + page,
         pageHeader: {
-            title: 'Conference Construction Set - ' + page,
+            title: utilities.toTitleCase(page),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         events : events,
@@ -51,12 +59,15 @@ renderList = function(req, res, events, page, msg) {
 
 /* GET list page */
 module.exports.list = function (req, res){
-    console.log("CON_EVENT LIST");
+    console.log("APP_SERVER/CONTROLLERS/CON_EVENT LIST ");
     var requestOptions, path, page;
     var sortQuery = "date";
     var findvalue = "";
     var findkey = "";
-    page = "list";
+    if(!page){
+        page = "list";
+        path = '/api/events';
+    };
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
@@ -66,12 +77,13 @@ module.exports.list = function (req, res){
     if (req.query.findkey != ""){
         findkey = req.query.findkey;
     }
-    path = '/api/events';
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {},
-        qs : {sort : sortQuery, findkey : findkey, findvalue : findvalue}
+        qs : {sort : sortQuery,
+              findkey : findkey,
+              findvalue : findvalue}
     }
     request(    
         requestOptions,
@@ -147,31 +159,59 @@ module.exports.performers = function(req, res){
     );
 };
 
-/*
 module.exports.conflicts = function(req, res){
-    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS");
-    var requestOptions, path, sortQuery, findQuery, page;
+    var fString = flString + "CONFLICTS: ";
+    console.log(fString);
+    var requestOptions, path, page, sortQuery;
     page = 'conflicts';
     path= '/api/conflicts';
+    if(req.params.sort){
+        sortQuery = req.params.sort;
+    } else {
+        sortQuery = "building";
+    }
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {},
-        qs : {}
+        qs : {sort : sortQuery}
     }
     console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST");
     request(
         requestOptions,
         function(err, response, body) {
-            console.log(body);
             if (err) {
-                console.log("CONFLICTS REQUEST ERROR: " + err);
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST response === 200");
-                showConflicts(body);
                 renderList(req, res, body, page);
             } else {
-                console.log("CONFLICTS REQUEST STATUS: " + response.status.code);
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENTJS CONFLICTS REQUEST STATUS: " + response.status.code);
+            }
+        }
+    );
+};
+
+/*
+module.exports.eventSort = function(req, res){
+    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_SORT");
+    var requestOptions, path, page;
+    path = "/api/" + page;
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery}
+    }
+    request(
+        requestOptions,
+        function(err, response, body){
+            if (err) {
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_SORT ERROR IN REQUEST: " + err);
+            } else if (response.statusCode === 200){
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_SORT SUCCESFUL");
+                renderList(req, res, body, page);
+            } else {
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_SORT STATUS: " + response.status.code);
             }
         }
     );
@@ -229,7 +269,7 @@ module.exports.eventNew = function (req, res){
     res.render('new',{
         title : 'CCS - New',
         pageHeader: {
-            title: 'Conference Construction Set - Create New Event',
+            title: 'Create New Event',
         }
     });
 };

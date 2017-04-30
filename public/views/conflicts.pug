@@ -9,9 +9,9 @@ block content
   table.table.table-striped
     thead.thead-inverse
       th
-        a(href="/list?sort=title") Title
+        a(href="/conflicts?sort=title") Title
       th
-        a(href="list?sort=category") Category
+        a(href="/conflicts?sort=conflict") Conflict
       th
         a(href="list?sort=date") Date
       th
@@ -24,11 +24,11 @@ block content
       each item in events
         tr
           td
-            a(href="/event/" + item._id)= item.title
+            a(href="/event/" + item.base_id)= item.base
           td
-            a(href="/list?findkey=category&findvalue=" + item.category)= item.category
+            a(href="/event/" + item.conflict_id)= item.conflict
           td
-            a(href="/list?findkey=date&findvalue=" + item.date)= item.date
+            a(href="/list?findkey=start&findvalue=" + item.date)= item.date
           td
             a(href="/list?findkey=start&findvalue=" + item.start)= item.start
           td
