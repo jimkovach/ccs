@@ -1,0 +1,46 @@
+table{
+    width:100%;
+    font-size: 70%;
+}
+
+th{
+    text-align:center;
+}
+
+td{
+    border: 1px solid #dddddd;
+    width: 12.5%;
+}
+
+td:hover,a{
+    color:gray:
+}
+
+.category{
+    font-weight:800;
+}
+
+.title{
+    font-style: italic;
+}
+
+.caag{
+    text-align: center;
+}
+
+.container{
+    margin:0;
+    padding:0;
+    width:100%;
+}
+
+.big-event{
+    font-size: 2em;
+}
+.big-event p{
+    font-size: .75em;
+}
+
+.big-event:hover{
+    background:color:white;
+}

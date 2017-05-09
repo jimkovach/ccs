@@ -1,8 +1,8 @@
+var flString = "APP_API/CONTROLLERS/CONFLICTS.JS "
+
 mongoose = require('mongoose');
 var Event = mongoose.model('Event');
 var utilities = require('../../public/js/utilities.js');
-var flString = "APP_API/CONTROLLERS/CONFLICTS.JS "
-console.log(flString);
 
 var conflictP = function(base, event){
     return(base.building === event.building && base.room === event.room && base.date === event.date && base.start === event.start);
@@ -24,7 +24,6 @@ var buildConflictArray = function(collection){
         for(var entry = base + 1; entry < collection.length; entry++){
             if( conflictP (collection[base], collection[entry])){
                 conflictArray.push({base_id : collection[base]._id, conflict_id : collection[entry].id});
-                console.log(fString + collection[base]._id + " : " + collection[entry].id);
             }
         }
     }

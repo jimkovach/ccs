@@ -31,9 +31,46 @@ mixin formatDate(dateString)
     -output = m + ' ' + d + ', ' + y + ' - ' + h + ':0' + mn + ap;
   =output
 
-mixin formatProgramDate(dateString)
-  -var date = new Date(dateString);
+mixin handleHours(hours)
+  -var h = hours;
+  -var ap;
+  if(h > 12)
+    -ap = "PM"
+    -h = h - 12
+  -else
+    -ap = "AM"
+  -output = h + ap
+  =output
+  
+mixin formatProgramDate(startNum, endNum)
+  -var start = new Date(startNum);
+  -var end = new Date(endNum);
+  -var hS = start.getHours();
+  -var hE = end.getHours();
+  -var apS = "AM";
+  -var apE = "AM";
+  if(hS > 12)
+    -apS = "PM";
+    -hS = hS - 12;
+  if(hE > 12)
+    -apE = "PM";
+    -hE = hE - 12;  
+  -var mS = start.getMinutes();
+  if(mS.toString().length === 1)
+    -mS += "0";
+  -var mE = end.getMinutes();
+  if(mE.toString().length === 1)
+    -mE += "0"
   -var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  -var d = dayNames[date.getDay()];
-  -var output = d;
+  -var d = dayNames[start.getDay()];
+  -var output = d + " " + hS + ":" + mS + apS + "-" + hE + ":" + mE + apE;
+  =output
+
+mixin dateFromNum(num)
+  -var date = new(dateString)
+  -var day = date.getDate()
+  -var month = date.getMonth() + 1
+  -var year = date.getFullYear()
+  date = month + "/" + day + "/" + year
+  -var output = date
   =output

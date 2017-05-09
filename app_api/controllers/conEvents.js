@@ -1,9 +1,10 @@
-var flString = "APP_AI/CONTROLLERS/CON_EVENTS.JS: ";
+var flString = "APP_API/CONTROLLERS/CON_EVENTS.JS: ";
 console.log(flString);
 
 var request = require('request');
 var mongoose = require('mongoose');
 var conflicts = require('./conflicts.js');
+var utilities = require('../../public/js/utilities.js');
 var Event = mongoose.model('Event');
 
 var sendJsonResponse = function(res, status, content) {
@@ -12,7 +13,6 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 module.exports.eventsGetAll = function(req, res) {
-    console.log("EVENTSGETALL");
     var findQueryObject = {};
     var findValue = req.query.findvalue;
     var findKey = req.query.findkey;
@@ -27,7 +27,6 @@ module.exports.eventsGetAll = function(req, res) {
             .sort(sortQuery)
             .exec(function(err, events) {
                 if (err) {
-                    console.log("EVENTSGETALL ERROR" + err);
                     sendJsonResponse(res, 404, err);
                 } else {
                     sendJsonResponse(res, 200, events);
@@ -49,37 +48,61 @@ module.exports.eventsGetAll = function(req, res) {
 
 module.exports.eventsGetConflicts = function(req, res){
     var fString = flString + "EVENTS_GET_CONFLICTS: ";
-    console.log(fString);
     var sortQuery = req.query.sort;
-    console.log(fString + "sortQuery: " + sortQuery);
     var results = [];
         Event
             .find()
             .exec(function(err, events) {
                 if (err) {
-                    console.log("APP_API/CONTROLLERS/CON_EVENTS.JS EVENTS_GET_CONFLICTS ERROR 404");
                     sendJsonResponse(res, 404, err);
                 } else {
-                    console.log("APP_API/CONTROLLERS/CON_EVENTS.JS EVENTS_GET_CONFLICTS SHOW_CONFLICTS(EVENTS)");
                     results = conflicts.showConflicts(events, sortQuery);
                     sendJsonResponse(res, 200, results);
                 }
             });
 };
 
-module.exports.eventsGetPresenters = function(req, res) {
-    console.log("EVENTSGET_PRESENTERS");
-    var sortQuery = req.query.sort + " : " + 1;
-    var findQuery = {'presenterLast': {$gt : ""}};
-    var  results = [];
-    console.log("EVENTS_PRESENTERS FIND_QUERY: " + findQuery);
-    console.log("EVENTS_PRESENTERS SORT_QUERY: " + sortQuery);
+module.exports.eventsGetCaag = function(req, res){
+    var fString = flString + "CAAG: ";
+    console.log(fString);
+    var findQuery = {};
+    var events = [];
     Event
-        .find({presenterLast : {$gt : ""}})
+        .find(findQuery)
+        .exec(function(err, events){
+            if (err) {
+                sendJsonResponse(res, 404, err);
+            } else {
+                sendJsonResponse(res, 200, events);
+            }
+        });
+};
+
+module.exports.eventsGetCag = function(req, res){
+    var fString = flString + "CAG: ";
+    console.log(fString);
+    var findQuery = {"date" : "02/17/2017", "start" : "08:30 AM", "building" : "Westin"};
+    var events = [];
+    Event
+        .find(findQuery)
+        .exec(function(err, events){
+            if (err) {
+                sendJsonResponse(res, 404, err);
+            } else {
+                sendJsonResponse(res, 200, events);
+            }
+        });
+};
+
+module.exports.eventsGetPresenters = function(req, res) {
+    var sortQuery = req.query.sort + " : " + 1;
+    var findQuery = req.query.find;
+    var  results = [];
+    Event
+        .find(findQuery)
         .sort(sortQuery)
         .exec(function(err, events) {
             if (err) {
-                console.log("EVENTS_GET_PRESENTERS ERROR" + err);
                 sendJsonResponse(res, 404, err);
             } else {
                 sendJsonResponse(res, 200, events);
@@ -88,18 +111,14 @@ module.exports.eventsGetPresenters = function(req, res) {
 };
 
 module.exports.eventsGetPerformers = function(req, res) {
-    console.log("EVENTSGET_PERFORMERS");
     var sortQuery = req.query.sort + " : " + 1;
     var findQuery = {'performerName': {$gt : ""}};
     var  results = [];
-    console.log("EVENTS_PERFORMERS FIND_QUERY: " + findQuery);
-    console.log("EVENTS_PERFORMERS SORT_QUERY: " + sortQuery);
     Event
-        .find({performerName : {$gt : ""}})
+        .find(findQuery)
         .sort(sortQuery)
         .exec(function(err, events) {
             if (err) {
-                console.log("EVENTS_GET_PERFORMERS ERROR" + err);
                 sendJsonResponse(res, 404, err);
             } else {
                 sendJsonResponse(res, 200, events);
@@ -117,7 +136,6 @@ module.exports.eventsReadOne = function (req, res) {
                 message : events
             };
             if (err) {
-                console.log("CONEVENTS EVENTS_READ_ONE: Error finding events");
                 response.status = 500;
                 response.message = err;
             } else if(!events) {
@@ -126,7 +144,6 @@ module.exports.eventsReadOne = function (req, res) {
                     "message" : "Event ID not found"
                 };
             }
-            console.log("CONEVENTS EVENTS_READ_ONE");
             sendJsonResponse(res, 200, events);
         });
 };
@@ -135,10 +152,13 @@ module.exports.eventsCreate = function(req, res) {
     Event.create({
         title : req.body.title,
         category : req.body.category,
-        date : req.body.date,
-        start: req.body.start,
+        dateStart : utilities.convertToDate(req.body.date + " " + req.body.start),
+        dateEnd : utilities.convertToDate(req.body.date + " " + req.body.end),
         building: req.body.building,
         room: req.body.room,
+        date: req.body.date,
+        start: req.body.start,
+        end : req.body.end,
         presenterFirst: req.body.presenterFirst,
         presenterLast: req.body.presenterLast,
         presenterEmail: req.body.presenterEmail,
@@ -168,34 +188,35 @@ module.exports.eventsCreate = function(req, res) {
 };
 
 module.exports.eventsUpdate = function(req, res) {
-    console.log("CON_EVENTS - EVENTS_UPDATE: ");
+    var fString = flString + "EVENTS_UPDATE: ";
+    console.log(fString);
     if(!req.params.eventid) {
         sendJsonResponse(res, 404, {
             "message" : "CON_EVENTS EVENTS_UPDATE: Not found, eventsid is required"
         });
         return;
     }
-    console.log("CON_EVENTS - EVENT_UPDATE REQ.PARAMS.EVENTID: " + req.params.eventid);
     Event
         .findById(req.params.eventid)
         .exec(
             function(err, events) {
-                console.log("CON_EVENTS EVENTS_UPDATE EVENT.EXEC FUNCTION: ");
                 if (!events) {
                     sendJsonResponse(res, 404, {
                         "message": "eventsid not found"
                     });
                     return;
                 }else if (err) {
-                    console.log("CON_EVENTS EVENTS_UPDATE EVENT.EXEC FUNCTION ERR: " + err);
                     sendJsonResponse(res, 400, err);
                     return;
                 }
                 events.title = req.body.title,
                 events.category = req.body.category,
+                events.dateStart = utilities.convertToDate(req.body.date + " " + req.body.start),
+                events.dateEnd = utilities.convertToDate(req.body.date + " " + req.body.end),
+                events.building = req.body.building,
                 events.date = req.body.date,
                 events.start = req.body.start,
-                events.building = req.body.building,
+                events.end = req.body.end,
                 events.room = req.body.room,
                 events.presenterFirst =  req.body.presenterFirst,
                 events.presenterLast = req.body.presenterLast,
@@ -231,7 +252,6 @@ module.exports.eventsUpdate = function(req, res) {
 
 module.exports.eventsDelete = function(req, res) {    
     var eventid = req.params.eventid;
-    console.log("EVENTSDELETE EVENTID: " + eventid);
     if (eventid) {
         Event
             .findByIdAndRemove(eventid)

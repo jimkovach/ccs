@@ -1,10 +1,12 @@
-console.log("APP_API/MODELS/DATA_SCHEMA.JS");
 var mongoose = require( 'mongoose' )
 
 var dataSchema = new mongoose.Schema({
     title: {type: String, required: 'a title is required'},
     date: String,
     start: String,
+    end : String,
+    dateStart : Number,
+    dateEnd : Number,
     building: String,
     room: String,
     category: String,

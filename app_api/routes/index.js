@@ -1,4 +1,3 @@
-console.log("APP_API/ROUTES/INDEX.JS");
 var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
@@ -7,6 +6,7 @@ var auth = jwt({
     userProperty: 'payload'
 });
 var ctrlEvents = require('../controllers/conEvents');
+var ctrlExhibits = require('../controllers/conExhibits');
 var ctrlAuth = require('../controllers/authentication');
 
 router.get('/events', ctrlEvents.eventsGetAll);
@@ -16,8 +16,22 @@ router.post('/update/:eventid', ctrlEvents.eventsUpdate);
 router.get('/delete/:eventid', ctrlEvents.eventsDelete);
 router.get('/presenters', ctrlEvents.eventsGetPresenters);
 router.get('/performers', ctrlEvents.eventsGetPerformers);
-
 router.get('/conflicts', ctrlEvents.eventsGetConflicts);
+
+router.get('/caag', ctrlEvents.eventsGetCaag);
+router.get('/cag', ctrlEvents.eventsGetCag);
+
+/*
+router.get('/exhibits', ctrlExhibits.exhibits);
+router.get('/exhibits/:exhibitid', ctrlExhibits.exhibitsReadOne);
+*/
+
+router.post('/exhibits/new', ctrlExhibits.exhibitsNew);
+
+/*
+router.post('/exhibits/:eventid', ctrlExhibits.exhibitsUpdate);
+router.get('/exhibits/delete/:eventid', ctrlExhibits.exhibitsDelete);
+*/
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

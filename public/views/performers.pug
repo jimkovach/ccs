@@ -4,10 +4,10 @@ block content
   .row.page-header.list-page-header
     h1= pageHeader.title
     p= pageHeader.strapline
+    .error= message
   form
     table.table.table-striped
       thead.thead-inverse
-        th select
         th
           a(href='/performers?sort=performerName') Performer
         th
@@ -21,8 +21,7 @@ block content
         each item in events
           tr
             td
-              input(type="checkbox" name=item.checked value=item.checked)
-            td= item.performerName
+              a(href='/event/' + item._id)= item.performerName
             td= item.performerDirector
             td= item.performerInstitution
             td= item.performerCity + " " + item.performerState

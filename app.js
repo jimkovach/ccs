@@ -1,4 +1,3 @@
-console.log("APP.JS");
 require('dotenv').load();
 require('./app_api/models/db.js');
 require('./app_api/config/passport.js');

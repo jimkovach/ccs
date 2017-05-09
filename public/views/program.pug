@@ -12,7 +12,8 @@ block content
     .col-lg-8.program
       .row
         .col-xs-6.col-sm-4.col-lg-6
-          p= event.start
+          p= ''
+            +formatProgramDate(event.dateStart, event.dateEnd)
           p= event.category
         .col-xs-6.col-sm-4.col-lg-6.pull-right.program-pull-right
           p= event.building
@@ -22,7 +23,7 @@ block content
           h3.program= event.title
       .row
         .col-lg-12
-          p= 'Presenter: ' + event.presenterFirst + ' ' + event.presenterLast
+          p= 'Presenter: ' + event.presenterFirst + ' ' + event.presenterLast +', ' + event.presenterInstitution + ', ' + event.presenterCity + ', ' + event.presenterState
           p= 'Host: ' + event.hostName + ', ' + event.hostInstitution + ', ' + event.hostCity + ' ' + event.hostState
           p.program-description= event.description
   .row

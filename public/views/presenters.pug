@@ -15,7 +15,8 @@ block content
     tbody
       each item in events
         tr
-          td= item.presenterLast + ", " + item.presenterFirst
+          td
+            a(href='/event/' + item._id)= item.presenterLast + ", " + item.presenterFirst
           td= item.presenterInstitution
           td= item.presenterCity + " " + item.presenterState
           td= item.presenterEmail

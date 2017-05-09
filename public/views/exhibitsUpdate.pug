@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .row.page.header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .err= message
+  .row
+    .col-xs-12.col-md-12
+    .error = message
+      form.form-horizontal(action="/update/" + event._id method="post" role="form")
+        .col-xs-12.col-sm-6.col-md-4
+          .form-group
+            col-xs-12.col-sm-12.col-md-12
+              input#exhibit.form_control(name="exhibit", placeholder="exhibit", value=exhibit.exhibit)
+              input#booth.form_control(name="booth", placeholder="booth", value=exhibit.booth)
+              input#exhibitor.form_control(name="exhibitor", placeholder="exhibitor", value=exhibit.exhibitor)
+              input#title.form_control(name="title", placeholder="title", value=exhibit.title)
+              input#address(name="address", placeholder="address", value=exhibit.address)
+              input#city(name="city", placeholder="city", value=exhibit.city)
+              input#state(name="state", placeholder="state", value=exhibit.state)
+              input#zip(name="zip", placeholder="zip", value=exhibit.zip)
+              input#email(name="email", placeholder="email", value=exhibit.email)
+              input#phone(name="phone", placeholder="phone", value=exhibit.phone)
+              input#web(name="web", placeholder="website", value=exhibit.web)
+              textarea#description(name="description", placeholder="description", rows=6)= exhibit.description
+              p
+              a.btn.btn-default(href=/exhibit' role='button') Cancel
+              buton.btn.btn-default.pull-reight(type="submit" value="Submit") Submit

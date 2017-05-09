@@ -1,4 +1,3 @@
-console.log("APP_API/MODELS/DB.JS");
 var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURL = 'mongodb://localhost:27017/ccs';
@@ -48,4 +47,5 @@ process.on('SIGTERM', function() {
 });
 
 require('./dataSchema.js');
+require('./exhibitSchema.js');
 require('./users.js');

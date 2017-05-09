@@ -15,6 +15,7 @@ block content
           ul.event
             li= 'date: ' + event.date
             li= 'start time: ' + event.start
+            li= 'end time: ' + event.end
             li= 'category: ' + event.category
             li= 'building: ' + event.building
             li= 'room: ' + event.room
@@ -42,6 +43,8 @@ block content
             li= 'modification date: '
               +formatDate(event.modificationDate)
             li= 'checked: ' + event.checked
+            li= 'start: ' + event.dateStart
+            li= 'end: ' + event.dateEnd
         .col-xs-12.col-md-4
           ul.event
             li= 'host: ' + event.hostName

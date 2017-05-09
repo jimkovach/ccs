@@ -1,0 +1,7 @@
+mixin displayEvent(event, room, start)
+  if(event.room.toUpperCase() == room.toUpperCase() && event.dateStart == start)
+    td
+      a(href='/event/' + event._id)
+        .category #{event.category}
+        .presenterLast #{event.presenterLast}
+        .title #{event.title}

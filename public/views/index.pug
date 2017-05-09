@@ -8,18 +8,19 @@ block content
     p= "The following menuitems appear in the header on all pages..."
       ul
         li
-          a(href='/list') List: Dropdown that exposes the following...
+          a(href='/list') Events: Dropdown that exposes the following...
         ul
           li
-            a(href='/list') Events: List of all events
+            a(href='/list') List: List of all events
           li
             a(href='/presenters') Presenters: List of all presenters attached to an event
           li
             a(href='/performers') Performers: List of all performers attached to an event
           li
+            a(href='/new') New Event: Use this to create a new event and add it to the database
+          li
             a(href='/conflicts') Conflicts: List of conflicts generated when a room is being used by more than one event at the same time
-        li
-          a(href='/new') New Event: Use this to create a new event and add it to the data base
+        li Exhibits is in development - not ready for production
         li Development is a dropdown of stuff just used in development - not for production
     p= "The following buttons appear on various event pages..."
       ul

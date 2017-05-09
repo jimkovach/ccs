@@ -5,6 +5,7 @@ html
     title= title
     link(rel='stylesheet', href='../css/bootstrap.min.css')
     link(rel='stylesheet', href='../css/custom.css')
+
   body
     .navbar.navbar-default.navbar-fixed-top
       .container-fluid
@@ -17,18 +18,25 @@ html
         #navbar-main.navbar-collapse.collapse
           ul.nav.navbar-nav
             li.dropdown
-              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Lists
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Events
               ul.dropdown-menu
                 li
-                  a(href='/list') Events
+                  a(href='/list') List
                 li
                   a(href='/presenters') Presenters
                 li
                   a(href='/performers') Performers
                 li
+                  a(href='/new') New Event
+                li
                   a(href='/conflicts') Conflicts
-            li
-              a(href='/new') New Event
+            li.dropdown
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Exhibits
+              ul.dropdown-menu
+                li
+                  a(href='/exhibits') Exhibits
+                li
+                  a(href='/exhibit/new') New Exhibit
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
               ul.dropdown-menu
@@ -38,7 +46,8 @@ html
                   a(href='/api/events') Get All
                 li
                   a(href='/api/events/58da811695d1f2cca324cc57') ReadOne
-              
+                li
+                  a(href='/caag') Conference at a Glance
     .container          
       block content
     footer

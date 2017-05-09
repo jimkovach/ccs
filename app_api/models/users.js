@@ -1,4 +1,3 @@
-console.log("APP_API/USERS.JS");
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');

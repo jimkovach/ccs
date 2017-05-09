@@ -1,4 +1,3 @@
-console.log("APP_API/CONTROLLERS/AUTHENTICATION.JS");
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -9,7 +8,6 @@ var sendJsonResponse = function(res, status, content){
 };
 
 module.exports.register = function(req, res) {
-    console.log("APP_API/CONTROLLERS/AUTHENTICATION.JS MODULE.EXPORTS.REGISTER");
     if(!req.body.name || !req.body.email || !req.body.password) {
         sendJsonResponse(res, 400, {
             "message" : "All fields required"
