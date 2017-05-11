@@ -46,7 +46,7 @@ renderList = function(req, res, events, page, msg) {
         }
     }
     res.render(page, {
-        title: 'CCS - ' + page,
+        title: page,
         pageHeader: {
             title: utilities.toTitleCase(page),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
@@ -86,7 +86,7 @@ module.exports.caag = function (req, res){
 
     //PROBLEM???????????
     res.render(page, {
-        title: 'CCS - ' + page,
+        title: page,
         events : events
     });
 };
@@ -121,21 +121,23 @@ module.exports.cag = function (req, res){
 
     //PROBLEM???????????
     res.render(page, {
-        title: 'CCS - ' + page,
+        title: page,
         events : events
     });
 };
     
 /* GET list page */
 module.exports.list = function (req, res){
+    var fString = flString + "LIST: ";
     var requestOptions, path, page;
-    var sortQuery = "date";
+    var sortQuery = "dateStart";
     var findvalue = "";
     var findkey = "";
     if(!page){
         page = "list";
         path = '/api/events';
     };
+    console.log(fString + req.query.sort);
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
@@ -302,9 +304,9 @@ module.exports.program = function (req, res) {
 
 module.exports.eventNew = function (req, res){
     res.render('new',{
-        title : 'CCS - New',
+        title : 'new',
         pageHeader: {
-            title: 'Create New Event',
+            title: 'Create New Event'
         }
     });
 };

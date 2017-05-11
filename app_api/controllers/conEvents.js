@@ -13,13 +13,15 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 module.exports.eventsGetAll = function(req, res) {
+    var fString = flString + "EVENTS_GET_ALL: ";
     var findQueryObject = {};
     var findValue = req.query.findvalue;
     var findKey = req.query.findkey;
     if(findValue){
         findQueryObject[findKey] = findValue;
     }
-    var sortQuery = req.query.sort + " : " + 1;
+    var sortQuery = req.query.sort;
+    console.log(fString + sortQuery);
     var results = [];
     if (findKey != ""){
         Event
