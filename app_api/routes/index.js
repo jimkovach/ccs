@@ -21,17 +21,17 @@ router.get('/conflicts', ctrlEvents.eventsGetConflicts);
 router.get('/caag', ctrlEvents.eventsGetCaag);
 router.get('/cag', ctrlEvents.eventsGetCag);
 
-/*
-router.get('/exhibits', ctrlExhibits.exhibits);
-router.get('/exhibits/:exhibitid', ctrlExhibits.exhibitsReadOne);
-*/
 
-router.post('/exhibits/new', ctrlExhibits.exhibitsNew);
+router.get('/exhibits', ctrlExhibits.exhibitsGetAll);
+router.get('/exhibits/read/:exhibitid', ctrlExhibits.exhibitsReadOne);
+router.get('/exhibitors', ctrlExhibits.exhibitorsReadAll);
+router.post('/exhibits/new', ctrlExhibits.exhibitsCreate);
 
-/*
-router.post('/exhibits/:eventid', ctrlExhibits.exhibitsUpdate);
-router.get('/exhibits/delete/:eventid', ctrlExhibits.exhibitsDelete);
-*/
+//router.post('/exhibits/:eventid', ctrlExhibits.exhibitsUpdate);
+
+
+router.get('/exhibits/delete/:exhibitid', ctrlExhibits.exhibitsDelete);
+
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

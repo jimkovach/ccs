@@ -32,9 +32,12 @@ var _showError = function(req, res, status) {
     });
 };
 
-renderList = function(req, res, events, page, msg) {
+renderList = function(req, res, events, page, msg, title) {
     fString = flString + "RENDER_LIST: "
     var message;
+    if(!title){
+        title = utilities.toTitleCase(page);
+    }
     if(!(events instanceof Array)){
         message = "API lookup error: responseBody must be an array";
         events = [];
@@ -48,12 +51,58 @@ renderList = function(req, res, events, page, msg) {
     res.render(page, {
         title: page,
         pageHeader: {
-            title: utilities.toTitleCase(page),
+            title: utilities.toTitleCase(title),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         events : events,
         message : message
     });
+};
+
+/* GET list page */
+module.exports.list = function (req, res){
+    var fString = flString + "LIST: ";
+    var requestOptions, path, page, message;
+    var sortQuery = "dateStart";
+    var findvalue = "";
+    var findkey = "";
+    var title = "Events";
+    message = "";
+    if(!page){
+        page = "list";
+        path = '/api/events';
+    };
+    console.log(fString + req.query.sort);
+    if (req.query.sort) {
+        sortQuery = req.query.sort;
+    }
+    if (req.query.findvalue != ""){ 
+        findvalue = req.query.findvalue;
+        title = findvalue;
+    }
+    if (req.query.findkey != ""){
+        findkey = req.query.findkey;
+    }
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery,
+              findkey : findkey,
+              findvalue : findvalue}
+    }
+    request(    
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                console.log("LIST REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                renderList(req, res, body, page, message, title);
+            } else {
+                console.log("LIST REQUEST STATUS: " + response.statusCode);
+            }
+        }
+    );
 };
 
 //CONCERT AT A GLANCE (CAAG)
@@ -125,58 +174,16 @@ module.exports.cag = function (req, res){
         events : events
     });
 };
-    
-/* GET list page */
-module.exports.list = function (req, res){
-    var fString = flString + "LIST: ";
-    var requestOptions, path, page;
-    var sortQuery = "dateStart";
-    var findvalue = "";
-    var findkey = "";
-    if(!page){
-        page = "list";
-        path = '/api/events';
-    };
-    console.log(fString + req.query.sort);
-    if (req.query.sort) {
-        sortQuery = req.query.sort;
-    }
-    if (req.query.findvalue != ""){
-        findvalue = req.query.findvalue;
-    }
-    if (req.query.findkey != ""){
-        findkey = req.query.findkey;
-    }
-    requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {},
-        qs : {sort : sortQuery,
-              findkey : findkey,
-              findvalue : findvalue}
-    }
-    request(    
-        requestOptions,
-        function(err, response, body) {
-            if (err) {
-                console.log("LIST REQUEST ERROR: " + err);
-            } else if (response.statusCode === 200) {
-                renderList(req, res, body, page);
-            } else {
-                console.log("LIST REQUEST STATUS: " + response.statusCode);
-            }
-        }
-    );
-};
 
 module.exports.presenters = function(req, res){
     var requestOptions, path, sortQuery, findQuery, page;
     page = 'presenters';
+    var msg = "";
     sortQuery = "presenterLast";
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
-    findQuery = {presenterLast : {$gt : ""}}
+    findQuery = {presenterLast : {$gt : ""}};
     path= '/api/presenters';
     requestOptions = {
         url : apiOptions.server + path,
@@ -190,7 +197,7 @@ module.exports.presenters = function(req, res){
             if (err) {
                 console.log("PRESENTERS REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                renderList(req, res, body, page);
+                renderList(req, res, body, page, msg, utilities.toTitleCase(page));
             } else {
                 console.log("PRESENTERS REQUEST STATUS: " + response.status.code);
             }
@@ -269,7 +276,7 @@ var renderEventPage = function (req, res, page, event) {
 };
 
 module.exports.event = function (req, res){
-    var requestOptions, path;
+    var requestOptions, path, page;
     page="event";
     path = "/api/events/" + req.params.eventid;
     requestOptions = {

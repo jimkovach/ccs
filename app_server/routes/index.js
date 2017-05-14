@@ -30,18 +30,17 @@ router.get('/conflicts', ctrlEvent.conflicts);
 router.get('/cag', ctrlEvent.cag);
 router.get('/caag', ctrlEvent.caag);
 
-/*
-router.get('/exhibit', ctrlExhibit.exhibits);
-router.get('/exhibit/:exhibitid', ctrlExhibit.exhibit);
-*/
-
+router.get('/exhibits', ctrlExhibit.exhibits);
+router.get('/exhibit/read/:exhibitid', ctrlExhibit.exhibit);
+router.get('/exhibitors', ctrlExhibit.exhibitors);
 router.get('/exhibit/new', ctrlExhibit.exhibitNew);
+router.post('/exhibit/new', ctrlExhibit.doExhibitNew);
 
 /*
-router.post('/exhibit/new', ctrlExhibit.doExhibitNew);
 router.get('/exhibit/update/:exhibitid', ctrlExhibit.exhibitUpdate);
 router.post('/exhibit/update/:exhibitid', ctrlExhibit.doExhibitUpdate);
-router.get('/exhibit/delete/:eventid', ctrlExhibit.exhibitDelete);
 */
+router.get('/exhibit/delete/:exhibitid', ctrlExhibit.exhibitDelete);
+
 
 module.exports = router;

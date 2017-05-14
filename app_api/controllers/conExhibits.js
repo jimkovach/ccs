@@ -1,4 +1,3 @@
-
 var flString = "APP_API/CONTROLLERS/CON_EXHIBITS.JS: ";
 console.log(flString);
 
@@ -11,22 +10,89 @@ var sendJsonResponse = function(res, status, content){
     res.json(content);
 };
 
-/*
-module.exports.exhibits = function(req, res){
-    var fString = flString + "EXHIBITS: ";
+
+module.exports.exhibitsGetAll = function(req, res){
+    var fString = flString + "EXHIBITS_GET_ALL: ";
     console.log(fString);
+    var findQueryObject = {};
+    var findValue = req.query.findvalue;
+    var findKey = req.query.findkey;
+    if(findValue){
+        findQueryObject[findKey] = findValue;
+    }
+    var sortQuery = req.query.sort;
+    var results = [];
+    if (findKey != ""){
+        Exhibit
+        .find(findQueryObject)
+        .sort(sortQuery)
+        .exec(function(err, exhibits) {
+            if (err) {
+                sendJsonResponse(res, 404, err);
+            } else {
+                sendJsonResponse(res, 200, exhibits);
+            }
+        });
+    } else {
+        Exhibit
+            .find()
+            .sort(sortQuery)
+            .exec(function(err, exhibits) {
+                if (err) {
+                    sendJsonResponse(res, 404, err);
+                } else {
+                    sendJsonResponse(res, 200, exhibits);
+                }
+            });
+    }
     
 };
 
-module.exports.exhibitsReadOne = function(req, res) {
-    var fString= flString + "EXHIBITS_READ_ONE: ";
+module.exports.exhibitorsReadAll = function(req, res) {
+    var fString = flString + "EXHIBITORS_READ_ALL: ";
     console.log(fString);
+    var sortQuery = req.query.sort;
+    var findQuery = req.query.find;
+    var results = [];
+    Exhibit
+        .find(findQuery)
+        .sort(sortQuery)
+        .exec(function(err, exhibits) {
+            if (err) {
+                sendJsonResponse(res, 404, err);
+            } else {
+                sendJsonResponse(res, 200, exhibits);
+            }
+        });
+};
+module.exports.exhibitsReadOne = function(req, res) {
+    var fString = flString + "EXHIBITS_READ_ONE: ";
+    console.log(fString);
+    var exhibitid = req.params.exhibitid;
+    console.log(fString + "EXHIBITID: " + exhibitid);
+    Exhibit
+        .findById(exhibitid)
+        .exec(function(err, exhibits) {
+            var response = {
+                status : 200,
+                message : exhibits
+            };
+            if (err) {
+                response.status = 500;
+                response.message = err;
+            } else if(!exhibits) {
+                response.status = 404;
+                response.message = {
+                    "message" : "Exhibit ID not found"
+                };
+            }
+            sendJsonResponse(res, 200, exhibits);
+        });
 
 };
-*/
 
-module.exports.exhibitsNew = function(req, res) {
-    var fString =flString + "EXHIBIT_NEW: ";
+module.exports.exhibitsCreate = function(req, res) {
+    var fString =flString + "EXHIBITS_CREATE: ";
     console.log(fString);
 
     Exhibit.create({
@@ -42,8 +108,6 @@ module.exports.exhibitsNew = function(req, res) {
         phone : req.body.phone,
         web : req.body.web,
         description : req.body.description,
-        creationDate : req.body.creationDate,
-        modificationDate : req.body.modificationDate,
         modified : req.body.modified,
         cancelled : req.body.cancelled,
         checked : req.body.checked
@@ -51,7 +115,7 @@ module.exports.exhibitsNew = function(req, res) {
         if (err) {
             sendJsonResponse(res, 400, err);
         } else {
-            sendJsonResponse(res, 201, events);
+            sendJsonResponse(res, 201, exhibits);
         }
     });
 };
@@ -63,9 +127,27 @@ module.exports.exhibitsUpdate = function(req, res) {
 
 };
 
+*/
+
 module.exports.exhibitsDelete = function(req, res) {
     var fString = flString + "EXHIBITS_DELETE: ";
     console.log(fString);
-
+    var exhibitid = req.params.exhibitid;
+    if (exhibitid) {
+        Exhibit
+        .findByIdAndRemove(exhibitid)
+        .exec(
+            function(err, exhibits) {
+                if (err ) {
+                    sendJsonResponse(res, 404, err);
+                    return;
+                }
+                sendJsonResponse(res, 204, null);
+            }
+            );
+    } else {
+       sendJsonResponse(res, 404, {
+        "message": "No exhibitid"
+    });
+   }
 };
-*/

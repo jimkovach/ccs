@@ -2,7 +2,7 @@ var mongoose = require( 'mongoose' )
 
 var exhibitSchema = new mongoose.Schema({
     exhibit: {type: String, required: 'an exhibit name is required'},
-    booth: Number,
+    booth: String,
     exhibitor: String,
     title: String,
     address: String,

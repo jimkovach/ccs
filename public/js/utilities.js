@@ -1,10 +1,14 @@
 flString = "APP_SERVER/CONTROLLERS/UTILITIES.JS: ";
 
 module.exports.toTitleCase = function(str){
-    return str.toLowerCase()
-           .split(" ")
-           .map(function(v){return v.charAt(0).toUpperCase() + v.slice(1)})
-           .join(" ");
+    if(typeof str == String){
+        return str.toLowerCase()
+            .split(" ")
+            .map(function(v){return v.charAt(0).toUpperCase() + v.slice(1)})
+            .join(" ");
+    } else {
+        return (str);
+    }
 };
 
 module.exports.getSortOrder = function(key){

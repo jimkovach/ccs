@@ -1,19 +1,8 @@
-extend layout
+extends layout
 
 block content
   .row.page-header.exhibit-page-header
-    h1= pageHeader.title
-    p= pageHeader.strapline
-    .error= message
-  table.table.table-striped.table-responsive
-    thead.thead-inverse
-      th
-        a(href='/exhibits?sort=exhibit') Exhibit
-      th
-        a(href='/exhibits?sort=booth') Booth
-    tbody
-      each exhibit in exhibits
-        tr
-          td
-            a(href="/exhibit/" + exhibit._id)= exhibit.exhibit
-          td  exhibit.booth
+    .col-lg-12
+      h1= pageHeader.title
+      p= exhibit.description
+      .error= message

@@ -1,11 +1,14 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURL = 'mongodb://localhost:27017/ccs';
+var dbExhibits = 'mongodb://localhost:27018/exhibits';
+
 if (process.env.NODE_ENV === 'production') {
     dbURL = 'mongodb://';
 }
 var retry = null;
 mongoose.connect(dbURL);
+//var db_exhibits = mongoose.createConnection(dbExhibits);
 
 mongoose.connection.on('connected', function(){
     console.log('Mongoose connected to ' + dbURL);

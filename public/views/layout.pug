@@ -1,3 +1,5 @@
+include _includes/sharedHTMLfunctions
+
 doctype html
 html
   head
@@ -10,8 +12,8 @@ html
     .navbar.navbar-default.navbar-fixed-top
       .container-fluid
         .navbar-header
-          a.navbar-brand(href='/') WMEA-CCS
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+          a.navbar-brand(href='/') CSS - Menu
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
             span.icon-bar
             span.icon-bar
             span.icon-bar
@@ -21,27 +23,27 @@ html
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Events
               ul.dropdown-menu
                 li
+                  a(href='/new') New Event
+                li
                   a(href='/list') List
                 li
                   a(href='/presenters') Presenters
                 li
                   a(href='/performers') Performers
                 li
-                  a(href='/new') New Event
-                li
                   a(href='/conflicts') Conflicts
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Exhibits
               ul.dropdown-menu
                 li
-                  a(href='/exhibits') Exhibits
-                li
                   a(href='/exhibit/new') New Exhibit
+                li
+                  a(href='/exhibitors') Exhibitors
+                li
+                  a(href='/exhibits') Exhibits
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
               ul.dropdown-menu
-                li
-                  a(href='/list') My Conference
                 li
                   a(href='/api/events') Get All
                 li

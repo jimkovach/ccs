@@ -1,15 +1,16 @@
-var mongoose = requie('mongoose');
+/*
+var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbEvents = 'mongodb://localhost/exhibits';
-var logExhibits = mongoose.createConnection(dbEvents);
+var dbExhibits = 'mongodb://localhost:27016/exhibits';
+var dbExhibits = mongoose.createConnection(dbExhibits);
 
-mongoose.events(dbEvents);
+mongoose.exhibits(dbExhibits);
 
-mongoose.events.on('connected', function(){
-    console.log('Mongoose cennected to ' + dbEvents);
+mongoose.exhibits.on('connected', function(){
+    console.log('Mongoose cennected to ' + dbExhibits);
 });
 
-mongoose.events.on('error', function(err){
+mongoose.exhibits.on('error', function(err){
     console.log('Mongoose connections error: ' + err);
 });
 
@@ -43,4 +44,4 @@ process.on('SIGTERM', function() {
 });
 
 require('./exhibitSchema.js');
-require('./users.js');
+*/
