@@ -1,8 +1,24 @@
 extends layout
 
 block content
-  .row.page-header.exhibit-page-header
+  .row.page-header
     .col-lg-12
       h1= pageHeader.title
-      p= exhibit.description
       .error= message
+  .row
+    .col-xs-12.col-md-12
+      .row
+        .col-md-3
+        .col-xs-12.col-md-6
+          h3.exhibit= exhibit.exhibit
+          h3.exhibit= 'Booth ' + exhibit.booth
+          p.exhibit_exhibitor= exhibit.exhibitor + ", " + exhibit.title
+          .exhibit_info
+            p= exhibit.address
+            p= exhibit.city + " " + exhibit.state + " " + exhibit.zip
+            p= exhibit.email
+            p= exhibit.phone
+            p= exhibit.web
+          .exhibit_description
+            p= exhibit.description
+        .col-md-3

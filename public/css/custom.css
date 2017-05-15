@@ -99,6 +99,39 @@ input{
     text-align : right;
 }
 
+.exhibit {
+    font-family:"Times";
+    font-size: 150%;
+    font-weight: 800;
+    text-align: center;
+    padding: 0;
+    margin:0;
+}
+
+p.exhibit_exhibitor{
+    font-family: "Times";
+    text-align: center;
+    font-size: 120%;
+}
+.exhibit_info {
+    font-family: "Times";
+    font-size: 120%;
+    line-height: 1;
+}
+
+.exhibit_info p{
+    padding: 0;
+    margin: 0;
+}
+
+.exhibit_description {
+    font-family: "Times";
+    font-style: italic;
+    font-size: 120%;
+    padding-top: 10px;
+}
+
+
 .error{
     color: red;
 }

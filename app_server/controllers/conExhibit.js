@@ -153,12 +153,13 @@ var renderExhibitPage = function (req, res, page, exhibit) {
     });
 };
 
-module.exports.exhibit = function(req, res){
+module.exports.exhibitRead = function(req, res){
     var fString = flString + "EXHIBIT: ";
     console.log(fString);
     var requestOptions, path, page;
-    page = "exhibit";
-    path = "/api/exhibits/read/" + req.params.exhibitid;
+    page = "exhibit.pug";
+    path = "/api/exhibitsRead/" + req.params.exhibitid;
+    console.log(fString + "PATH: " + path);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
@@ -167,8 +168,14 @@ module.exports.exhibit = function(req, res){
     request (
         requestOptions,
         function(err, response, body) {
-            console.log(fString + "REQUEST: ")
-            renderExhibitPage(req, res, page, body);
+            if(err) {
+                console.log(fString + "REQUEST ERR: " + err);
+            } else if (response.statusCode === 200) {
+                console.log(fString + "REQUEST SUCCESSFUL, RESPONSE: " + response.statusCode);
+                renderExhibitPage(req, res, page, body);
+            } else {
+                console.log(fString + "REQUEST STATUS" + response.statusCode);
+            }
         }
     );
 };

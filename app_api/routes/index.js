@@ -23,7 +23,7 @@ router.get('/cag', ctrlEvents.eventsGetCag);
 
 
 router.get('/exhibits', ctrlExhibits.exhibitsGetAll);
-router.get('/exhibits/read/:exhibitid', ctrlExhibits.exhibitsReadOne);
+router.get('/exhibitsRead/:exhibitid', ctrlExhibits.exhibitsReadOne);
 router.get('/exhibitors', ctrlExhibits.exhibitorsReadAll);
 router.post('/exhibits/new', ctrlExhibits.exhibitsCreate);
 

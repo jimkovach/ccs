@@ -31,7 +31,7 @@ router.get('/cag', ctrlEvent.cag);
 router.get('/caag', ctrlEvent.caag);
 
 router.get('/exhibits', ctrlExhibit.exhibits);
-router.get('/exhibit/read/:exhibitid', ctrlExhibit.exhibit);
+router.get('/exhibitRead/:exhibitid', ctrlExhibit.exhibitRead);
 router.get('/exhibitors', ctrlExhibit.exhibitors);
 router.get('/exhibit/new', ctrlExhibit.exhibitNew);
 router.post('/exhibit/new', ctrlExhibit.doExhibitNew);
