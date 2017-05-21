@@ -22,3 +22,12 @@ block content
           .exhibit_description
             p= exhibit.description
         .col-md-3
+    .col-xs-12.col-md-12
+      .row
+        hr
+      .row
+        .col-lg-12
+          .col-lg-4
+          .col-lg-4
+            a.btn.btn-default(href='/exhibitUpdate/' + exhibit._id role='button') update
+            a.btn.btn-default(href='/exhibitDelete/' + exhibit._id role='button') delete

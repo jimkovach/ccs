@@ -7,10 +7,11 @@ var auth = jwt({
     secret : process.env.JWT_SECRET,
     userProperty: 'payload'
 });
-var path = require('path');
-var main = require('../controllers/main.js');
-var ctrlEvent = require('../controllers/conEvent.js');
-var ctrlExhibit = require('../controllers/conExhibit.js');
+//var path = require('path');
+var path = '../controllers/';
+var main = require(path + 'main.js');
+var ctrlEvent = require(path + 'conEvent.js');
+var ctrlExhibit = require(path + 'conExhibit.js');
 
 router.get('/', main.index);
 
@@ -35,12 +36,8 @@ router.get('/exhibitRead/:exhibitid', ctrlExhibit.exhibitRead);
 router.get('/exhibitors', ctrlExhibit.exhibitors);
 router.get('/exhibit/new', ctrlExhibit.exhibitNew);
 router.post('/exhibit/new', ctrlExhibit.doExhibitNew);
-
-/*
-router.get('/exhibit/update/:exhibitid', ctrlExhibit.exhibitUpdate);
-router.post('/exhibit/update/:exhibitid', ctrlExhibit.doExhibitUpdate);
-*/
-router.get('/exhibit/delete/:exhibitid', ctrlExhibit.exhibitDelete);
-
+router.get('/exhibitDelete/:exhibitid', ctrlExhibit.exhibitDelete);
+router.get('/exhibitUpdate/:exhibitid', ctrlExhibit.exhibitUpdate);
+router.post('/exhibitUpdate/:exhibitid', ctrlExhibit.doExhibitUpdate);
 
 module.exports = router;

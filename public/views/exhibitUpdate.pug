@@ -1,0 +1,42 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.page.header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+  .row
+    .col-xs-12.col-md-12
+      form.form-horizontal(action="/exhibitUpdate/" + exhibit._id method="post" role="form")
+        .col-xs-12.col-sm-6.col-md-4
+          .form-group
+            .col-xs-12.col-sm-12.col-md-12
+              input#exhibit.form-control(name="exhibit", placeholder="exhibit", value=exhibit.exhibit)
+              input#exhibitor.form-control(name="exhibitor", placeholder="exhibitor", value=exhibit.exhibitor)
+              input#title.form-control(name="title", placeholder="title", value=exhibit.title)
+              input#booth.form-control(name="booth", placeholder="booth", value=exhibit.booth)
+              input#address.form-control(name="address", placeholder="address", value=exhibit.address)
+              input#city.form-control(name="city", placeholder="city", value=exhibit.city)
+              input#state.form-control(name="state", placeholder="state", value=exhibit.state)
+              input#zip.form-control(name="zip", placeholder="zip", value=exhibit.zip)
+              input#email.form-control(name="email", placeholder="email", value=exhibit.email)
+              input#web.form-control(name="web", placeholder="web", value=exhibit.web)
+        .col-xs-12.col-sm-6.col-md-4
+          .form-group
+            .col-xs-12.col-sm-12.col-md-12
+              textarea#description.form-control(name="description", placeholder="description", rows=18)= exhibit.description
+              p
+              button.btn.btn-default(type="submit" value='Submit') Submit
+        .col-xs-12.col-sm-6.col-md-4
+          .col-xs-12.col-sm-12.col-md-12
+            ul.event
+              li= 'creation date: '
+                +formatDate(exhibit.creationDate)
+              li= 'modified: ' + exhibit.modified
+              li= 'modification date: '
+                +formatDate(exhibit.modificationDate)
+              li= 'cancelled: ' + exhibit.cancelled
+              li= 'checked: ' + exhibit.checked
+

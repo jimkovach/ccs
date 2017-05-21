@@ -116,7 +116,7 @@ module.exports.exhibitors = function(req, res){
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
-    findQuery = {exhibitor : {$gt : ""}};
+    findQuery = {exhibit : {$gt : ""}};
     path= '/api/exhibitors';
     page = "exhibitors";
     requestOptions = {
@@ -143,9 +143,8 @@ module.exports.exhibitors = function(req, res){
 
 var renderExhibitPage = function (req, res, page, exhibit) {
     var fString = flString + "RENDER_EXHIBIT_PAGE: "
-    console.log(fString);
     console.log(fString + "PAGE: " + page);
-    console.log(fString + "EXHIBIT.EXHIBIT: " + exhibit.exhibit);
+    console.log(fString + "EXHIBIT . EXHIBIT: " + exhibit.exhibit)
     res.render(page, {
         title : exhibit.exhibit,
         pageHeader: { title: exhibit.exhibit},
@@ -249,43 +248,72 @@ module.exports.doExhibitNew = function(req, res){
 };
 
 
-
-
-
-
-/*
-
 module.exports.exhibitUpdate = function(req, res) {
     var fString = flString + "EXHIBIT_UPDATE: ";
     console.log(fString);
     var requestOptions, path;
-    path = "/api/exhibits/" + req.params.eventid;
-    var page = 'update';
-    console.log("APP_SERVER/CONTROLLERS/CON_EXHIBITS.JS EXHIBIT_UPDATE PATH: " + path);    
+    path = "/api/exhibitsRead/" + req.params.exhibitid;
+    var page = 'exhibitUpdate';
+    console.log(fString + "PATH: " + path);    
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {},
         qs : {}
     };
+    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body) {
-            console.log("APP_SERVER/CONTROLLERS/CON_EXHIBIT.JS EXHIBIT_UPDATE REQUEST FUNCTION ERR: " + err);
+            console.log(fString + "REQUEST FUNCTION ERR: " + err);
             renderExhibitPage(req, res, page, body);
         }
     );
 };    
 
-};
-
 module.exports.doExhibitUpdate = function(req, res) {
     var fString = flString + "DO_EXHIBIT_UPDATE: ";
     console.log(fString);
-
+    var requestOptions, path;
+    var exhibitid = req.params.exhibitid;
+    path = "/api/exhibitUpdate/" + exhibitid;
+    var postData = {
+        exhibit : req.body.exhibit,
+        exhibitor : req.body.exhibitor,
+        booth : req.body.booth,
+        title : req.body.title,
+        address : req.body.address,
+        city : req.body.city,
+        state : req.body.state,
+        zip : req.body.zip,
+        email : req.body.email,
+        phone : req.body.phone,
+        web : req.body.web,
+        description : req.body.description,
+        creationDate : req.body.creationDate,
+        modified : true,
+        cancelled : req.body.cancelled,
+        checked : req.body.checked,
+        modificationDate : Date.now
+    };
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "POST",
+        json : postData,
+        qs : {}
+    };
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (response.statusCode === 200) {
+                console.log(fString + "REQUEST RESPONSE.STATUSCODE: " + response.statusCode);
+                res.redirect('/exhibitRead/' + exhibitid);
+            } else {
+                _showError(req, res, response.statusCode);
+            }
+        }
+    );
 };
-
-*/
 
 module.exports.exhibitDelete = function(req, res) {
     var fString = flString + "EXHIBIT_DELETE: ";

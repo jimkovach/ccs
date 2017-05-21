@@ -1,12 +1,12 @@
 extends layout
 
-
 block content
-  .row.page-header.list-page-header
-    h1= pageHeader.title
-    p= pageHeader.strapline
-    .error= message
-  table.table.table-striped
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
+  table.table.table-striped.table-responsive
     thead.thead-inverse
       th
         a(href="/conflicts?sort=title") Title
@@ -24,9 +24,9 @@ block content
       each item in events
         tr
           td
-            a(href="/event/" + item.base_id)= item.base
+            a(href="/update/" + item.base_id)= item.base
           td
-            a(href="/event/" + item.conflict_id)= item.conflict
+            a(href="/update/" + item.conflict_id)= item.conflict
           td
             a(href="/list?findkey=start&findvalue=" + item.date)= item.date
           td

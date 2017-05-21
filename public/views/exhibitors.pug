@@ -1,20 +1,21 @@
 extends layout
 
 block content
-  .row.page-header.list-page-header
-    h1= pageHeader.title
-    p= pageHeader.strapline
-    .error= message
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
   table.table.table-striped.table-responsive
     thead.thead-inverse
       th
-        a(href="/exhibitors?sort=exhibitor") Exhibitor
+        a(href="/exhibitors?sort=exhibit") Exhibitor
       th
         a(href="/exhibitors?sort=booth") Booth
     tbody
       each item in exhibits
         tr
           td
-            a(href="/exhibit/read/" + item._id)= item.exhibitor
+            a(href="/exhibitRead/" + item._id)= item.exhibit
           td
-            a(href="/exhibit/read/" + item._id)= item.booth
+            a(href="/exhibitRead/" + item._id)= item.booth

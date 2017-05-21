@@ -5,9 +5,10 @@ var auth = jwt({
     secret : process.env.JWT_SECRET,
     userProperty: 'payload'
 });
-var ctrlEvents = require('../controllers/conEvents');
-var ctrlExhibits = require('../controllers/conExhibits');
-var ctrlAuth = require('../controllers/authentication');
+var path = '../controllers/';
+var ctrlEvents = require(path + 'conEvents');
+var ctrlExhibits = require(path + 'conExhibits');
+var ctrlAuth = require(path + 'authentication');
 
 router.get('/events', ctrlEvents.eventsGetAll);
 router.get('/events/:eventid', ctrlEvents.eventsReadOne);
@@ -26,10 +27,8 @@ router.get('/exhibits', ctrlExhibits.exhibitsGetAll);
 router.get('/exhibitsRead/:exhibitid', ctrlExhibits.exhibitsReadOne);
 router.get('/exhibitors', ctrlExhibits.exhibitorsReadAll);
 router.post('/exhibits/new', ctrlExhibits.exhibitsCreate);
-
-//router.post('/exhibits/:eventid', ctrlExhibits.exhibitsUpdate);
-
-
+//router.get('/exhibitUpdate/:exhibitid', ctrlExhibits.exhibitsUpdate);
+router.post('/exhibitUpdate/:exhibitid', ctrlExhibits.exhibitsUpdate);
 router.get('/exhibits/delete/:exhibitid', ctrlExhibits.exhibitsDelete);
 
 

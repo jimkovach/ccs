@@ -20,7 +20,14 @@ block content
             a(href='/new') New Event: Use this to create a new event and add it to the database
           li
             a(href='/conflicts') Conflicts: List of conflicts generated when a room is being used by more than one event at the same time
-        li Exhibits is in development - not ready for production
+        li Exhibits is in development
+        ul
+          li
+            a(href='/exhibit/new') New Exhibit: Create a new exhibit
+          li
+            a(href='/exhibitors') Exhibitors: List of exhibitors
+          li
+            a(href='/exhibits') Exhibits: List of exhibits
         li Development is a dropdown of stuff just used in development - not for production
     p= "The following buttons appear on various event pages..."
       ul
@@ -28,8 +35,8 @@ block content
         li Update: takes you to the update page where you can change data stored for an event
         li Delete: removes the current event from the database. WARNING: there is no warning or second chance yet. If you click this button, the event is gone
         li Program: Takes you to a program view of that event, how the event will layout in the program
-    p= "List pages (list, performers, presenters, etc.) have the following behavior..."
+    p= "List pages (list, performers, presenters, exhibits, exhibitors, etc.) have the following behavior..."
       ul
         li Clicking on a table header item will usually sort by that item
-        li Clicking on an event title will take you to that event's detail page
+        li Clicking on an event/exhibit title will take you to that event's/exhibit's detail page
         li Clicking on an item in the table (except for the title) will usually display just the entries that contain that item. For instance, in the List, clicking on a category will show all entries in that particular category - try it, you'll see what I mean

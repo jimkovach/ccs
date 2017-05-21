@@ -92,7 +92,7 @@ module.exports.exhibitsReadOne = function(req, res) {
 };
 
 module.exports.exhibitsCreate = function(req, res) {
-    var fString =flString + "EXHIBITS_CREATE: ";
+    var fString = flString + "EXHIBITS_CREATE: ";
     console.log(fString);
 
     Exhibit.create({
@@ -120,14 +120,58 @@ module.exports.exhibitsCreate = function(req, res) {
     });
 };
 
-/*
+
 module.exports.exhibitsUpdate = function(req, res) {
     var fString = flString + "EXHIBITS_UPDATE: ";
     console.log(fString);
-
+    if(!req.params.exhibitid){
+        console.log(fString + "NO REQ.PARAMS.EXHIBITID: " + req.params.exhibited);
+        sendJsonResponse(res, 404, {
+            "message" : fString + "Not found, exhibitsid is required"
+        });
+        return;
+    } 
+    Exhibit
+    .findById(req.params.exhibitid)
+    .exec(
+        function(err, exhibits){
+            if (!exhibits) {
+                console.log(fString + "EXHIBIT ERR: NO EXHIBITS FOUND");
+                sendJsonResponse(res, 404, {
+                    "message" : fString + "EXHIBITSID NOT FOUND"
+                });
+                return;
+            } else if (err) {
+                console.log(fString + "EXHIBIT: ERR: " + err);
+                sendJsonResponse(res, 400, err);
+                return;
+            }
+            exhibits.exhibit = req.body.exhibit,
+            exhibits.booth = req.body.booth,
+            exhibits.exhibitor = req.body.exhibitor,
+            exhibits.title = req.body.title,
+            exhibits.address = req.body.address,
+            exhibits.city = req.body.city,
+            exhibits.state = req.body.state,
+            exhibits.zip = req.body.zip,
+            exhibits.email = req.body.email,
+            exhibits.phone = req.body.phone,
+            exhibits.web = req.body.web,
+            exhibits.description = req.body.description,
+            exhibits.modified = true,
+            exhibits.modificationDate = new Date();
+            exhibits.save(function(err, exhibits) {
+                if (err) {
+                    console.log(fString + "ERR: " + err);
+                    sendJsonResponse(res, 404, err);
+                } else {
+                    console.log(fString + "Success: " + exhibits.exhibit);
+                    sendJsonResponse(res, 200, exhibits);
+                }
+            });
+        }
+    );
 };
-
-*/
 
 module.exports.exhibitsDelete = function(req, res) {
     var fString = flString + "EXHIBITS_DELETE: ";

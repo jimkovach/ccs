@@ -1,7 +1,7 @@
 var mongoose = require( 'mongoose' )
 
 var exhibitSchema = new mongoose.Schema({
-    exhibit: {type: String, required: 'an exhibit name is required'},
+    exhibit: String,
     booth: String,
     exhibitor: String,
     title: String,
