@@ -27,10 +27,9 @@ router.get('/exhibits', ctrlExhibits.exhibitsGetAll);
 router.get('/exhibitsRead/:exhibitid', ctrlExhibits.exhibitsReadOne);
 router.get('/exhibitors', ctrlExhibits.exhibitorsReadAll);
 router.post('/exhibits/new', ctrlExhibits.exhibitsCreate);
-//router.get('/exhibitUpdate/:exhibitid', ctrlExhibits.exhibitsUpdate);
 router.post('/exhibitUpdate/:exhibitid', ctrlExhibits.exhibitsUpdate);
 router.get('/exhibits/delete/:exhibitid', ctrlExhibits.exhibitsDelete);
-
+router.get('/exhibitConflicts/', ctrlExhibits.exhibitsGetConflicts);
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

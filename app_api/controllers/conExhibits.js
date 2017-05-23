@@ -177,6 +177,7 @@ module.exports.exhibitsDelete = function(req, res) {
     var fString = flString + "EXHIBITS_DELETE: ";
     console.log(fString);
     var exhibitid = req.params.exhibitid;
+    console.log(fString + "EXHIBIT_ID: " + exhibitid);
     if (exhibitid) {
         Exhibit
         .findByIdAndRemove(exhibitid)
@@ -194,4 +195,23 @@ module.exports.exhibitsDelete = function(req, res) {
         "message": "No exhibitid"
     });
    }
+};
+
+module.exports.exhibitsGetConflicts = function(req, res){
+    var fString = flString + "EXHIBITS_GET_CONFLICTS: ";
+    console.log(fString);
+    var sortQuery = req.query.sort;
+    var results = [];
+        EXhibit
+            .find()
+            .exec(function(err, exhibits) {
+                if (err) {
+                    console.log(fString + "ERR: " + err);
+                    sendJsonResponse(res, 404, err);
+                } else {
+                    results = conflicts.showConflicts(exhibits, sortQuery);
+                    console.log(fString + "RESLUTS: " + results);
+                    sendJsonResponse(res, 200, results);
+                }
+            });
 };

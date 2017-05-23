@@ -338,3 +338,33 @@ module.exports.exhibitDelete = function(req, res) {
         }
     );
 };
+
+module.exports.exhibitConflicts = function(req, res){
+    var fString = flString + "EXHIBIT_CONFLICTS: ";
+    console.log(fString);
+    var requestOptions, path, page;
+    page = 'exhibitConflicts';
+    path= '/api/exhibitConflicts';
+    var sortQuery = "booth";
+    if(req.query.sort){
+        sortQuery = req.query.sort;
+    }
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery}
+    }
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                renderList(req, res, body, page);
+            } else {
+                console.log("APP_SERVER/CONTROLLERS/CON_EVENTJS CONFLICTS REQUEST STATUS: " + response.status.code);
+            }
+        }
+    );
+};

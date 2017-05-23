@@ -1,6 +1,7 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_EVENT.JS ";
 console.log(flString);
 
+var fs = require('fs');
 var request = require('request');
 var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
@@ -32,9 +33,73 @@ var _showError = function(req, res, status) {
     });
 };
 
-renderList = function(req, res, events, page, msg, title) {
-    fString = flString + "RENDER_LIST: "
+// CREATE TEXT FILES
+var renderText = function(req, res, events, page, msg, type) {
+    fString = flString + "RENDER_TEXT: ";
+    console.log(fString + type);
     var message;
+    var delimiter, postfix;
+    var file;
+    var i = 0;
+    var event_string = '';
+    switch(type){
+    case 'tab':
+        delimiter = '\t';
+        postfix = '.tab';
+        break;
+    case 'comma':
+        delimiter = ',';
+        postfix = '.csv';
+        break;
+    default:
+        delimiter = ' ';
+        postfix = '.txt';
+    }
+    file = 'texts/' + page + postfix;
+    for(i in events){
+        event_string +=
+            events[i].title + delimiter +
+            events[i].room + delimiter +
+            events[i].dateStart + delimiter +
+            events[i].dateEnd + delimiter +
+            events[i].building + delimiter +
+            events[i].room + delimiter +
+            events[i].category + delimiter +
+            events[i].presenterFirst + delimiter +
+            events[i].presenterLast + delimiter +
+            events[i].presenterEmail + delimiter +
+            events[i].presenterInstitution + delimiter +
+            events[i].presenterCity + delimiter +
+            events[i].presenterState + delimiter +
+            events[i].hostName + delimiter +
+            events[i].hostEmail + delimiter +
+            events[i].hostInstitution + delimiter +
+            events[i].hostCity + delimiter +
+            events[i].hostState + delimiter +
+            events[i].performerName + delimiter +
+            events[i].performerEmail + delimiter +
+            events[i].performerInstitution + delimiter +
+            events[i].performerCity + delimiter +
+            events[i].performerState + delimiter +
+            events[i].performerDirector + delimiter +
+            events[i].description + delimiter +
+            '\n';
+    }
+    fs.writeFile(file, event_string, function(err) {
+        if (err){
+            return console.error(fString + 'ERR: ' + err);
+        } else {
+            console.log(fString + "SUCCESS!");
+        }
+    });
+};
+
+var renderList = function(req, res, events, page, msg, title) {
+    fString = flString + "RENDER_LIST: ";
+    var message;
+
+    renderText(req, res, events, page, msg, 'tab');
+    
     if(!title){
         title = utilities.toTitleCase(page);
     }
@@ -265,6 +330,7 @@ module.exports.conflicts = function(req, res){
         }
     );
 };
+
 
 // GET SINGLE EVENT
 var renderEventPage = function (req, res, page, event) {

@@ -39,5 +39,6 @@ router.post('/exhibit/new', ctrlExhibit.doExhibitNew);
 router.get('/exhibitDelete/:exhibitid', ctrlExhibit.exhibitDelete);
 router.get('/exhibitUpdate/:exhibitid', ctrlExhibit.exhibitUpdate);
 router.post('/exhibitUpdate/:exhibitid', ctrlExhibit.doExhibitUpdate);
+router.get('/exhibitConflicts', ctrlExhibit.exhibitConflicts);
 
 module.exports = router;
