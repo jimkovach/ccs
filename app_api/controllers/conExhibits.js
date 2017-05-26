@@ -10,7 +10,6 @@ var sendJsonResponse = function(res, status, content){
     res.json(content);
 };
 
-
 module.exports.exhibitsGetAll = function(req, res){
     var fString = flString + "EXHIBITS_GET_ALL: ";
     console.log(fString);
@@ -44,8 +43,7 @@ module.exports.exhibitsGetAll = function(req, res){
                     sendJsonResponse(res, 200, exhibits);
                 }
             });
-    }
-    
+    }    
 };
 
 module.exports.exhibitorsReadAll = function(req, res) {
@@ -65,6 +63,7 @@ module.exports.exhibitorsReadAll = function(req, res) {
             }
         });
 };
+
 module.exports.exhibitsReadOne = function(req, res) {
     var fString = flString + "EXHIBITS_READ_ONE: ";
     console.log(fString);
@@ -88,13 +87,11 @@ module.exports.exhibitsReadOne = function(req, res) {
             }
             sendJsonResponse(res, 200, exhibits);
         });
-
 };
 
 module.exports.exhibitsCreate = function(req, res) {
     var fString = flString + "EXHIBITS_CREATE: ";
     console.log(fString);
-
     Exhibit.create({
         exhibit : req.body.exhibit,
         booth : req.body.booth,
@@ -119,7 +116,6 @@ module.exports.exhibitsCreate = function(req, res) {
         }
     });
 };
-
 
 module.exports.exhibitsUpdate = function(req, res) {
     var fString = flString + "EXHIBITS_UPDATE: ";

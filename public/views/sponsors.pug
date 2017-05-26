@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
+  table.table.table-striped.table-responsive
+    thead.thead-inverse
+      th
+        a(href="/sponsors?sort=sponsor") Sponsor
+      th
+        a(href="/sponsors?sort=institution") Institution
+    tbody
+      each sponsor in sponsors
+        tr
+          td
+            a(href="/sponsorRead/" + sponsor._id)= sponsor.sponsor
+          td= sponsor.institution

@@ -108,6 +108,10 @@ input{
     margin:0;
 }
 
+p.exhibit_centered{
+    text-align: center;
+}
+
 p.exhibit_exhibitor{
     font-family: "Times";
     text-align: center;

@@ -32,7 +32,6 @@ var _showError = function(req, res, status) {
     });
 };
 
-
 var renderExhibits = function(req, res, exhibits, page, msg, title) {
     fString = flString + "RENDER_EXHIBITS: ";
     var message = msg;
@@ -57,11 +56,9 @@ var renderExhibits = function(req, res, exhibits, page, msg, title) {
     });
 };
 
-
 module.exports.exhibits = function(req, res){
     var fString = flString + "EXHIBITS: ";
     console.log(fString);
-
     var requestOptions, path, page, message, title;
     var sortQuery = "exhibit";
     var findvalue = "";
@@ -164,6 +161,7 @@ module.exports.exhibitRead = function(req, res){
         method : "GET",
         json : {}
     };
+    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body) {
@@ -178,7 +176,6 @@ module.exports.exhibitRead = function(req, res){
         }
     );
 };
-
 
 module.exports.exhibitNew = function(req, res){
     var fString = flString + "EXHIBIT_NEW: ";

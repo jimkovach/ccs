@@ -12,6 +12,7 @@ var path = '../controllers/';
 var main = require(path + 'main.js');
 var ctrlEvent = require(path + 'conEvent.js');
 var ctrlExhibit = require(path + 'conExhibit.js');
+var ctrlSponsor = require(path + 'conSponsor.js');
 
 router.get('/', main.index);
 
@@ -40,5 +41,13 @@ router.get('/exhibitDelete/:exhibitid', ctrlExhibit.exhibitDelete);
 router.get('/exhibitUpdate/:exhibitid', ctrlExhibit.exhibitUpdate);
 router.post('/exhibitUpdate/:exhibitid', ctrlExhibit.doExhibitUpdate);
 router.get('/exhibitConflicts', ctrlExhibit.exhibitConflicts);
+
+router.get('/sponsors', ctrlSponsor.sponsors);
+router.get('/sponsorCreate', ctrlSponsor.sponsorCreate);
+router.post('/sponsorCreate', ctrlSponsor.doSponsorCreate);
+router.get('/sponsorRead/:sponsorid', ctrlSponsor.sponsorRead);
+router.get('/sponsorUpdate/:sponsorid', ctrlSponsor.sponsorUpdate);
+router.post('/sponsorUpdate/:sponsorid', ctrlSponsor.doSponsorUpdate);
+router.get('/sponsorDelete/:sponsorid', ctrlSponsor.sponsorDelete);
 
 module.exports = router;

@@ -45,6 +45,13 @@ html
                 li
                   a(href='/exhibitConflicts') Conflicts
             li.dropdown
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Sponsors
+              ul.dropdown-menu
+                li
+                  a(href='/sponsorCreate') New Sponsor
+                li
+                  a(href='/sponsors') Sponsors
+            li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
               ul.dropdown-menu
                 li
@@ -57,6 +64,7 @@ html
                   a(href='/api/exhibitsRead/5918dd18604537059eba6534') Get Exhibit
                 li
                   a(href='/caag') Conference at a Glance
+
     .container          
       block content
     footer

@@ -64,3 +64,8 @@ module.exports.timeFromNum = function(num){
     minutes = date.getMinutes();
     return(hours + ":" + minutes + "0 " + ampm);
 };
+
+module.exports.day = function(day){
+    var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+};

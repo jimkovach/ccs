@@ -3,6 +3,8 @@ console.log(flString);
 
 var fs = require('fs');
 var request = require('request');
+var PDFDocument = require('pdfkit');
+
 var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : "http://localhost:3000"
@@ -33,6 +35,82 @@ var _showError = function(req, res, status) {
     });
 };
 
+// CREATE PDF
+var renderPdf = function(req, res, events, page, msg) {
+    var pdf = new PDFDocument;
+    fString = flString + "RENDER_PDF: ";
+    console.log(fString);
+    var file = 'texts/' + page + '.pdf';
+    var i = 0;
+    pdf.pipe(fs.createWriteStream(file));
+    pdf.font('Times-Roman');
+    pdf.fontSize(20);
+    pdf.text("WASHINGTON MUSIC EDUCATORS ASSOCIATION");
+    pdf.moveDown(1);
+    pdf.fontSize(12);
+    for(i in events){
+        pdf.text(events[i].date + ' ' + events[i].start + '-' + events[i].end);
+        pdf.moveUp(1);
+        pdf.text(events[i].building,{align:'right'});
+        pdf.text(events[i].category);
+        pdf.moveUp(1);
+        pdf.text(events[i].room,
+                 {align: 'right'}
+                );
+        pdf.text(events[i].title,{
+            align: 'center',
+            fill: true,
+            stroke: true
+        });
+        if(events[i].presenterFirst){
+            pdf.text('Presenter: ',
+                     {continued : true});
+            pdf.text(
+                     events[i].presenterFirst +
+                     ' ' +
+                     events[i].presenterLast +
+                    ', ',
+                {stroke : true,
+                 fill : true,
+                 continued : true
+                });
+            pdf.text(
+                     events[i].presenterInstitution +
+                     ', ' + events[i].presenterCity +
+                    ' ' + events[i].presenterState,
+                {stroke : false,
+                 continued : false}
+                    );
+        }
+        if(events[i].hostName){
+            pdf.text('Host: ',
+                     {
+                         continued : true
+                     });
+            pdf.text(events[i].hostName + ', ',
+                     {stroke : true,
+                      fill : true,
+                      continued : true
+                     });
+            pdf.text(events[i].hostInstitution + ', ' +
+                events[i].hostCity +
+                     ' ' +
+                     events[i].hostState,
+                     {
+                         stroke : false,
+                         continued : false
+                     }
+                    );
+        }
+        pdf.text(events[i].description,
+                 {
+                     features: 'ital'
+                 });
+        pdf.moveDown(1);
+    }                
+    pdf.end();
+};
+
 // CREATE TEXT FILES
 var renderText = function(req, res, events, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
@@ -51,6 +129,12 @@ var renderText = function(req, res, events, page, msg, type) {
         delimiter = ',';
         postfix = '.csv';
         break;
+    case 'line':
+        delimiter = '\n';
+        postfix = '.lb.txt';
+        break;
+    case 'pdf':
+        renderPdf(req, res, events, page, msg);
     default:
         delimiter = ' ';
         postfix = '.txt';
@@ -60,8 +144,9 @@ var renderText = function(req, res, events, page, msg, type) {
         event_string +=
             events[i].title + delimiter +
             events[i].room + delimiter +
-            events[i].dateStart + delimiter +
-            events[i].dateEnd + delimiter +
+            events[i].date + delimiter +
+            events[i].start + delimiter +
+            events[i].end + delimiter +
             events[i].building + delimiter +
             events[i].room + delimiter +
             events[i].category + delimiter +
@@ -98,7 +183,11 @@ var renderList = function(req, res, events, page, msg, title) {
     fString = flString + "RENDER_LIST: ";
     var message;
 
+    renderText(req, res, events, page, msg, 'txt');
     renderText(req, res, events, page, msg, 'tab');
+    renderText(req, res, events, page, msg, 'comma');
+    renderText(req, res, events, page, msg, 'line');
+    renderText(req, res, events, page, msg, 'pdf');
     
     if(!title){
         title = utilities.toTitleCase(page);
@@ -330,7 +419,6 @@ module.exports.conflicts = function(req, res){
         }
     );
 };
-
 
 // GET SINGLE EVENT
 var renderEventPage = function (req, res, page, event) {
