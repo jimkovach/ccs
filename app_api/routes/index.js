@@ -9,6 +9,8 @@ var path = '../controllers/';
 var ctrlEvents = require(path + 'conEvents');
 var ctrlExhibits = require(path + 'conExhibits');
 var ctrlSponsors = require(path + 'conSponsors');
+var ctrlInstruments = require(path + 'conInstruments');
+
 var ctrlAuth = require(path + 'authentication');
 
 router.get('/events', ctrlEvents.eventsGetAll);
@@ -36,6 +38,12 @@ router.post('/sponsorsCreate', ctrlSponsors.sponsorsCreate);
 router.get('/sponsorsRead/:sponsorid', ctrlSponsors.sponsorsReadOne);
 router.post('/sponsorUpdate/:sponsorid', ctrlSponsors.sponsorsUpdate);
 router.get('/sponsorsDelete/:sponsorid', ctrlSponsors.sponsorsDelete);
+
+router.post('/instrumentsCreate', ctrlInstruments.instrumentsCreate);
+router.get('/instruments', ctrlInstruments.instrumentsReadAll);
+router.get('/instrumentsRead/:instrumentid', ctrlInstruments.instrumentsRead);
+router.post('/instrumentUpdate/:instrumentid', ctrlInstruments.instrumentsUpdate);
+router.get('/instrumentsDelete/:instrumentid', ctrlInstruments.instrumentsDelete);
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

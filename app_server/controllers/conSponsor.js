@@ -266,7 +266,6 @@ module.exports.doSponsorUpdate = function(req, res){
     );
 };
 
-
 module.exports.sponsorDelete = function(req, res){
     var requestOptions, path;
     path = "/api/sponsorsDelete/" + req.params.sponsorid;

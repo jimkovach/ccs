@@ -66,21 +66,21 @@ var renderPdf = function(req, res, events, page, msg) {
             pdf.text('Presenter: ',
                      {continued : true});
             pdf.text(
-                     events[i].presenterFirst +
-                     ' ' +
-                     events[i].presenterLast +
+                events[i].presenterFirst +
+                    ' ' +
+                    events[i].presenterLast +
                     ', ',
                 {stroke : true,
                  fill : true,
                  continued : true
                 });
             pdf.text(
-                     events[i].presenterInstitution +
-                     ', ' + events[i].presenterCity +
+                events[i].presenterInstitution +
+                    ', ' + events[i].presenterCity +
                     ' ' + events[i].presenterState,
                 {stroke : false,
                  continued : false}
-                    );
+            );
         }
         if(events[i].hostName){
             pdf.text('Host: ',
@@ -93,7 +93,7 @@ var renderPdf = function(req, res, events, page, msg) {
                       continued : true
                      });
             pdf.text(events[i].hostInstitution + ', ' +
-                events[i].hostCity +
+                     events[i].hostCity +
                      ' ' +
                      events[i].hostState,
                      {
@@ -107,7 +107,7 @@ var renderPdf = function(req, res, events, page, msg) {
                      features: 'ital'
                  });
         pdf.moveDown(1);
-    }                
+    }
     pdf.end();
 };
 
@@ -188,7 +188,7 @@ var renderList = function(req, res, events, page, msg, title) {
     renderText(req, res, events, page, msg, 'comma');
     renderText(req, res, events, page, msg, 'line');
     renderText(req, res, events, page, msg, 'pdf');
-    
+
     if(!title){
         title = utilities.toTitleCase(page);
     }
@@ -230,7 +230,7 @@ module.exports.list = function (req, res){
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
-    if (req.query.findvalue != ""){ 
+    if (req.query.findvalue != ""){
         findvalue = req.query.findvalue;
         title = findvalue;
     }
@@ -245,7 +245,7 @@ module.exports.list = function (req, res){
               findkey : findkey,
               findvalue : findvalue}
     }
-    request(    
+    request(
         requestOptions,
         function(err, response, body) {
             if (err) {
@@ -273,7 +273,7 @@ module.exports.caag = function (req, res){
         json : {},
         qs : {findQuery}
     }
-    request(    
+    request(
         requestOptions,
         function(err, response, body) {
             if (err) {
@@ -286,7 +286,6 @@ module.exports.caag = function (req, res){
             }
         }
     );
-
     //PROBLEM???????????
     res.render(page, {
         title: page,
@@ -308,7 +307,7 @@ module.exports.cag = function (req, res){
         json : {},
         qs : {findQuery}
     }
-    request(    
+    request(
         requestOptions,
         function(err, response, body) {
             if (err) {
@@ -321,7 +320,6 @@ module.exports.cag = function (req, res){
             }
         }
     );
-
     //PROBLEM???????????
     res.render(page, {
         title: page,
@@ -385,7 +383,7 @@ module.exports.performers = function(req, res){
                 renderList(req, res, body, page);
             } else {
                 message = (fString + "PERFORMERS REQUEST STATUS: " + response.status.code);
-                console.log(message); 
+                console.log(message);
             }
         }
     );
@@ -541,7 +539,7 @@ module.exports.eventUpdate = function (req, res){
     var requestOptions, path;
     path = "/api/events/" + req.params.eventid;
     var page = 'update';
-    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_UPDATE PATH: " + path);    
+    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_UPDATE PATH: " + path);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",

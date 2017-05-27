@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      .error= message
+  .row
+    .col-xs-12.col-md-12
+      .row
+        .col-xs-12.col-md-4
+          ul.event
+            li= 'instrument: ' + instrument.instrument
+            li= 'serial no: ' + instrument.serial
+            li= 'make: ' + instrument.make
+            li= 'model: ' + instrument.model
+            li= 'owner: ' + instrument.owner
+            li= 'group: ' + instrument.group
+        .col-xs-12.col-md-4
+          ul.event
+            p PICKUP
+            li= 'building: ' + instrument.pickupBuilding
+            li= 'room: ' + instrument.pickupRoom
+            li= 'date: ' + instrument.pickupDate
+            li= 'time: ' + instrument.pickupTime
+            li= 'manager: ' + instrument.pickupPerson
+            li= 'code: ' + instrument.pickup
+            p DELIVERY
+            li= 'building: ' + instrument.deliveryBuilding
+            li= 'room: ' + instrument.deliveryRoom
+            li= 'date: ' + instrument.deliveryDate
+            li= 'time: ' + instrument.deliveryTime
+            li= 'manager: ' + instrument.deliveryPerson
+        .col-xs-12.col-md-4
+          ul.event
+            p RETURN
+            li= 'date: ' + instrument.returnDate
+            li= 'time: ' + instrument.returnTime
+            li= 'manager: ' + instrument.returnPerson
+      .row
+        .col-xs-12.col-md-4
+          ul.event
+            li= 'created: ' + instrument.creationDate
+            li= 'modified: ' + instrument.modified
+            li= 'modification date: ' + instrument.modificationDate
+            li= 'checked: ' + instrument.checked
+            li= 'cancelled: ' + instrument.cancelled
+        .col-xs-12.col-md-4
+      .row
+        hr
+      .row
+        .col-lg-12
+          .col-lg-4
+          .col-lg-4
+            a.btn.btn-default(href='/instruments' role='button') list
+            a.btn.btn-default(href='/instrumentCreate' role='button') new
+            a.btn.btn-default(href='/instrumentUpdate/' + instrument._id role='button') update
+            a.btn.btn-default(href='/instrumentDelete/' + instrument._id role='button') delete

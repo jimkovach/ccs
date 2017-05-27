@@ -52,6 +52,13 @@ html
                 li
                   a(href='/sponsors') Sponsors
             li.dropdown
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Instruments
+              ul.dropdown-menu
+                li
+                  a(href='/instrumentCreate') New Instrument
+                li
+                  a(href='/instruments') Instruments
+            li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
               ul.dropdown-menu
                 li
@@ -71,6 +78,7 @@ html
       .row
         .col-xs-12
           small &copy; 2017 - wmea - jim kovach
+    noscript('this site will not work without javascript enabled, please enable your javascript')
     script(src='../js/conflicts.js')
     script(src='../js/jquery.min.js')
     script(src='../js/bootstrap.js')

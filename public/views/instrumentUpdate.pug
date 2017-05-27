@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
+  .row
+    .col-xs-12.col-md-12
+      form.form-horizontal(action="", method="post", role="form")
+        .col-xs-12.col-sm-6.col-md-3
+          .form-group
+            col-xs-12.col-sm-12.col-md-12
+              p INSTRUMENT
+              input#instrument.form-control(name="instrument", placeholder="instrument", value=instrument.instrument)
+              input#serial.form-control(name="serial", placeholder="serial number", value=instrument.serial)
+              input#make.form-control(name="make", placeholder="make", value=instrument.make)
+              input#model.form-control(name="model", placeholder="model", value=instrument.model)
+              input#owner.form-control(name="owner", placeholder="owner", value=instrument.owner)
+              input#group.form-control(name="group", placeholder="assigned group", value=instrument.group)
+        .col-xs-12.col-sm-6.col-md-3
+          .form-group
+            col-xs-12.col-sm-12.col-md-12
+              p PICKUP
+              input#pickupBuilding.form-control(name="pickupBuilding", placeholder="Pickup Building", value=instrument.pickupBuilding)
+              input#pickupRoom.form-control(name="pickupRoom", placeholder="Pickup Room", value=instrument.pickupRoom)
+              input#pickupDate.form-control(name="pickupDate", placeholder="Pickup Date", value=instrument.pickupDate)
+              input#pickupTime.form-control(name="pickupTime", placeholder="Pickup Time", value=instrument.pickupTime)
+              input#pickupPerson.form-control(name="pickupPerson", placeholder="Pickup Person", value=instrument.pickupPerson)
+        .col-xs-12.col-sm-6.col-md-3
+          .form-group
+            col-xs-12.col-sm-12.col-md-12
+              p DELIVERY
+              input#deliveryBuilding.form-control(name="deliveryBuilding", placeholder="Delivery Building", value=instrument.deliveryBuilding)
+              input#deliveryRoom.form-control(name="deliveryRoom", placeholder="Delivery Room", value=instrument.deliveryRoom)
+              input#deliveryDate.form-control(name="deliveryDate", placeholder="Delivery Date", value=instrument.deliveryDate)
+              input#deliveryTime.form-control(name="deliveryTime", placeholder="Delivery Time", value=instrument.deliveryTime)
+              input#deliveryPerson.form-control(name="deliveryPerson", placeholder="Delivery Manager", value=instrument.deliveryPerson)
+        .col-xs-12.col-sm-6.col-md-3
+          .form-group
+            col-xs-12.col-sm-12.col-md-12
+              p RETURN
+              input#returnDate.form-control(name="returnDate", placeholder="Return Date", value=instrument.returnDate)
+              input#returnTime.form-control(name="returnTime", placeholder="Return Time", value=instrument.returnTime)
+              input#returnPerson.form-control(name="returnPerson", placeholder="Return Person", value=instrument.returnPerson)
+          .form-group
+            col-xs-12.col-sm-12.col-md-12
+              a.btn.btn-default(href='/instrumentRead/' + instrument._id role='button') Cancel
+              button.btn.btn-default.pull-right(type="submit" value='Submit') Submit

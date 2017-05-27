@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
+  table.table.table-striped.table-responsive
+    thead
+      th
+        a(href='/instruments?sort=instrument') Instrument
+      th
+        a(href='/instruments?sort=serial') Serial #
+      th
+        a(href='/instruments?sort=pickupBuilding') Pickup Point
+      th
+        a(href='/instruments?sort=pickupDate') Pickup Date
+      th
+        a(href='/instruments?sort=pickupTime') Pickup Time
+      th
+        a(href='/instruments?sort=deliveryDate') Delivery Date
+      th
+        a(href='/instruments?sort=deliveryTime') Delivery Time
+    tbody
+      each inst in instruments
+        tr
+          td
+            a(href='/instrumentRead/' + inst._id)= inst.instrument
+          td= inst.serial
+          td
+            a(href='/instruments?findkey=pickupBuilding&findvalue=' + inst.pickupBuilding)= inst.pickupBuilding
+          td
+            a(href='/instruments?findkey=pickupDate&findvalue=' + inst.pickupDate)= inst.pickupDate
+          td
+            a(href='/instruments?findkey=pickupTime&findvalue=' + inst.pickupTime)= inst.pickupTime
+          td
+            a(href='/instruments?findkey=deliveryDate&findvalue=' + inst.deliveryDate)= inst.deliveryDate
+          td
+            a(href='/instruments?findkey=deliveryTime&findvalue=' + inst.deliveryTime)= inst.deliveryTime

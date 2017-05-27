@@ -13,6 +13,7 @@ var main = require(path + 'main.js');
 var ctrlEvent = require(path + 'conEvent.js');
 var ctrlExhibit = require(path + 'conExhibit.js');
 var ctrlSponsor = require(path + 'conSponsor.js');
+var ctrlInstrument = require(path + 'conInst.js');
 
 router.get('/', main.index);
 
@@ -49,5 +50,13 @@ router.get('/sponsorRead/:sponsorid', ctrlSponsor.sponsorRead);
 router.get('/sponsorUpdate/:sponsorid', ctrlSponsor.sponsorUpdate);
 router.post('/sponsorUpdate/:sponsorid', ctrlSponsor.doSponsorUpdate);
 router.get('/sponsorDelete/:sponsorid', ctrlSponsor.sponsorDelete);
+
+router.get('/instrumentCreate', ctrlInstrument.instrumentCreate);
+router.post('/instrumentCreate', ctrlInstrument.doInstrumentCreate);
+router.get('/instruments', ctrlInstrument.instruments);
+router.get('/instrumentRead/:instrumentid', ctrlInstrument.instrumentRead);
+router.get('/instrumentUpdate/:instrumentid', ctrlInstrument.instrumentUpdate);
+router.post('/instrumentUpdate/:instrumentid', ctrlInstrument.doInstrumentUpdate);
+router.get('/instrumentDelete/:instrumentid', ctrlInstrument.instrumentDelete);
 
 module.exports = router;

@@ -28,7 +28,9 @@ block content
             .col-xs-12.col-sm-12.col-md-12
               textarea#description.form-control(name="description", placeholder="description", rows=18)= exhibit.description
               p
+              hr
               button.btn.btn-default(type="submit" value='Submit') Submit
+              a.btn.btn-default.pull-right(href='/exhibitRead/' + exhibit._id role='button') Cancel
         .col-xs-12.col-sm-6.col-md-4
           .col-xs-12.col-sm-12.col-md-12
             ul.event
