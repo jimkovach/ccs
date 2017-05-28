@@ -67,5 +67,4 @@ module.exports.timeFromNum = function(num){
 
 module.exports.day = function(day){
     var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 };

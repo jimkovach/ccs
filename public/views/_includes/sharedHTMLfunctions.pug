@@ -74,3 +74,12 @@ mixin dateFromNum(num)
   date = month + "/" + day + "/" + year
   -var output = date
   =output
+
+mixin justDate(d)
+  -var dt = new Date(d);
+  -var monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  -var day = dt.getDate();
+  -var month = monthArray[dt.getMonth()];
+  -var year = dt.getFullYear();
+  -var output = month + ' ' + day + ', ' + year;
+  =output

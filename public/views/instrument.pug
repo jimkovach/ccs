@@ -1,5 +1,7 @@
 extends layout
 
+include _includes/sharedHTMLfunctions
+
 block content
   .row.page-header
     .col-lg-12
@@ -8,7 +10,7 @@ block content
   .row
     .col-xs-12.col-md-12
       .row
-        .col-xs-12.col-md-4
+        .col-xs-12.col-md-3
           ul.event
             li= 'instrument: ' + instrument.instrument
             li= 'serial no: ' + instrument.serial
@@ -16,25 +18,30 @@ block content
             li= 'model: ' + instrument.model
             li= 'owner: ' + instrument.owner
             li= 'group: ' + instrument.group
-        .col-xs-12.col-md-4
+        .col-xs-12.col-md-3
           ul.event
             p PICKUP
             li= 'building: ' + instrument.pickupBuilding
             li= 'room: ' + instrument.pickupRoom
-            li= 'date: ' + instrument.pickupDate
+            li= 'date: '
+              +justDate(instrument.pickupDate)
             li= 'time: ' + instrument.pickupTime
             li= 'manager: ' + instrument.pickupPerson
             li= 'code: ' + instrument.pickup
+        .col-xs-12.col-md-3
+          ul.event
             p DELIVERY
             li= 'building: ' + instrument.deliveryBuilding
             li= 'room: ' + instrument.deliveryRoom
-            li= 'date: ' + instrument.deliveryDate
+            li= 'date: '
+              +justDate(instrument.deliveryDate)
             li= 'time: ' + instrument.deliveryTime
             li= 'manager: ' + instrument.deliveryPerson
-        .col-xs-12.col-md-4
+        .col-xs-12.col-md-3
           ul.event
             p RETURN
-            li= 'date: ' + instrument.returnDate
+            li= 'date: '
+              +justDate(instrument.returnDate)
             li= 'time: ' + instrument.returnTime
             li= 'manager: ' + instrument.returnPerson
       .row

@@ -20,7 +20,7 @@ module.exports.instrumentsCreate = function(req, res) {
         model : req.body.model,
         group : req.body.group,
         owner : req.body.owner,
-        pickup : utilities.convertToDate(req.body.pickupDate + " " + req.body.pickupTime),
+//        pickup : req.body.pickupDate + " " + req.body.pickupTime
         pickupBuilding : req.body.pickupBuilding,
         pickupRoom : req.body.pickupRoom,
         pickupDate : req.body.pickupDate,

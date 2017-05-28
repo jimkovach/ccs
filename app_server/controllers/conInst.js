@@ -34,10 +34,166 @@ var _showError = function(req, res, status) {
     });
 };
 
+// CREATE PDF
+var renderPdf = function(req, res, instruments, page, msg) {
+    var pdf = new PDFDocument;
+    fString = flString + "RENDER_PDF: ";
+    console.log(fString)
+    var file = 'texts/' + page + '.pdf';
+    var i = 0;
+    pdf.pipe(fs.createWriteStream(file));
+    pdf.font('Times-Roman');
+    pdf.fontSize(32);
+    pdf.text(page.toUpperCase(),
+             {align : 'center'});
+    pdf.moveDown(1);
+    var fontSize = 10;
+    pdf.fontSize(fontSize);
+    for (i in instruments){
+        pdf.text('Instrument: ' + instruments[i].instrument + '\n' +
+                 'Serial #: ' + instruments[i].serial + '\n' +
+                 'Make: ' + instruments[i].make +'\n' +
+                 'Model: ' + instruments[i].model + '\n' +
+                 'Owner: ' + instruments[i].owner + '\n' +
+                 'Group: ' + instruments[i].group + '\n' +
+                 'PICKUP' + '\n' +
+                 'Building: ' + instruments[i].pickupBuilding + '\n' +
+                 'Room: ' + instruments[i].pickupRoom + '\n' +
+                 'Date: ' + instruments[i].pickupDate + '\n' +
+                 'Time: ' + instruments[i].pickupTime + '\n' +
+                 'Manager: ' + instruments[i].pickupPerson + '\n' +
+                 'DELIVERY' + '\n' +
+                 'Building: ' + instruments[i].deliveryBuilding + '\n' +
+                 'Room: ' + instruments[i].deliveryRoom + '\n' +
+                 'Date: ' + utilities.dateFromNum(instruments[i].deliveryDate) + '\n' +
+                 'Time: ' + instruments[i].deliveryTime + '\n' +
+                 'Manager: ' + instruments[i].deliveryPerson + '\n' +
+                 'RETURN' + '\n' +
+                 'Date: ' + utilities.dateFromNum(instruments[i].returnDate) + '\n' +
+                 'Time: ' + instruments[i].returnTime + '\n' +
+                 'Manager: ' + instruments[i].returnPerson + '\n' +
+                 'Modified: ' + instruments[i].modificationDate,
+                 {width:500,
+                  height:fontSize * 7,
+                  columns : 4});
+        pdf.moveDown(1);
+        }            
+    pdf.end();
+};
+
+// CREATE TEXT FILES
+var renderText = function(req, res, instruments, page, msg, type) {
+    fString = flString + "RENDER_TEXT: ";
+    console.log(fString + type);
+    var message;
+    var delimiter, postfix;
+    var file;
+    var i = 0;
+    var instrument_string = '';
+    switch(type){
+    case 'tab':
+        delimiter = '\t';
+        postfix = '.tab';
+        break;
+    case 'comma':
+        delimiter = ',';
+        postfix = '.csv';
+        break;
+    case 'line':
+        delimiter = '\n';
+        postfix = '.lb.txt';
+        break;
+    case 'pdf':
+        renderPdf(req, res, instruments, page, msg);
+        break;
+    default:
+        delimiter = ' ';
+        postfix = '.txt';
+    }
+    file = 'texts/' + page + postfix;
+    if(type === 'comma'){
+        instrument_string =
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            'PICKUP' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            'DELIVERY' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            'RETURN' +
+            '\n' +
+            'INSTRUMENT' + delimiter +
+            'SERIAL #' + delimiter +
+            'MAKE' + delimiter +
+            'MODEL' + delimiter +
+            'OWNER' + delimiter +
+            'GROUP' + delimiter +
+            'BUILDING' + delimiter +
+            'ROOM' + delimiter +
+            'DATE' + delimiter +
+            'TIME' + delimiter +
+            'MANAGER' + delimiter +
+            'BUILDING' + delimiter +
+            'ROOM' + delimiter +
+            'DATE' + delimiter +
+            'TIME' + delimiter +
+            'MANAGER' + delimiter +
+            'DATE' + delimiter +
+            'TIME' + delimiter +
+            'MANAGER' +
+            '\n';
+    }
+    for(i in instruments){
+        instrument_string +=
+            instruments[i].instrument + delimiter +
+            instruments[i].serial + delimiter +
+            instruments[i].make + delimiter +
+            instruments[i].model + delimiter +
+            instruments[i].owner + delimiter +
+            instruments[i].group + delimiter +
+            instruments[i].pickupBuilding + delimiter +
+            instruments[i].pickupRoom + delimiter +
+            utilities.dateFromNum(instruments[i].pickupDate) + delimiter +
+            instruments[i].pickupTime + delimiter +
+            instruments[i].pickupPerson + delimiter +
+            instruments[i].deliveryBuilding + delimiter +
+            instruments[i].deliveryRoom + delimiter +
+            utilities.dateFromNum(instruments[i].deliveryDate) + delimiter +
+            instruments[i].deliveryTime + delimiter +
+            instruments[i].deliveryPerson + delimiter +
+            utilities.dateFromNum(instruments[i].returnDate) + delimiter +
+            instruments[i].returnTime + delimiter +
+            instruments[i].returnPerson + delimiter +
+            instruments[i].modificationDate + delimiter +
+            instruments[i].cancelled +
+            '\n';
+    }
+    fs.writeFile(file, instrument_string, function(err) {
+        if (err) {
+            return console.error(fString + 'ER: ' + err);
+        } else {
+            console.log(fString + "Success!");
+        }
+    });
+};
+
 var renderInstruments = function(req, res, instruments, page, msg, title) {
     fString = flString + "RENDER_INSTRUMENT: ";
     console.log(fString);
     var message;
+    var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
+        if(!title){
+        title = utilities.toTitleCase(page);
+    }
     if(!title){
         title = utilities.toTitleCase(page);
     }
@@ -61,6 +217,9 @@ var renderInstruments = function(req, res, instruments, page, msg, title) {
         instruments : instruments,
         message : message
     });
+    for(var i = 0; i < textArray.length; i++) {
+        renderText(req, res, instruments, page, msg, textArray[i]);
+    }
 };
 
 module.exports.instruments = function (req, res){
@@ -170,7 +329,7 @@ module.exports.doInstrumentCreate = function(req, res){
         group : req.body.group,
         pickupBuilding : req.body.pickupBuilding,
         pickupRoom : req.body.pickupRoom,
-        pickup : req.body.pickup,
+//        pickup : req.body.pickup,
         pickupDate : req.body.pickupDate,
         pickupTime : req.body.pickupTime,
         pickupPerson : req.body.pickupPerson,
@@ -251,7 +410,7 @@ module.exports.doInstrumentUpdate = function(req, res){
         group : req.body.group,
         pickupBuilding : req.body.pickupBuilding,
         pickupRoom : req.body.pickupRoom,
-        pickup : utilities.convertToDate(req.body.pickup),
+//        pickup : utilities.convertToDate(req.body.pickup),
         pickupDate : utilities.convertToDate(req.body.pickupDate),
         pickupTime : req.body.pickupTime,
         pickupPerson : req.body.pickupPerson,

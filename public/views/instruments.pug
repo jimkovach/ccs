@@ -1,5 +1,7 @@
 extends layout
 
+include _includes/sharedHTMLfunctions
+
 block content
   .row.page-header
     .col-lg-12
@@ -31,10 +33,12 @@ block content
           td
             a(href='/instruments?findkey=pickupBuilding&findvalue=' + inst.pickupBuilding)= inst.pickupBuilding
           td
-            a(href='/instruments?findkey=pickupDate&findvalue=' + inst.pickupDate)= inst.pickupDate
+            a(href='/instruments?findkey=pickupDate&findvalue=' + inst.pickupDate)= ''
+              +formatDate(inst.pickupDate)
           td
             a(href='/instruments?findkey=pickupTime&findvalue=' + inst.pickupTime)= inst.pickupTime
           td
-            a(href='/instruments?findkey=deliveryDate&findvalue=' + inst.deliveryDate)= inst.deliveryDate
+            a(href='/instruments?findkey=deliveryDate&findvalue=' + inst.deliveryDate)= ''
+              +formatDate(inst.deliveryDate)
           td
             a(href='/instruments?findkey=deliveryTime&findvalue=' + inst.deliveryTime)= inst.deliveryTime

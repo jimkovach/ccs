@@ -45,7 +45,8 @@ var renderPdf = function(req, res, events, page, msg) {
     pdf.pipe(fs.createWriteStream(file));
     pdf.font('Times-Roman');
     pdf.fontSize(20);
-    pdf.text("WASHINGTON MUSIC EDUCATORS ASSOCIATION");
+    pdf.text("WASHINGTON MUSIC EDUCATORS ASSOCIATION",
+             {align : 'center'});
     pdf.moveDown(1);
     pdf.fontSize(12);
     for(i in events){
@@ -137,13 +138,64 @@ var renderText = function(req, res, events, page, msg, type) {
         renderPdf(req, res, events, page, msg);
         break;
     default:
-        delimiter = '';
+        delimiter = ' ';
         postfix = '.txt';
     }
     file = 'texts/' + page + postfix;
+    if(type = 'comma'){
+        event_string =
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            'PRESENTER' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            'HOST' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            '' + delimiter +
+            'PERFORMER' + delimiter +
+             '\n' +
+            'TITLE' + delimiter +
+            'ROOM' + delimiter +
+            'DATE' + delimiter +
+            'START' + delimiter +
+            'END' + delimiter +
+            'BUILDING' + delimiter +
+            'ROOM' + delimiter +
+            'CATEGORY' + delimiter +
+            'FIRST' + delimiter +
+            'LAST' + delimiter +
+            'EMAIL' + delimiter +
+            'INSTITUTION' + delimiter +
+            'CITY' + delimiter +
+            'STATE' + delimiter +
+            'NAME' + delimiter +
+            'HOST EMAIL' + delimiter +
+            'HOST INSTITUTION' + delimiter +
+            'HOST CITY' + delimiter +
+            'HOST STATE' + delimiter +
+            'NAME' + delimiter +
+            'PERFORMER EMAIL' + delimiter +
+            'PERFORMER INSTITUTION' + delimiter +
+            'PERFORMER CITY' + delimiter +
+            'PERFORMER STATE' + delimiter +
+            'DIRECTOR' + delimiter +
+            'DESCRIPTION' +
+            '\n';
+    }
     for(i in events){
         event_string +=
-            events[i].title + delimiter +
+            '"' + events[i].title + '"' + delimiter +
             events[i].room + delimiter +
             events[i].date + delimiter +
             events[i].start + delimiter +
@@ -168,7 +220,7 @@ var renderText = function(req, res, events, page, msg, type) {
             events[i].performerCity + delimiter +
             events[i].performerState + delimiter +
             events[i].performerDirector + delimiter +
-            events[i].description + delimiter +
+            '"' + events[i].description +'"' + delimiter +
             '\n';
     }
     fs.writeFile(file, event_string, function(err) {
@@ -184,7 +236,7 @@ var renderList = function(req, res, events, page, msg, title) {
     fString = flString + "RENDER_LIST: ";
     var message;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
-        if(!title){
+    if(!title){
         title = utilities.toTitleCase(page);
     }
     if(!(events instanceof Array)){
@@ -208,6 +260,7 @@ var renderList = function(req, res, events, page, msg, title) {
     });
     for(var i = 0; i < textArray.length; i++) {
         renderText(req, res, events, page, msg, textArray[i]);
+        console.log (fString + "TEXTARRAY[" + i + "]: " + textArray[i]);
     }
 };
 

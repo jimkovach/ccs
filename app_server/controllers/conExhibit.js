@@ -75,8 +75,7 @@ var renderPdf = function(req, res, exhibits, page, msg) {
                  {align : 'center'});
         pdf.moveDown(1);
         pdf.fontSize(12);
-        for(i in exhibits){
-            
+        for(i in exhibits){            
             pdf.text(exhibits[i].exhibit,
                      {align : 'center',
                       stroke: true,
@@ -98,7 +97,7 @@ var renderPdf = function(req, res, exhibits, page, msg) {
     }
     pdf.end();
 };
-    
+
 // CREATE TEXT FILES
 var renderText = function(req, res, exhibits, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
@@ -128,24 +127,35 @@ var renderText = function(req, res, exhibits, page, msg, type) {
         postfix = '.txt';
     }
     file = 'texts/' + page + postfix;
-    for(i in exhibits){
-        exhibit_string +=
-            exhibits[i].exhibit + delimiter +
-            exhibits[i].booth + delimiter +
-            exhibits[i].exhibitior + delimiter +
-            exhibits[i].title + delimiter +
-            exhibits[i].address + delimiter +
-            exhibits[i].city + delimiter +
-            exhibits[i].state  + delimiter +
-            exhibits[i].zip + delimiter +
-            exhibits[i].email + delimiter +
-            exhibits[i].phone + delimiter +
-            exhibits[i].web + delimiter +
-            exhibits[i].description + delimiter +
-            exhibits[i].modified + delimiter +
-            exhibits[i].modificationDate + delimiter +
-            exhibits[i].cancelled + delimiter +
-            '\n';
+    switch(page){
+    case 'exhibitors':
+        for(i in exhibits){
+            exhibit_string +=
+                exhibits[i].exhibit + delimiter +
+                exhibits[i].booth +
+                '\n';
+        }
+        break;
+    case 'exhibits':
+        for(i in exhibits){
+            exhibit_string +=
+                exhibits[i].exhibit + delimiter +
+                exhibits[i].booth + delimiter +
+                exhibits[i].exhibitor + delimiter +
+                exhibits[i].title + delimiter +
+                exhibits[i].address + delimiter +
+                exhibits[i].city + delimiter +
+                exhibits[i].state  + delimiter +
+                exhibits[i].zip + delimiter +
+                exhibits[i].email + delimiter +
+                exhibits[i].phone + delimiter +
+                exhibits[i].web + delimiter +
+                exhibits[i].description + delimiter +
+                exhibits[i].modified + delimiter +
+                exhibits[i].modificationDate + delimiter +
+                exhibits[i].cancelled + delimiter +
+                '\n';
+        }
     }fs.writeFile(file, exhibit_string, function(err) {
         if (err) {
             return console.error(fString + 'ER: ' + err);

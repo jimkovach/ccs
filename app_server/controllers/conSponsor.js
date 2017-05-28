@@ -41,72 +41,26 @@ var renderPdf = function(req, res, sponsors, page, msg) {
     fString = flString + "RENDER_PDF: ";
     console.log(fString);
     var file = 'texts/' + page + '.pdf';
+    var currentInstitution = '';
+    var oldInstitution = '';
     var i = 0;
     pdf.pipe(fs.createWriteStream(file));
     pdf.font('Times-Roman');
-    pdf.fontSize(20);
-    pdf.text(page.toUpperCase());
+    pdf.fontSize(32);
+    pdf.text(page.toUpperCase(),
+             {align : 'center'});
     pdf.moveDown(1);
     pdf.fontSize(12);
     for(i in sponsors){
-        pdf.text(events[i].date + ' ' + events[i].start + '-' + events[i].end);
-        pdf.moveUp(1);
-        pdf.text(events[i].building,{align:'right'});
-        pdf.text(events[i].category);
-        pdf.moveUp(1);
-        pdf.text(events[i].room,
-                 {align: 'right'}
-                );
-        pdf.text(events[i].title,{
-            align: 'center',
-            fill: true,
-            stroke: true
-        });
-        if(events[i].presenterFirst){
-            pdf.text('Presenter: ',
-                     {continued : true});
-            pdf.text(
-                events[i].presenterFirst +
-                    ' ' +
-                    events[i].presenterLast +
-                    ', ',
-                {stroke : true,
-                 fill : true,
-                 continued : true
-                });
-            pdf.text(
-                events[i].presenterInstitution +
-                    ', ' + events[i].presenterCity +
-                    ' ' + events[i].presenterState,
-                {stroke : false,
-                 continued : false}
-            );
+        currentInstitution = sponsors[i].institution;
+        if( currentInstitution != oldInstitution){
+            pdf.moveDown(1);
+            pdf.fontSize(18);
+            pdf.text(sponsors[i].institution);
+            oldInstitution = currentInstitution;
+            pdf.fontSize(12);
         }
-        if(events[i].hostName){
-            pdf.text('Host: ',
-                     {
-                         continued : true
-                     });
-            pdf.text(events[i].hostName + ', ',
-                     {stroke : true,
-                      fill : true,
-                      continued : true
-                     });
-            pdf.text(events[i].hostInstitution + ', ' +
-                     events[i].hostCity +
-                     ' ' +
-                     events[i].hostState,
-                     {
-                         stroke : false,
-                         continued : false
-                     }
-                    );
-        }
-        pdf.text(events[i].description,
-                 {
-                     features: 'ital'
-                 });
-        pdf.moveDown(1);
+        pdf.text(sponsors[i].sponsor);
     }
     pdf.end();
 };
@@ -134,7 +88,7 @@ var renderText = function(req, res, sponsors, page, msg, type) {
         postfix = '.lb.txt';
         break;
     case 'pdf':
-        renderPdf(req, res, events, page, msg);
+        renderPdf(req, res, sponsors, page, msg);
         break;
     default:
         delimiter = ' ';
@@ -160,7 +114,7 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
     fString = flString + "RENDER_SPONSOR_LIST: ";
     console.log(fString);
     var message;
-    var textArray = ['txt', 'tab', 'comma', 'line'];
+    var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
         if(!title){
         title = utilities.toTitleCase(page);
     }    
@@ -207,8 +161,12 @@ module.exports.sponsors = function (req, res) {
         path = '/api/sponsors';
     };
     console.log(fString + "REQ.QUERY.SORT: " + req.query.sort);
-    if (req.query.sort) {
-        sortQuery = req.query.sort;
+    if (req.query.sortb) {
+        sortQuery = (req.query.sort, req.query.sortb);
+    } else {
+        if (req.query.sort) {
+            sortQuery = req.query.sort;
+        }
     }
     if (req.query.findvalue != ""){ 
         findvalue = req.query.findvalue;
