@@ -35,11 +35,135 @@ var _showError = function(req, res, status) {
     });
 };
 
+// CREATE PDF
+var renderPdf = function(req, res, sponsors, page, msg) {
+    var pdf = new PDFDocument;
+    fString = flString + "RENDER_PDF: ";
+    console.log(fString);
+    var file = 'texts/' + page + '.pdf';
+    var i = 0;
+    pdf.pipe(fs.createWriteStream(file));
+    pdf.font('Times-Roman');
+    pdf.fontSize(20);
+    pdf.text(page.toUpperCase());
+    pdf.moveDown(1);
+    pdf.fontSize(12);
+    for(i in sponsors){
+        pdf.text(events[i].date + ' ' + events[i].start + '-' + events[i].end);
+        pdf.moveUp(1);
+        pdf.text(events[i].building,{align:'right'});
+        pdf.text(events[i].category);
+        pdf.moveUp(1);
+        pdf.text(events[i].room,
+                 {align: 'right'}
+                );
+        pdf.text(events[i].title,{
+            align: 'center',
+            fill: true,
+            stroke: true
+        });
+        if(events[i].presenterFirst){
+            pdf.text('Presenter: ',
+                     {continued : true});
+            pdf.text(
+                events[i].presenterFirst +
+                    ' ' +
+                    events[i].presenterLast +
+                    ', ',
+                {stroke : true,
+                 fill : true,
+                 continued : true
+                });
+            pdf.text(
+                events[i].presenterInstitution +
+                    ', ' + events[i].presenterCity +
+                    ' ' + events[i].presenterState,
+                {stroke : false,
+                 continued : false}
+            );
+        }
+        if(events[i].hostName){
+            pdf.text('Host: ',
+                     {
+                         continued : true
+                     });
+            pdf.text(events[i].hostName + ', ',
+                     {stroke : true,
+                      fill : true,
+                      continued : true
+                     });
+            pdf.text(events[i].hostInstitution + ', ' +
+                     events[i].hostCity +
+                     ' ' +
+                     events[i].hostState,
+                     {
+                         stroke : false,
+                         continued : false
+                     }
+                    );
+        }
+        pdf.text(events[i].description,
+                 {
+                     features: 'ital'
+                 });
+        pdf.moveDown(1);
+    }
+    pdf.end();
+};
+
+// CREATE TEXT FILES
+var renderText = function(req, res, sponsors, page, msg, type) {
+    fString = flString + "RENDER_TEXT: ";
+    console.log(fString + type);
+    var message;
+    var delimiter, postfix;
+    var file;
+    var i = 0;
+    var sponsor_string = '';
+    switch(type){
+    case 'tab':
+        delimiter = '\t';
+        postfix = '.tab';
+        break;
+    case 'comma':
+        delimiter = ',';
+        postfix = '.csv';
+        break;
+    case 'line':
+        delimiter = '\n';
+        postfix = '.lb.txt';
+        break;
+    case 'pdf':
+        renderPdf(req, res, events, page, msg);
+        break;
+    default:
+        delimiter = ' ';
+        postfix = '.txt';
+    }
+    file = 'texts/' + page + postfix;
+    for(i in sponsors){
+        sponsor_string +=
+            sponsors[i].sponsor + delimiter +
+            sponsors[i].institution +
+            '\n';
+    }
+    fs.writeFile(file, sponsor_string, function(err) {
+        if (err){
+            return console.error(fString + 'ERR: ' + err);
+        } else {
+            console.log(fString + "SUCCESS!");
+        }
+    });
+};
+
 var renderSponsorList = function(req, res, sponsors, page, msg, title){
     fString = flString + "RENDER_SPONSOR_LIST: ";
     console.log(fString);
     var message;
-    
+    var textArray = ['txt', 'tab', 'comma', 'line'];
+        if(!title){
+        title = utilities.toTitleCase(page);
+    }    
     if(!title){
         title = utilities.toTitleCase(page);
     }
@@ -64,6 +188,9 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
         sponsors : sponsors,
         message : message
     });
+    for(var i = 0; i < textArray.length; i++) {
+        renderText(req, res, sponsors, page, msg, textArray[i]);
+    }
 };
 
 module.exports.sponsors = function (req, res) {

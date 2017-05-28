@@ -1,7 +1,9 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_EXHIBIT.JS ";
 console.log(flString);
 
+var fs=require('fs');
 var request = require('request');
+var PDFDocument = require('pdfkit');
 var utilities = require('../../public/js/utilities');
 var apiOptions = {
     server : "http://localhost:3000"
@@ -12,7 +14,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 var _showError = function(req, res, status) {
-    var fString = (flString + "_SHOWeRROR: ");
+    var fString = flString + "_SHOWeRROR: ";
+    console.log(fString);
     var title, content;
     if (status === 404) {
         title = "404, page not found";
@@ -32,9 +35,133 @@ var _showError = function(req, res, status) {
     });
 };
 
+var expandTab = function(textStart, textEnd){
+    var fString = flString + "EXPAND_TAB: ";
+    console.log(fString);
+    var newText = "";
+    var fString = flString + "EXPAND_TAB: ";
+    console.log(fString);
+    var textLength = textStart.length + textEnd.length;
+    var newText = "";
+    newText = textStart;
+    for(var i = 0; i < 100 - textLength; i++){
+        newText += '.';
+    };
+    newText += textEnd;
+    return newText;
+};
+
+// CREATE PDF
+var renderPdf = function(req, res, exhibits, page, msg) {
+    var pdf = new PDFDocument;
+    fString = flString + "RENDER_PDF: ";
+    console.log(fString)
+    var file = 'texts/' + page + '.pdf';
+    var i = 0;
+    pdf.pipe(fs.createWriteStream(file));
+    pdf.font('Times-Roman');
+    pdf.fontSize(32);
+    if(page === "exhibitors"){
+        pdf.text(page.toUpperCase(),
+                 {align : 'center'});
+        pdf.moveDown(1);
+        pdf.fontSize(12);
+        for (i in exhibits){
+            expandTab(exhibits[i].exhibit, exhibits[i].booth);
+            pdf.text(expandTab(exhibits[i].exhibit, exhibits[i].booth));
+        }
+    } else if (page === "exhibits"){
+        pdf.text(page.toUpperCase(),
+                 {align : 'center'});
+        pdf.moveDown(1);
+        pdf.fontSize(12);
+        for(i in exhibits){
+            
+            pdf.text(exhibits[i].exhibit,
+                     {align : 'center',
+                      stroke: true,
+                      fill: true});
+            pdf.text('Booth ' + exhibits[i].booth,
+                     {align : 'center',
+                      stroke: true,
+                      fill: true});
+            pdf.text(exhibits[i].exhibitor + ", " + exhibits[i].title,
+                     {align : 'center'});
+            pdf.text(exhibits[i].address);
+            pdf.text(exhibits[i].city + " " + exhibits[i].state + " " + exhibits[i].zip);
+            pdf.text(exhibits[i].email);
+            pdf.text(exhibits[i].phone);
+            pdf.text(exhibits[i].web);
+            pdf.text(exhibits[i].description);
+            pdf.moveDown(1);
+        }            
+    }
+    pdf.end();
+};
+    
+// CREATE TEXT FILES
+var renderText = function(req, res, exhibits, page, msg, type) {
+    fString = flString + "RENDER_TEXT: ";
+    console.log(fString + type);
+    var message;
+    var delimiter, postfix;
+    var file;
+    var i = 0;
+    var exhibit_string = '';
+    switch(type){
+    case 'tab':
+        delimiter = '\t';
+        postfix = '.tab';
+        break;
+    case 'comma':
+        delimiter = ',';
+        postfix = '.csv';
+        break;
+    case 'line':
+        delimiter = '\n';
+        postfix = '.lb.txt';
+        break;
+    case 'pdf':
+        renderPdf(req, res, exhibits, page, msg);
+    default:
+        delimiter = ' ';
+        postfix = '.txt';
+    }
+    file = 'texts/' + page + postfix;
+    for(i in exhibits){
+        exhibit_string +=
+            exhibits[i].exhibit + delimiter +
+            exhibits[i].booth + delimiter +
+            exhibits[i].exhibitior + delimiter +
+            exhibits[i].title + delimiter +
+            exhibits[i].address + delimiter +
+            exhibits[i].city + delimiter +
+            exhibits[i].state  + delimiter +
+            exhibits[i].zip + delimiter +
+            exhibits[i].email + delimiter +
+            exhibits[i].phone + delimiter +
+            exhibits[i].web + delimiter +
+            exhibits[i].description + delimiter +
+            exhibits[i].modified + delimiter +
+            exhibits[i].modificationDate + delimiter +
+            exhibits[i].cancelled + delimiter +
+            '\n';
+    }fs.writeFile(file, exhibit_string, function(err) {
+        if (err) {
+            return console.error(fString + 'ER: ' + err);
+        } else {
+            console.log(fString + "Success!");
+        }
+    });
+};
+
 var renderExhibits = function(req, res, exhibits, page, msg, title) {
     fString = flString + "RENDER_EXHIBITS: ";
     var message = msg;
+    var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
+        if(!title){
+        title = utilities.toTitleCase(page);
+    }
     if(!(exhibits instanceof Array)){
         message = "API lookup error: responseBody must be an array";
         exhibits = [];
@@ -54,6 +181,9 @@ var renderExhibits = function(req, res, exhibits, page, msg, title) {
         exhibits : exhibits,
         message : message
     });
+    for(var i = 0; i < textArray.length; i++) {
+        renderText(req, res, exhibits, page, msg, textArray[i]);
+    }
 };
 
 module.exports.exhibits = function(req, res){

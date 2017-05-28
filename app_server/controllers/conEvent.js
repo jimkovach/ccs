@@ -135,8 +135,9 @@ var renderText = function(req, res, events, page, msg, type) {
         break;
     case 'pdf':
         renderPdf(req, res, events, page, msg);
+        break;
     default:
-        delimiter = ' ';
+        delimiter = '';
         postfix = '.txt';
     }
     file = 'texts/' + page + postfix;
@@ -182,14 +183,8 @@ var renderText = function(req, res, events, page, msg, type) {
 var renderList = function(req, res, events, page, msg, title) {
     fString = flString + "RENDER_LIST: ";
     var message;
-
-    renderText(req, res, events, page, msg, 'txt');
-    renderText(req, res, events, page, msg, 'tab');
-    renderText(req, res, events, page, msg, 'comma');
-    renderText(req, res, events, page, msg, 'line');
-    renderText(req, res, events, page, msg, 'pdf');
-
-    if(!title){
+    var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
+        if(!title){
         title = utilities.toTitleCase(page);
     }
     if(!(events instanceof Array)){
@@ -211,6 +206,9 @@ var renderList = function(req, res, events, page, msg, title) {
         events : events,
         message : message
     });
+    for(var i = 0; i < textArray.length; i++) {
+        renderText(req, res, events, page, msg, textArray[i]);
+    }
 };
 
 /* GET list page */
