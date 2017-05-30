@@ -1,6 +1,4 @@
 var flString = "APP_API/CONTROLLERS/CON_EVENTS.JS: ";
-console.log(flString);
-
 var request = require('request');
 var mongoose = require('mongoose');
 var conflicts = require('./conflicts.js');
@@ -21,7 +19,6 @@ module.exports.eventsGetAll = function(req, res) {
         findQueryObject[findKey] = findValue;
     }
     var sortQuery = req.query.sort;
-    console.log(fString + sortQuery);
     var results = [];
     if (findKey != ""){
         Event
@@ -58,7 +55,8 @@ module.exports.eventsGetConflicts = function(req, res){
                 if (err) {
                     sendJsonResponse(res, 404, err);
                 } else {
-                    results = conflicts.showConflicts(events, sortQuery);
+                    results = conflicts.showConflicts('events', events, sortQuery);
+                    console.log(fString + "RESULTS: " + results.length);
                     sendJsonResponse(res, 200, results);
                 }
             });
@@ -191,7 +189,6 @@ module.exports.eventsCreate = function(req, res) {
 
 module.exports.eventsUpdate = function(req, res) {
     var fString = flString + "EVENTS_UPDATE: ";
-    console.log(fString);
     if(!req.params.eventid) {
         sendJsonResponse(res, 404, {
             "message" : "CON_EVENTS EVENTS_UPDATE: Not found, eventsid is required"

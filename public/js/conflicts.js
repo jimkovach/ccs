@@ -1,13 +1,25 @@
-console.log("APP_SERVER/CONTROLLERS/CONFLICTS.JS");
+var flString = "PUBLIC/JS/CONFLICTS.JS: ";
+console.log(flString);
 
-var conflictString = function(entry){
-    console.log("APP_SERVER/CONTROLLERS/CONFLICTS.JS CONFLICT_STRING");
-    return(("b:" + entry.building + "|r:" + entry.room + "|d:" + entry.date + "|t:" + entry.start).replace(/\s+/,""));
+var conflictString = function(db, entry){
+    var fString = flString + "CONFLICT_STRING: " + db;
+    console.log(fString);
+    var conflictString = "";
+    switch(db){
+    case 'events':
+        conflictTest = ("b:" + entry.building + "|r:" + entry.room + "|d:" + entry.date + "|t:" + entry.start).replace(/\s+/,"");
+        break;
+    case 'exhibits':
+        conflictTest = "e:" + entry.exhibit + "|b:" + entry.booth;
+        break;
+    }
+    console.log(fString + "CONFLICT_TEST: " + conflictTest);
+    return conflictTest;
 };
 
-var conflict_p = function(base, event){
+var conflict_p = function(base, entry){
     console.log("APP_SERVER/CONTROLLERS/CONFLICTS.JS CONFLICT_P");
-    if (conflictString(base) == conflictString(event)){
+    if (conflictString('events', base) == conflictString('events', entry)){
         return(true);
     }
     return(false);

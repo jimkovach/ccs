@@ -3,6 +3,8 @@ console.log(flString);
 
 var request = require('request');
 var mongoose = require('mongoose');
+var conflicts = require('./conflicts.js');
+var utlities = require('../../public/js/utilities.js');
 var Exhibit = mongoose.model('Exhibit');
 
 var sendJsonResponse = function(res, status, content){
@@ -196,17 +198,20 @@ module.exports.exhibitsDelete = function(req, res) {
 module.exports.exhibitsGetConflicts = function(req, res){
     var fString = flString + "EXHIBITS_GET_CONFLICTS: ";
     console.log(fString);
-    var sortQuery = req.query.sort;
+    var sortQuery = 'booth';
+    if(req.query.sort){
+        sortQuery = req.query.sort;
+    }
     var results = [];
-        EXhibit
+        Exhibit
             .find()
             .exec(function(err, exhibits) {
                 if (err) {
                     console.log(fString + "ERR: " + err);
                     sendJsonResponse(res, 404, err);
                 } else {
-                    results = conflicts.showConflicts(exhibits, sortQuery);
-                    console.log(fString + "RESLUTS: " + results);
+                    results = conflicts.showConflicts('exhibits', exhibits, sortQuery);
+                    console.log(fString + "RESULTS: " + results.length);
                     sendJsonResponse(res, 200, results);
                 }
             });

@@ -39,11 +39,10 @@ var expandTab = function(textStart, textEnd){
     var fString = flString + "EXPAND_TAB: ";
     console.log(fString);
     var newText = "";
-    var fString = flString + "EXPAND_TAB: ";
-    console.log(fString);
     var textLength = textStart.length + textEnd.length;
-    var newText = "";
     newText = textStart;
+    console.log(fString + "TEXT_LENGTH: " + textLength);
+    console.log(fString + "100 - TEXT_LENGTH: " + (100 - textLength));
     for(var i = 0; i < 100 - textLength; i++){
         newText += '.';
     };
@@ -55,7 +54,6 @@ var expandTab = function(textStart, textEnd){
 var renderPdf = function(req, res, exhibits, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
-    console.log(fString)
     var file = 'texts/' + page + '.pdf';
     var i = 0;
     pdf.pipe(fs.createWriteStream(file));
@@ -67,7 +65,6 @@ var renderPdf = function(req, res, exhibits, page, msg) {
         pdf.moveDown(1);
         pdf.fontSize(12);
         for (i in exhibits){
-            expandTab(exhibits[i].exhibit, exhibits[i].booth);
             pdf.text(expandTab(exhibits[i].exhibit, exhibits[i].booth));
         }
     } else if (page === "exhibits"){
@@ -101,7 +98,6 @@ var renderPdf = function(req, res, exhibits, page, msg) {
 // CREATE TEXT FILES
 var renderText = function(req, res, exhibits, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
-    console.log(fString + type);
     var message;
     var delimiter, postfix;
     var file;
@@ -160,7 +156,6 @@ var renderText = function(req, res, exhibits, page, msg, type) {
         if (err) {
             return console.error(fString + 'ER: ' + err);
         } else {
-            console.log(fString + "Success!");
         }
     });
 };
@@ -492,15 +487,17 @@ module.exports.exhibitConflicts = function(req, res){
         json : {},
         qs : {sort : sortQuery}
     }
+    console.log(fString + 'REQUEST_OPTIONS.URL: ' + requestOptions.url);
     request(
         requestOptions,
         function(err, response, body) {
             if (err) {
-                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS CONFLICTS REQUEST ERROR: " + err);
+                console.log(fString + " REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                renderList(req, res, body, page);
+                console.log(fString + "REQUEST RENDER: " + requestOptions.url);
+                renderExhibits(req, res, body, page);
             } else {
-                console.log("APP_SERVER/CONTROLLERS/CON_EVENTJS CONFLICTS REQUEST STATUS: " + response.status.code);
+                console.log(fString + " REQUEST STATUS: " + response.status.code);
             }
         }
     );

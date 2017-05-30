@@ -1,0 +1,93 @@
+extends layout
+
+include _includes/table
+
+block content
+  link(rel='stylesheet', href='../css/caag.css')
+  table.table.table-responsive.caag
+    thead
+      th.big-event(colspan=14) Hyatt - Sunday, February 19
+    thead.thead-inverse
+      td time
+      td Cedar Ballroom
+      td(colspan=2) Regency Ballroom
+      td(colspan=4) Grand Ballroom
+      td(colspan=7) 3rd Floor
+    thead.thead-inverse
+      td
+      td AB
+      td ABC
+      td EFG
+      td I
+      td J
+      td EFG
+      td ABC
+      td Cottonwood
+      td juniper
+      td Laurel
+      td Larch
+      td Madrona
+      td Auditorium
+      td Maple
+    tbody
+      tr
+        td 8:30-9:30
+        for event in events
+          +displayEvent(event, "Cedar Ballroom", "1487521800000")
+        for event in events
+          +displayEvent(event, "Regency Ballroom AB", "1487521800000")
+        for event in events
+          +displayEvent(event, "Regency Ballroom EFG", "1487521800000")
+        td
+        td
+        td
+        td
+        td
+        for event in events
+          +displayEvent(event, "Juniper","1487521800000")
+        for event in events
+          +displayEvent(event, "Laurel", "1487521800000")
+        for event in events
+          +displayEvent(event, "Larch","1487521800000")
+        td
+        for event in events
+          +displayEvent(event, "Auditorium","1487521800000")
+        for event in events
+          +displayEvent(event, "Maple","1487521800000")
+
+      tr
+        td 9:50-10:50
+        for event in events
+          +displayEvent(event, "Cedar Ballroom", '1487526600000')
+        for event in events
+          +displayEvent(event, "Regency Ballroom AB", '1487526600000')
+        for event in events
+          +displayEvent(event, "EFG", '1487526600000')
+        td
+        td
+        td
+        td
+        td
+        td
+        for event in events
+          +displayEvent(event, "Juniper", '1487526600000')
+        for event in events
+          +displayEvent(event, "Laurel", '1487526600000')
+        for event in events
+          +displayEvent(event, "Larch", '1487526600000')
+        td
+        for event in events
+          +displayEvent(event, "Auditorium", '1487526600000')
+        td
+      tr
+        td 12:00
+        td.big-event(colspan=14) NAfME All-Northwest Instrumental Concert
+          p Benaroya Hall, Seattle
+      tr
+        td 2:00
+        td.big-event(colspan=14) NAfME All-Northwest and WMEA All-State Choral Concert
+          p Bellevue Hyatt Grand Ballroom
+      tr
+        td 5:30
+        td.big-event(colspan=14) WMEA All-State Instrumental Concert
+          p Benaroya Hall, Seattle

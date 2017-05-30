@@ -1,10 +1,8 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_EVENT.JS ";
-console.log(flString);
 
 var fs = require('fs');
 var request = require('request');
 var PDFDocument = require('pdfkit');
-
 var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : "http://localhost:3000"
@@ -39,7 +37,6 @@ var _showError = function(req, res, status) {
 var renderPdf = function(req, res, events, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
-    console.log(fString);
     var file = 'texts/' + page + '.pdf';
     var i = 0;
     pdf.pipe(fs.createWriteStream(file));
@@ -115,7 +112,6 @@ var renderPdf = function(req, res, events, page, msg) {
 // CREATE TEXT FILES
 var renderText = function(req, res, events, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
-    console.log(fString + type);
     var message;
     var delimiter, postfix;
     var file;
@@ -227,7 +223,6 @@ var renderText = function(req, res, events, page, msg, type) {
         if (err){
             return console.error(fString + 'ERR: ' + err);
         } else {
-            console.log(fString + "SUCCESS!");
         }
     });
 };
@@ -260,7 +255,6 @@ var renderList = function(req, res, events, page, msg, title) {
     });
     for(var i = 0; i < textArray.length; i++) {
         renderText(req, res, events, page, msg, textArray[i]);
-        console.log (fString + "TEXTARRAY[" + i + "]: " + textArray[i]);
     }
 };
 
@@ -313,12 +307,43 @@ module.exports.list = function (req, res){
 //CONCERT AT A GLANCE (CAAG)
 module.exports.caag = function (req, res){
     fString= flString + "CAAG: ";
-    console.log(fString);
     var requestOptions, path, page;
     path = '/api/caag';
     var findQuery = {"date" : "02/17/2017", "start" : "08:30 AM", "building" : "Westin"};
     page = "caag";
     requestOptions= {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {findQuery}
+    }
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                console.log(fString + "LIST REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                //PROBLEM???????
+                renderList(req, res, body, page);
+            } else {
+                console.log("LIST REQUEST STATUS: " + response.statusCode);
+            }
+        }
+    );
+    //PROBLEM???????????
+    res.render(page, {
+        title: page,
+        events : events
+    });
+};
+
+module.exports.caaghs = function(req, res){
+    fString = flString + "CAAGHS: ";
+    var requestOptions, path, page;
+    path = '/api/caag';
+    var findQuery = {"date" : "02/19/2017", "start" : "08:30 AM", "building" : "Hyatt"};
+    page = "caaghs";
+    requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {},
@@ -568,13 +593,10 @@ module.exports.doEventNew = function(req, res){
     request(
         requestOptions,
         function(err, response, body) {
-            console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS DO_EVENT_NEW REQUEST RESPONSE.STATUS_CODE: "+ response.statusCode);
             if (response.statusCode === 200) {
-                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS DO_EVENT_NEW: SUCCESSFULLY POSTED: " + postData.title + " WITH A STATUS OF 200");
                 message = "Successfully posted " + postData.title;
                 res.redirect('/list');
             } else if (response.statusCode === 201) {
-                console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS DO_EVENT_NEW: SUCCESFULLY CREATED NEW EVENT WITH A STATUS OF 201");
                 message = "Successfully posted " + postData.title;
                 res.redirect('/list');
             } else {
@@ -586,11 +608,9 @@ module.exports.doEventNew = function(req, res){
 
 module.exports.eventUpdate = function (req, res){
     var fString = flString + "EVENT_UPDATE: ";
-    console.log(fString);
     var requestOptions, path;
     path = "/api/events/" + req.params.eventid;
     var page = 'update';
-    console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_UPDATE PATH: " + path);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
@@ -600,7 +620,6 @@ module.exports.eventUpdate = function (req, res){
     request (
         requestOptions,
         function(err, response, body) {
-            console.log("APP_SERVER/CONTROLLERS/CON_EVENT.JS EVENT_UPDATE REQUEST FUNCTION ERR: " + err);
             renderEventPage(req, res, page, body);
         }
     );
@@ -608,7 +627,6 @@ module.exports.eventUpdate = function (req, res){
 
 module.exports.doEventUpdate = function(req, res){
     var fString = flString + "DO_EVENT_UPDATE: ";
-    console.log(fString);
     var eventid = req.params.eventid;
     var requestOptions, path;
     path = "/api/update/" + eventid;

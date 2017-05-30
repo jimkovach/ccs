@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
+  table.table.table-striped.table-responsive
+    thead.thead-inverse
+      th
+        a(href="/exhibits?sort=exhibit") Exhibit
+      th
+        a(href="/exhibits?sort=conflict") Conflict
+      th
+        a(href="/exhibits?sort=booth") Booth
+    tbody
+      each item in exhibits
+        tr
+          td
+            a(href="/exhibitUpdate/" + item.base_id)= item.base
+          td
+            a(href="/exhibitUpdate/" + item.conflict_id)= item.conflict
+          td
+            a(href="/exhibits?findkey=booth&findvalue=" + item.booth)= item.booth

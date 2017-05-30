@@ -5,3 +5,13 @@ mixin displayEvent(event, room, start)
         .category #{event.category}
         .presenterLast #{event.presenterLast}
         .title #{event.title}
+
+mixin handleBigEvent(event, room, start, width)
+  td.big-event(colspan='width')
+    .title #(event.title)
+    
+mixin doEvent(events, room, start)
+  -var event = events.findOne({'room' : room}, {'events.dateStart' : start});
+  td
+    a(href='/event/' + event._id)
+      .title #(event.title)

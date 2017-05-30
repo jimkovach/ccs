@@ -32,6 +32,7 @@ router.get('/conflicts', ctrlEvent.conflicts);
 
 router.get('/cag', ctrlEvent.cag);
 router.get('/caag', ctrlEvent.caag);
+router.get('/caaghs', ctrlEvent.caaghs);
 
 router.get('/exhibits', ctrlExhibit.exhibits);
 router.get('/exhibitRead/:exhibitid', ctrlExhibit.exhibitRead);
