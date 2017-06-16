@@ -28,7 +28,7 @@ block content
       each inst in instruments
         tr
           td
-            a(href='/instrumentRead/' + inst._id)= inst.instrument
+            a(href='/instrumentUpdate/' + inst._id)= inst.instrument
           td= inst.serial
           td
             a(href='/instruments?findkey=pickupBuilding&findvalue=' + inst.pickupBuilding)= inst.pickupBuilding

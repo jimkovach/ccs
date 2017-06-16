@@ -48,23 +48,42 @@ module.exports.dateFromNum = function(num){
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
     date = month + "/" + day + "/" + year;
+    console.log(date);
     return(date);
 };
 
 module.exports.timeFromNum = function(num){
-    var ampm, minutes, hours;
+    var ampm, minutes, hours, time;
     var date = new Date(num);
     hours = date.getHours();
     if(date.getHours() > 12){
-        ampm = "PM";
+        ampm = " PM";
         hours = (date.getHours() - 12);
     } else {
-        ampm = "AM";
+        ampm = " AM";
     }
     minutes = date.getMinutes();
+    time = hours + ":" + minutes + "0 " + ampm;
+    console.log(time);
     return(hours + ":" + minutes + "0 " + ampm);
 };
 
 module.exports.day = function(day){
-    var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+    return(weekday[day]);
 };
+
+module.exports.fillTable = function(events) {
+    var flString = flString + "FILL_TABLE: ";
+    var roomArray = new Array('Fort Peck', 'Grand ABC', 'Lake Sammamish', "Lake Coeur d'Alene", 'Lake Chelan', 'Lake Washington A');
+    var timeArray = new Array('8:30 AM', '9:50 AM', '11:00 AM', '12:15 AM', '1:30 PM', '3:00 PM', '3:30 PM', '5:30 PM', '8:00 PM');
+    r = '';
+    t = '';
+    var string = '';
+    for ( t in timeArray){
+        for (r in roomArray){
+            string += roomArray[i];
+        }
+        console.log(string);
+    }
+}

@@ -7,6 +7,7 @@ var auth = jwt({
     secret : process.env.JWT_SECRET,
     userProperty: 'payload'
 });
+
 //var path = require('path');
 var path = '../controllers/';
 var main = require(path + 'main.js');
@@ -17,7 +18,7 @@ var ctrlInstrument = require(path + 'conInst.js');
 
 router.get('/', main.index);
 
-router.get('/list', ctrlEvent.list);
+router.get('/events', ctrlEvent.events);
 router.get('/event/:eventid', ctrlEvent.event);
 router.get('/new', ctrlEvent.eventNew);
 router.post('/new', ctrlEvent.doEventNew);
@@ -27,10 +28,9 @@ router.get('/delete/:eventid', ctrlEvent.eventDelete);
 router.get('/program/:eventid', ctrlEvent.program);
 router.get('/presenters', ctrlEvent.presenters);
 router.get('/performers', ctrlEvent.performers);
-
 router.get('/conflicts', ctrlEvent.conflicts);
+router.get('/tables', ctrlEvent.tables);
 
-router.get('/cag', ctrlEvent.cag);
 router.get('/caag', ctrlEvent.caag);
 router.get('/caaghs', ctrlEvent.caaghs);
 
@@ -59,5 +59,7 @@ router.get('/instrumentRead/:instrumentid', ctrlInstrument.instrumentRead);
 router.get('/instrumentUpdate/:instrumentid', ctrlInstrument.instrumentUpdate);
 router.post('/instrumentUpdate/:instrumentid', ctrlInstrument.doInstrumentUpdate);
 router.get('/instrumentDelete/:instrumentid', ctrlInstrument.instrumentDelete);
+
+router.get('/tables', ctrlEvent.tables);
 
 module.exports = router;

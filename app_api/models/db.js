@@ -4,7 +4,7 @@ var dbURL = 'mongodb://localhost:27017/ccs';
 var dbExhibits = 'mongodb://localhost:27018/exhibits';
 
 if (process.env.NODE_ENV === 'production') {
-    dbURL = 'mongodb://';
+    dbURL = 'mongodb://jimkovach:gabby@ds053428.mlab.com:53428/ccs';
 }
 var retry = null;
 mongoose.connect(dbURL);

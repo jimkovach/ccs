@@ -10,38 +10,42 @@ block content
     .col-xs-12.col-md-12
       form.form-horizontal(action="", method="post", role="form")
         .col-xs-12.col-sm-6.col-md-4
+
           .form-group
             .col-xs-12.col-sm-12
-              input#title.form-control(name="title", placeholder="title")
+              input#title.form-control(autofocus=true name="title", placeholder="title")
               input#category.form-control(name="category", placeholder="category")
-              input#date.form-control(name="date", placeholder="date")
-              input#start.form-control(name="start", placeholder="start time")
+              input#date.form-control(name="date", placeholder="date", value=event.date)
+              input#start.form-control(name="start", placeholder="start time", value=event.time)
               input#start.form-control(name="end", placeholder="end time")
-              input#building.form-control(name="building", placeholder="building")
-              input#room.form-control(name="room", placeholder="room")
+              input#building.form-control(name="building", placeholder="building", value=event.building)
+              input#room.form-control(name="room", placeholder="room", value=event.room)
+
           .form-group
             .col-xs-12.col-sm-12
               input#hostName.form-control(name="hostName", placeholder="host")
-              input#hostEmail.form-control(name="hostEmail", placeholder="email")
+              input#hostEmail.form-control(type="email" name="hostEmail", placeholder="email")
               input#hostInstitution.form-control(name="hostInstitution", placeholder="institution")
               input#hostCity.form-control(name="hostCity", placeholder="city")
               input#hostState.form-control(name="hostState", placeholder="state")
+
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
               input#presenterFirst.form-control(name="presenterFirst", placeholder="presenter first")
               input#presenterLast.form-control(name="presenterLast", placeholder="presenter last")
-              input#presenterEmail.form-control(name="presenterEmail", placeholder="email")
+              input#presenterEmail.form-control(type="email" name="presenterEmail", placeholder="email")
               input#presenterInstitution.form-control(name="presenterInstitution", placeholder="institution")
               input#presenterCity.form-control(name="presenterCity", placeholder="city")
               input#presenterState.form-control(name="presenterState", placeholder="state")
             .col-xs-12.col-sm-12
+            
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
               input#performerName.form-control(name="performerName", placeholder="performer")
               input#performerDirector.form-control(name="performerDirector", placeholder="director")
-              input#performerEmail.form-control(name="performerEmail", placeholder="email")
+              input#performerEmail.form-control(type="email" name="performerEmail", placeholder="email")
               input#performerInstitution.form-control(name="performerInstitution", placeholder="institution")
               input#performerCity.form-control(name="performerCity", placeholder="city")
               input#performerState.form-control(name="performerState", placeholder="state")
@@ -50,5 +54,5 @@ block content
               p
               textarea#description.form-control(name="description", placeholder="description", rows="7")
               p
-              button.btn.btn-default(type="Submit" value='Submit') Submit
-              a.button.btn.pull-right.btn-default(href='/list' role='button') Cancel
+              a.button.btn.btn-default(href='/events' role='button') Cancel
+              button.btn.btn-default.pull-right(type="Submit" value='Submit') Submit

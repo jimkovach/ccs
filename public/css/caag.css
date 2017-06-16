@@ -7,9 +7,9 @@ th{
     text-align:center;
 }
 
-td{
+th, td{
     border: 1px solid #dddddd;
-    width: 12.5%;
+    width: 6.66%;
 }
 
 td:hover,a{
@@ -43,4 +43,28 @@ td:hover,a{
 
 .big-event:hover{
     background:color:white;
+}
+
+a {
+    color: black;
+}
+
+.blank{
+    background-color: #eeeeee;
+}
+
+.blank a{
+    color: #cccccc;
+    font-size: 2em;
+}
+
+.blank a:hover{
+    color: #33DD33;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.table-header{
+    background-color: #000000;
+    color: #ffffff;
 }

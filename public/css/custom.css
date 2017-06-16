@@ -20,6 +20,12 @@ p{
 a {
     color: black;
 }
+
+.menu-item{
+    text-transform: capitalize;
+    padding-left: 0;
+}
+
 a:hover{
     color: gray;
     text-decoration: underline;
@@ -46,10 +52,6 @@ ul.event li{
 }
 .page-header{
     margin-top: 0px;
-}
-
-.list-page-header h1::before{
-    content: "Conference Construction Set - ";
 }
 
 footer {
@@ -150,10 +152,9 @@ h1{
     padding-left:5px;
 }
 
-h1::before{
-    content: "CCS - ";
+.caagh{
+    width : 6.66%;
 }
-
 
 @media screen and (min-width: 665px){
     .container{
@@ -165,8 +166,7 @@ h1::before{
         font-size:2em;
     }
 
-    
-    h1::before{
-        content: "Conference Construction Set - ";
-    }
+}
+.menu-header {
+    font-size:1.25em;
 }

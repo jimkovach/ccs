@@ -1,17 +1,96 @@
 mixin displayEvent(event, room, start)
   if(event.room.toUpperCase() == room.toUpperCase() && event.dateStart == start)
-    td
-      a(href='/event/' + event._id)
+    td.caagh
+      a(href='/update/' + event._id)
         .category #{event.category}
         .presenterLast #{event.presenterLast}
         .title #{event.title}
 
 mixin handleBigEvent(event, room, start, width)
   td.big-event(colspan='width')
-    .title #(event.title)
-    
-mixin doEvent(events, room, start)
-  -var event = events.findOne({'room' : room}, {'events.dateStart' : start});
-  td
     a(href='/event/' + event._id)
       .title #(event.title)
+
+mixin doEvent(events)
+  -var roomArray = ['Cedar Ballroom', 'Regency Ballroom AB', 'Regency Ballroom EFG', 'I', 'J', 'EFG', 'ABC', 'Cottonwood', 'Juniper', 'Laurel', 'Larch', 'Madrona', 'Auditorium', 'Maple']
+  -var roomAbrv = ['AB', 'ABC', 'EFG', 'I', 'J', 'EFG', 'ABC', 'Cottonwood', 'Juniper', 'Laurel', 'Larch', 'Mardona', 'Auditorium', 'Maple']
+  -var timeArray = ['8:30 AM', '9:50 AM', '12:00 PM', '2:00 PM', '5:30 PM']
+  -var eventString = []
+  tr
+    td.caagh= 'Time'
+    each room in roomAbrv
+      td.caagh= room
+    each tyme, tindex in timeArray
+      tr
+        td.caagh= tyme
+        for r, rindex in roomArray
+          for event in events
+            if(event.room == r  && event.building == 'Hyatt' && event.dateStart =='1487521800000')
+              -eventString[rindex] = event.title
+          if(eventString[rindex])
+            td.caagh= eventString
+          else
+            td.caagh
+
+mixin displayTable(building, date, events)
+  -var dt = new Date(date)
+  -var spanWidth = 15
+  -var buildingArray = new Array('Hyatt', 'Westin')
+  -var roomArray
+  -var roomAbrv
+  -var timeArray
+  -var weekdays = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+  -var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+  
+  case building
+    when 'Hyatt'
+      -roomArray = ["Cedar Ballroom", "Regency Ballroom ABC", "Regency Ballroom EFG", "Grand Ballroom I", "Grand Ballroom J", "Grand Ballroom EFG", "Grand Ballroom ABC", "Cottonwood", "Juniper", "Laurel", "Larch", "Madrona", "Auditorium", "Maple"]
+      -roomAbrv = ["AB", "ABC", "EFG", "I", "J", "EFG", "ABC", "Cottonwood", "Juniper", "Laurel", "Larch", "Madrona", "Auditorium", "Maple"]
+    when 'Westin'
+      -roomArray = ["Fort Peck", "Grand Ballroom ABC", "Lake Sammamish", "Lake Couer d'Alene", "Lake Chelan", "Lake Washington A", "Lake Washington B"]
+      -roomAbrv = roomArray
+
+  case dt.getDate()
+    when 16
+      -timeArray = ["7:00 PM"]
+    when 17
+      -timeArray = ["8:30 AM", "9:50 AM", "11:00 AM", "12:15 PM", "1:30 PM", "3:00 PM", "3:30 PM", "5:30 PM", "6:00 PM", "8:00 PM"]
+    when 18
+      -timeArray = ["8:30 AM", "9:50 AM", "11:00 AM", "12:30 PM", "1:50 PM", "3:00 PM", "3:30 PM", "5:15 PM", "8:00 PM"]
+    when 19
+      -timeArray = ["8:30 AM", "9:50 AM", "12:00 PM", "2:00 PM", "5:30 PM"]
+
+  -var headerText = building + " - " + weekdays[dt.getDay()] + ", " + months[dt.getMonth()] + " " + dt.getDate()
+
+  tr
+    th.big-event.table-header(colspan=spanWidth)= headerText
+  if(building == "Hyatt")
+    tr.caag
+      th.caag
+      th.caag(colspan=1)= "Cedar Ballroom"
+      th.caag(colspan=2)= "Regency Ballroom"
+      th.caag(colspan=4)= "Grand Ballroom"
+      th.caag(colspan=7)= "3rd Floor"
+
+  tr.caag
+    th.caag= 'Time'
+    for room in roomAbrv
+      th.caag #{room}
+  tr
+  for tyme in timeArray
+    tr
+      td.caag #{tyme}
+      for room in roomArray
+        -var tempString = null
+        for event in events
+          if(event.start == tyme && event.room.toLowerCase() == room.toLowerCase())
+            -tempString = 1
+            td.caag
+              a(href='/update/' + event._id)
+                .category #{event.category}
+                .presenterLast #{event.presenterLast}
+                .title #{event.title}
+        if (!tempString)
+          td.blank
+            a(href='/new?building=' + building + "&date=" + date + "&room=" + room + "&time=" + tyme)
+              .blank +

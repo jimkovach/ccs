@@ -3,7 +3,7 @@ module.exports.index = function (req, res){
     res.render('index', {
         title: 'CCS',
         pageHeader: {
-            title: 'About',
+            title: 'Conference Construction Set: About',
             strapline: 'a quick guide to using this application'
         },
     });

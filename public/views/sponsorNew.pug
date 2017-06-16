@@ -12,8 +12,9 @@ block content
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              input#sponsor.form-control(name="sponsor", placeholder="sponsor")
+              input#sponsor.form-control(autofocus=true name="sponsor", placeholder="sponsor")
               input#institution.form-control(name="institution", placeholder="institution")
               p
-              button.btn.btn-default(type="Submit" value='Submit') Submit
-              a.btn.btn-default.pull-right(href='/sponsors 'role='button') Cancel
+
+              a.btn.btn-default(href='/sponsors' role='button') Cancel
+              button.btn.btn-default.pull-right(type="Submit" value='Submit') Submit

@@ -19,6 +19,7 @@ block content
             li= 'category: ' + event.category
             li= 'building: ' + event.building
             li= 'room: ' + event.room
+
         .col-xs-12.col-md-4
           ul.event
             li= 'presenter: ' + event.presenterFirst + " " + event.presenterLast
@@ -26,6 +27,17 @@ block content
             li= 'institution: ' + event.presenterInstitution
             li= 'city: ' + event.presenterCity
             li= 'state: ' + event.presenterState
+
+      .row
+
+        .col-xs-12.col-md-4
+          ul.event
+            li= 'host: ' + event.hostName
+            li= 'email: ' + event.hostEmail
+            li= 'institution: ' + event.hostInstitution
+            li= 'city: ' + event.hostCity
+            li= 'state: ' + event.hostState
+
         .col-xs-12.col-md-4
           ul.event
             li= 'performer: ' + event.performerName
@@ -34,8 +46,8 @@ block content
             li= 'institution: ' + event.performerInstitution
             li= 'city: ' + event.performerCity
             li= 'state: ' + event.performerState
-      .row
-        .col-xs-12.col-md-8
+
+        .col-xs-12.col-md-4
           ul.event
             li= 'created: '
               +formatDate(event.creationDate)
@@ -45,13 +57,6 @@ block content
             li= 'checked: ' + event.checked
             li= 'start: ' + event.dateStart
             li= 'end: ' + event.dateEnd
-        .col-xs-12.col-md-4
-          ul.event
-            li= 'host: ' + event.hostName
-            li= 'email: ' + event.hostEmail
-            li= 'institution: ' + event.hostInstitution
-            li= 'city: ' + event.hostCity
-            li= 'state: ' + event.hostState
 
     .col-xs-12.col-md-12
   .row
@@ -61,7 +66,7 @@ block content
       .col-lg-4
       .col-lg-5
         a.btn.btn-default(href='/program/' + event._id role='button') program
-        a.btn.btn-default(href='/list' role='button') events
+        a.btn.btn-default(href='/events' role='button') events
         a.btn.btn-default(href='/new') new
         a.btn.btn-default(href='/update/' + event._id role='button') update
         a.btn.btn-default(href='/delete/' + event._id role='button') delete

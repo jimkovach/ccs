@@ -56,7 +56,6 @@ module.exports.eventsGetConflicts = function(req, res){
                     sendJsonResponse(res, 404, err);
                 } else {
                     results = conflicts.showConflicts('events', events, sortQuery);
-                    console.log(fString + "RESULTS: " + results.length);
                     sendJsonResponse(res, 200, results);
                 }
             });
@@ -121,6 +120,29 @@ module.exports.eventsGetPerformers = function(req, res) {
             if (err) {
                 sendJsonResponse(res, 404, err);
             } else {
+                sendJsonResponse(res, 200, events);
+            }
+        });
+};
+
+module.exports.eventsTables = function(req, res) {
+    var fString = flString + "EVENTS_TABLES: ";
+    console.log(fString);
+    
+    var sortQuery = req.query.sort + " : " + 1;
+    var findQuery = {"building" : req.query.building,
+                     "date" : req.query.date
+                    }
+    console.log(fString + "findQuery: " + findQuery.building);
+    Event
+        .find(findQuery)
+        .sort(sortQuery)
+        .exec(function(err, events) {
+            if(err) {
+                console.log(fString + "Event.exec.ERR");
+                sendJsonResponse(res, 404, err);
+            } else {
+                console.log(fString + "Event.exec.success");
                 sendJsonResponse(res, 200, events);
             }
         });

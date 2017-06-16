@@ -12,7 +12,7 @@ block content
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              input#exhibit.form-control(name="exhibit", placeholder="exhibit")
+              input#exhibit.form-control(autofocus=true name="exhibit", placeholder="exhibit")
               input#booth.form-control(name="booth", placeholder="booth")
               input#exhibitor.form-control(name="exhibitor", placeholder="exhibitor")
               input#title.form-control(name="title", placeholder="title")
@@ -20,8 +20,8 @@ block content
               input#city.form-control(name="city", placeholder="city")
               input#state.form-control(name="state", placeholder="state")
               input#zip.form-control(name="zip", placeholder="zip")
-              input#email.form-control(name="email", placeholder="email")
-              input#phone.form-control(name="phone", placeholder="phone")
+              input#email.form-control(type="email" name="email", placeholder="email")
+              input#phone.form-control(type="phone" name="phone", placeholder="phone")
               input#email.form-control(name="web", placeholder="website")
         .col-xs-12.col-sm-6.col-md-4
           .form-group
@@ -31,5 +31,6 @@ block content
             .col-xs-12.col-sm-12
               p
               hr
-              button.btn.btn-default(type="Submit" value='Submit') Submit
-              a.button.btn.btn-default.pull-right(href='/exhibits') Cancel
+              a.button.btn.btn-default(href='/exhibits') Cancel              
+              button.btn.btn-default.pull-right(type="Submit" value='Submit') Submit
+

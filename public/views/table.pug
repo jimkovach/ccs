@@ -1,0 +1,9 @@
+extends layout
+
+include _includes/table
+
+block content
+  link(rel='stylesheet', href='../css/caag.css')
+
+  table.table.table-responsive.caag
+    +displayTable(building, date, events)

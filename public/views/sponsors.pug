@@ -16,6 +16,6 @@ block content
       each sponsor in sponsors
         tr
           td
-            a(href="/sponsorRead/" + sponsor._id)= sponsor.sponsor
+            a(href="/sponsorUpdate/" + sponsor._id)= sponsor.sponsor
           td
             a(href="/sponsors?findkey=institution&findvalue=" + sponsor.institution)= sponsor.institution

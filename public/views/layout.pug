@@ -18,6 +18,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
+
         #navbar-main.navbar-collapse.collapse
           ul.nav.navbar-nav
             li.dropdown
@@ -26,7 +27,7 @@ html
                 li
                   a(href='/new') New Event
                 li
-                  a(href='/list') List
+                  a(href='/events') Events
                 li
                   a(href='/presenters') Presenters
                 li
@@ -58,6 +59,29 @@ html
                   a(href='/instrumentCreate') New Instrument
                 li
                   a(href='/instruments') Instruments
+
+            li.dropdown
+              a.btn.dropdown-toggle(type='button', data-toggle='dropdown') CaaG
+              ul.dropdown-menu
+                li.dropdown-header.menu-header Working
+                li
+                  a.menu-item(href='/caag') Westin - Friday
+                li
+                  a.menu-item(href='/caaghs') Hyatt - Sunday
+                li.divider
+                li.dropdown-header.menu-header Hyatt
+                  a.menu-item(href="/tables?building=Hyatt&date=02/16/2017") Thursday
+                  a.menu-item(href="/tables?building=Hyatt&date=02/17/2017") Friday
+                  a.menu-item(href="/tables?building=Hyatt&date=02/18/2017") Saturday
+                  a.menu-item(href="/tables?building=Hyatt&date=02/19/2017") Sunday
+                li.divider
+                li.dropdown-header.menu-header Westin
+                  a.menu-item(href="/tables?building=Westin&date=02/16/2017") Thursday
+                  a.menu-item(href="/tables?building=Westin&date=02/17/2017") Friday
+                  a.menu-item(href="/tables?building=Westin&date=02/18/2017") Saturday
+                  a.menu-item(href="/tables?building=Westin&date=02/19/2017") Sunday
+
+
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
               ul.dropdown-menu
@@ -69,10 +93,6 @@ html
                   a(href='/api/exhibits') Get Exhibits
                 li
                   a(href='/api/exhibitsRead/5918dd18604537059eba6534') Get Exhibit
-                li
-                  a(href='/caag') Conference at a Glance
-                li
-                  a(href='/caaghs') CAAGHS
 
     .container          
       block content

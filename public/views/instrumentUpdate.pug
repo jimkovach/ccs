@@ -13,7 +13,7 @@ block content
           .form-group
             col-xs-12.col-sm-12.col-md-12
               p INSTRUMENT
-              input#instrument.form-control(name="instrument", placeholder="instrument", value=instrument.instrument)
+              input#instrument.form-control(autofocus=true name="instrument", placeholder="instrument", value=instrument.instrument)
               input#serial.form-control(name="serial", placeholder="serial number", value=instrument.serial)
               input#make.form-control(name="make", placeholder="make", value=instrument.make)
               input#model.form-control(name="model", placeholder="model", value=instrument.model)
@@ -46,5 +46,5 @@ block content
               input#returnPerson.form-control(name="returnPerson", placeholder="Return Person", value=instrument.returnPerson)
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              a.btn.btn-default(href='/instrumentRead/' + instrument._id role='button') Cancel
+              a.btn.btn-default(href='/instruments?sort=instrument' role='button') Cancel
               button.btn.btn-default.pull-right(type="submit" value='Submit') Submit

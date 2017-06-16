@@ -13,7 +13,7 @@ block content
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12.col-md-12
-              input#exhibit.form-control(name="exhibit", placeholder="exhibit", value=exhibit.exhibit)
+              input#exhibit.form-control(autofocus="true" name="exhibit", placeholder="exhibit", value=exhibit.exhibit)
               input#exhibitor.form-control(name="exhibitor", placeholder="exhibitor", value=exhibit.exhibitor)
               input#title.form-control(name="title", placeholder="title", value=exhibit.title)
               input#booth.form-control(name="booth", placeholder="booth", value=exhibit.booth)
@@ -21,16 +21,16 @@ block content
               input#city.form-control(name="city", placeholder="city", value=exhibit.city)
               input#state.form-control(name="state", placeholder="state", value=exhibit.state)
               input#zip.form-control(name="zip", placeholder="zip", value=exhibit.zip)
-              input#email.form-control(name="email", placeholder="email", value=exhibit.email)
+              input#email.form-control(type="email" name="email", placeholder="email", value=exhibit.email)
               input#web.form-control(name="web", placeholder="web", value=exhibit.web)
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12.col-md-12
               textarea#description.form-control(name="description", placeholder="description", rows=18)= exhibit.description
-              p
               hr
-              button.btn.btn-default(type="submit" value='Submit') Submit
-              a.btn.btn-default.pull-right(href='/exhibitRead/' + exhibit._id role='button') Cancel
+              a.btn.btn-default(href='/exhibits?sort=exhibit' role='button') Cancel
+              button.btn.btn-default.pull-right(type="submit" value='Submit') Submit
+
         .col-xs-12.col-sm-6.col-md-4
           .col-xs-12.col-sm-12.col-md-12
             ul.event

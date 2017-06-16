@@ -50,17 +50,22 @@ var renderPdf = function(req, res, sponsors, page, msg) {
     pdf.text(page.toUpperCase(),
              {align : 'center'});
     pdf.moveDown(1);
-    pdf.fontSize(12);
     for(i in sponsors){
         currentInstitution = sponsors[i].institution;
         if( currentInstitution != oldInstitution){
             pdf.moveDown(1);
-            pdf.fontSize(18);
-            pdf.text(sponsors[i].institution);
+            pdf.fontSize(16);
+            pdf.text(sponsors[i].institution,
+                {
+                    width : 300,
+                    continued : 'yes'
+                });
             oldInstitution = currentInstitution;
-            pdf.fontSize(12);
+            pdf.fontSize(11);
         }
-        pdf.text(sponsors[i].sponsor);
+        pdf.text(sponsors[i].sponsor,
+            {paragraphGap: 2}
+            );
     }
     pdf.end();
 };

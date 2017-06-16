@@ -1,4 +1,5 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_EVENT.JS ";
+var table = require('../../public/js/table.js');
 
 var fs = require('fs');
 var request = require('request');
@@ -7,7 +8,6 @@ var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : "http://localhost:3000"
 };
-
 if (process.env.NODE_ENV === 'production') {
     apiOptions.server ="http://ccs.herokuapp.com";
 }
@@ -232,7 +232,7 @@ var renderList = function(req, res, events, page, msg, title) {
     var message;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
     if(!title){
-        title = utilities.toTitleCase(page);
+        title = page;
     }
     if(!(events instanceof Array)){
         message = "API lookup error: responseBody must be an array";
@@ -247,7 +247,7 @@ var renderList = function(req, res, events, page, msg, title) {
     res.render(page, {
         title: page,
         pageHeader: {
-            title: utilities.toTitleCase(title),
+            title: title,
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         events : events,
@@ -258,9 +258,9 @@ var renderList = function(req, res, events, page, msg, title) {
     }
 };
 
-/* GET list page */
-module.exports.list = function (req, res){
-    var fString = flString + "LIST: ";
+/* GET events */
+module.exports.events = function (req, res){
+    var fString = flString + "EVENTS: ";
     var requestOptions, path, page, message;
     var sortQuery = "dateStart";
     var findvalue = "";
@@ -268,8 +268,8 @@ module.exports.list = function (req, res){
     var title = "Events";
     message = "";
     if(!page){
-        page = "list";
-        path = '/api/events';
+        page = "events";
+        path = "/api/events";
     };
     console.log(fString + req.query.sort);
     if (req.query.sort) {
@@ -304,6 +304,94 @@ module.exports.list = function (req, res){
     );
 };
 
+var renderTable = function(req, res, events, page, msg, title) {
+    var fString = flString + "RENDER_TABLE: ";
+    var message;
+    var building = req.query.building;
+    var date = req.query.date;
+    var dt = new Date(date);
+    
+    title = building + " " + utilities.day(dt.getDay());
+
+    if(!(events instanceof Array)){
+        message = "API lookup error: responseBody must be an array";
+        events = [];
+    } else if (!events.length) {
+        message = "No items found";
+    } else {
+        if(msg){
+            message = msg;
+        }
+    }
+
+    res.render(page, {
+        title: title,
+        pageHeader: {
+            title: title,
+        },
+        building : building,
+        date : date,
+        events : events,
+        message : message
+    });
+};
+
+module.exports.tables = function (req, res){
+    var fString = flString + "TABLES: ";
+    var requestOptions, path, page, message;
+
+    //DEFAULTS
+    var sortQuery = "dateStart";
+    var building = "Hyatt";
+    var date = "02/16/2017";
+    var title = building;
+    var message = " ";
+    if(!page){
+        page = "table";
+        path = "/api/tables";
+    };
+    if (req.query.sort) {
+        sortQuery = req.query.sort;
+    }
+    if (req.query.building != ""){
+        building = req.query.building;
+        title = building;
+    }
+    if (req.query.date != ""){
+        date = req.query.date;
+    }
+    console.log(fString + "building: " + building);
+    console.log(fString + "date: " + date);
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery,
+              building : building,
+              date : date
+             }
+    }
+    console.log(fString + "requestOptions.url: " + requestOptions.url);
+    console.log(fString + "requestOptions.qs.building: " + requestOptions.qs.building);
+    console.log(fString + "requestOptions.qs.date: " + requestOptions.qs.date);
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                console.log(fString + "LIST REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                console.log(fString + "response.statusCode: " + response.statusCode);
+                console.log(fString + "request: body.length: " + body.length);
+                renderTable(req, res, body, page, message, title);
+//                table.doDisplay(building, date, body, res);
+            } else {
+                console.log(fString + "LIST REQUEST STATUS: " + response.statusCode);
+            }
+        }
+    );
+};
+
+        
 //CONCERT AT A GLANCE (CAAG)
 module.exports.caag = function (req, res){
     fString= flString + "CAAG: ";
@@ -369,40 +457,6 @@ module.exports.caaghs = function(req, res){
     });
 };
 
-//CONCERT AT A GLANCE (CAG)
-module.exports.cag = function (req, res){
-    fString= flString + "CAG: ";
-    console.log(fString);
-    var requestOptions, path, page;
-    path = '/api/cag';
-    var findQuery = {"date" : "02/17/2017", "start" : "08:30 AM", "building" : "Westin"};
-    page = "cag";
-    requestOptions= {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {},
-        qs : {findQuery}
-    }
-    request(
-        requestOptions,
-        function(err, response, body) {
-            if (err) {
-                console.log(fStrings + "LIST REQUEST ERROR: " + err);
-            } else if (response.statusCode === 200) {
-                //PROBLEM???????
-                renderList(req, res, body, page);
-            } else {
-                console.log("LIST REQUEST STATUS: " + response.statusCode);
-            }
-        }
-    );
-    //PROBLEM???????????
-    res.render(page, {
-        title: page,
-        events : events
-    });
-};
-
 module.exports.presenters = function(req, res){
     var requestOptions, path, sortQuery, findQuery, page;
     page = 'presenters';
@@ -425,7 +479,7 @@ module.exports.presenters = function(req, res){
             if (err) {
                 console.log("PRESENTERS REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                renderList(req, res, body, page, msg, utilities.toTitleCase(page));
+                renderList(req, res, body, page, msg, 'Presenters');
             } else {
                 console.log("PRESENTERS REQUEST STATUS: " + response.status.code);
             }
@@ -498,7 +552,7 @@ module.exports.conflicts = function(req, res){
 var renderEventPage = function (req, res, page, event) {
     res.render(page, {
         title: event.title,
-        pageHeader: {title: event.title},
+        pageHeader: {title: page.toUpperCase() + " - " + event.title},
         event : event
     });
 };
@@ -538,17 +592,25 @@ module.exports.program = function (req, res) {
 };
 
 module.exports.eventNew = function (req, res){
+    var fString = flString + "EVENT_NEW: ";
+    var requestOptions, path, page;
+    page = "new";
+
+    renderEventPage(req, res, page, req.query);
+/*    
     res.render('new',{
         title : 'new',
         pageHeader: {
             title: 'Create New Event'
         }
     });
+*/
 };
 
 module.exports.doEventNew = function(req, res){
     var requestOptions, path, message;
     path = "/api/events" ;
+
     var postData = {
         title: req.body.title,
         category : req.body.category,
@@ -578,7 +640,7 @@ module.exports.doEventNew = function(req, res){
         performerState : req.body.performerState,
         description : req.body.description,
         modified : false,
-        checked : false
+        checked : req.body.checked
     };
     if(!postData.title){
         console.log("title is required");
@@ -595,10 +657,10 @@ module.exports.doEventNew = function(req, res){
         function(err, response, body) {
             if (response.statusCode === 200) {
                 message = "Successfully posted " + postData.title;
-                res.redirect('/list');
+                res.redirect('/events');
             } else if (response.statusCode === 201) {
                 message = "Successfully posted " + postData.title;
-                res.redirect('/list');
+                res.redirect('/events');
             } else {
                 _showError(req, res, response.statusCode);
             }
@@ -672,7 +734,7 @@ module.exports.doEventUpdate = function(req, res){
         requestOptions,
         function(err, response, body) {
             if (response.statusCode === 200) {
-                res.redirect('/event/' + eventid);
+                res.redirect("/event/" + eventid);
             } else {
                 _showError(req, res, response.statusCode);
             }
@@ -693,7 +755,7 @@ module.exports.eventDelete = function(req, res){
         function (err, response, body){
             if (response.statusCode === 204) {
                 console.log("SUCCESSFULLY DELETED: " + req.params.eventid);
-                res.redirect('/list');
+                res.redirect('/events');
             } else {
                 _showError(req, res, response.statusCode);
                 console.log("DELETE ERROR");
