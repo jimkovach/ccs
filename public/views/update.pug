@@ -54,5 +54,7 @@ block content
               p
               textarea#description.form-control(name="description", placeholder="description", rows="6")= event.description
               p
-              button.btn.btn-default.pull-right(type="submit" value='Submit') Submit
+              
               a.btn.btn-default(href='/events/' role='button') Cancel
+              button.btn.btn-default(type="submit" value='Submit') Submit
+              a.btn.btn-default.pull-right(href='/delete/' + event._id role='button') Delete

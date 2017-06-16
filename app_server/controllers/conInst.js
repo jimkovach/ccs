@@ -192,10 +192,10 @@ var renderInstruments = function(req, res, instruments, page, msg, title) {
     var message;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
         if(!title){
-        title = utilities.toTitleCase(page);
+            title = page;
     }
     if(!title){
-        title = utilities.toTitleCase(page);
+        title = page;
     }
     if(!(instruments instanceof Array)){
         message = "API lookup error: responseBody must be an array";
@@ -211,7 +211,7 @@ var renderInstruments = function(req, res, instruments, page, msg, title) {
     res.render(page, {
         title: page,
         pageHeader: {
-            title: utilities.toTitleCase(title),
+            title: title.toUpperCase(),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         instruments : instruments,
@@ -275,7 +275,7 @@ var renderInstrumentPage = function (req, res, page, instrument) {
     console.log(fString + "INSTRUMENT: " + instrument + ": " + instrument.instrument);
     res.render(page, {
         title: instrument.instrument,
-        pageHeader: {title : instrument.instrument},
+        pageHeader: {title : "INSTRUMENTS: " + instrument.instrument + " #" + instrument.serial},
         instrument : instrument
     });
 };

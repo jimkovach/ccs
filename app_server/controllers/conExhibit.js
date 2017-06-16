@@ -178,9 +178,9 @@ var renderExhibits = function(req, res, exhibits, page, msg, title) {
         }
     }
     res.render(page, {
-        title: 'CCS - ' + page,
+        title: page,
         pageHeader: {
-            title: utilities.toTitleCase(page),
+            title: page.toUpperCase(),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         exhibits : exhibits,
@@ -279,7 +279,7 @@ var renderExhibitPage = function (req, res, page, exhibit) {
     console.log(fString + "EXHIBIT . EXHIBIT: " + exhibit.exhibit)
     res.render(page, {
         title : exhibit.exhibit,
-        pageHeader: { title: exhibit.exhibit},
+        pageHeader: { title: 'EXHIBITS ' + page.toUpperCase() + ": " + exhibit.exhibit},
         exhibit : exhibit
     });
 };

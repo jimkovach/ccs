@@ -21,7 +21,7 @@ router.get('/delete/:eventid', ctrlEvents.eventsDelete);
 router.get('/presenters', ctrlEvents.eventsGetPresenters);
 router.get('/performers', ctrlEvents.eventsGetPerformers);
 router.get('/conflicts', ctrlEvents.eventsGetConflicts);
-router.get('/caag', ctrlEvents.eventsGetCaag);
+//router.get('/caag', ctrlEvents.eventsGetCaag);
 router.get('/tables', ctrlEvents.eventsTables);
 
 router.get('/exhibits', ctrlExhibits.exhibitsGetAll);

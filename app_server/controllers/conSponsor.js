@@ -121,10 +121,10 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
     var message;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
         if(!title){
-        title = utilities.toTitleCase(page);
+            title = page;
     }    
     if(!title){
-        title = utilities.toTitleCase(page);
+        title = page;
     }
     if(!(sponsors instanceof Array)){
         message = "API lookup error: responseBody must be an array";
@@ -141,7 +141,7 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
     res.render(page, {
         title: page,
         pageHeader: {
-            title: utilities.toTitleCase(title),
+            title: title.toUpperCase(),
             strapline: 'sponsors'
         },
         sponsors : sponsors,
@@ -210,11 +210,10 @@ var renderSponsorPage = function (req, res, page, sponsor) {
     console.log(fString + "SPONSOR: " + sponsor);
     res.render(page, {
         title: sponsor.sponsor,
-        pageHeader: {title : sponsor.sponsor},
+        pageHeader: {title : "SPONSORS: " + sponsor.sponsor},
         sponsor : sponsor
     });
 };
-
 
 module.exports.sponsorCreate = function(req, res){
     var fString = flString + "SPONSOR_CREATE: ";
@@ -223,7 +222,7 @@ module.exports.sponsorCreate = function(req, res){
     res.render(page, {
         title: 'CCS - New Sponsor',
         pageHeader : {
-            title : 'Create New sponsor',
+            title : 'Create New Sponsor',
             strapline : 'note: the sponsor name is required'
         },
     });

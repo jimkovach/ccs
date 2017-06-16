@@ -31,8 +31,10 @@ router.get('/performers', ctrlEvent.performers);
 router.get('/conflicts', ctrlEvent.conflicts);
 router.get('/tables', ctrlEvent.tables);
 
+/*
 router.get('/caag', ctrlEvent.caag);
 router.get('/caaghs', ctrlEvent.caaghs);
+*/
 
 router.get('/exhibits', ctrlExhibit.exhibits);
 router.get('/exhibitRead/:exhibitid', ctrlExhibit.exhibitRead);

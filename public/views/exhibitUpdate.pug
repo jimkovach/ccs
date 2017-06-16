@@ -29,7 +29,8 @@ block content
               textarea#description.form-control(name="description", placeholder="description", rows=18)= exhibit.description
               hr
               a.btn.btn-default(href='/exhibits?sort=exhibit' role='button') Cancel
-              button.btn.btn-default.pull-right(type="submit" value='Submit') Submit
+              button.btn.btn-default(type="submit" value='Submit') Submit
+              a.btn.btn-default.pull-right(href='/exhibitDelete/' + exhibit._id) Delete
 
         .col-xs-12.col-sm-6.col-md-4
           .col-xs-12.col-sm-12.col-md-12
@@ -41,4 +42,3 @@ block content
                 +formatDate(exhibit.modificationDate)
               li= 'cancelled: ' + exhibit.cancelled
               li= 'checked: ' + exhibit.checked
-

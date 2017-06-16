@@ -245,9 +245,9 @@ var renderList = function(req, res, events, page, msg, title) {
         }
     }
     res.render(page, {
-        title: page,
+        title: title,
         pageHeader: {
-            title: title,
+            title: title.toUpperCase(),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         events : events,
@@ -391,7 +391,7 @@ module.exports.tables = function (req, res){
     );
 };
 
-        
+/*        
 //CONCERT AT A GLANCE (CAAG)
 module.exports.caag = function (req, res){
     fString= flString + "CAAG: ";
@@ -456,6 +456,7 @@ module.exports.caaghs = function(req, res){
         events : events
     });
 };
+*/
 
 module.exports.presenters = function(req, res){
     var requestOptions, path, sortQuery, findQuery, page;
@@ -479,7 +480,7 @@ module.exports.presenters = function(req, res){
             if (err) {
                 console.log("PRESENTERS REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                renderList(req, res, body, page, msg, 'Presenters');
+                renderList(req, res, body, page, msg, 'PRESENTERS');
             } else {
                 console.log("PRESENTERS REQUEST STATUS: " + response.status.code);
             }
