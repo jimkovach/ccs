@@ -411,7 +411,7 @@ module.exports.doInstrumentUpdate = function(req, res){
         pickupBuilding : req.body.pickupBuilding,
         pickupRoom : req.body.pickupRoom,
 //        pickup : utilities.convertToDate(req.body.pickup),
-        pickupDate : utilities.convertToDate(req.body.pickupDate),
+        pickupDate : req.body.pickupDate,
         pickupTime : req.body.pickupTime,
         pickupPerson : req.body.pickupPerson,
         deliveryBuilding : req.body.deliveryBuilding,

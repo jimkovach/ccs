@@ -73,7 +73,7 @@ var renderPdf = function(req, res, sponsors, page, msg) {
 // CREATE TEXT FILES
 var renderText = function(req, res, sponsors, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
-    console.log(fString + type);
+
     var message;
     var delimiter, postfix;
     var file;
@@ -95,9 +95,13 @@ var renderText = function(req, res, sponsors, page, msg, type) {
     case 'pdf':
         renderPdf(req, res, sponsors, page, msg);
         break;
-    default:
+    case 'txt':
         delimiter = ' ';
         postfix = '.txt';
+        break;
+    default:
+        console.log(fString + "UNDEFINED FILETYPE");
+        return;
     }
     file = 'texts/' + page + postfix;
     for(i in sponsors){
@@ -109,22 +113,24 @@ var renderText = function(req, res, sponsors, page, msg, type) {
     fs.writeFile(file, sponsor_string, function(err) {
         if (err){
             return console.error(fString + 'ERR: ' + err);
-        } else {
-            console.log(fString + "SUCCESS!");
         }
     });
 };
 
 var renderSponsorList = function(req, res, sponsors, page, msg, title){
     fString = flString + "RENDER_SPONSOR_LIST: ";
-    console.log(fString);
+
     var message;
+    var strapline = "Partners in Promoting Music Education";
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
-        if(!title){
-            title = page;
-    }    
     if(!title){
-        title = page;
+        title = page.toUpperCase();
+    }
+    if(req.query.findkey == "institution"){
+        title = "SPONSORS: " + title;
+        if(req.query.findvalue == "NAfME Corporate Members") {
+            strapline = "NAfME corporate members provide vital support for NAfME programs and assist in the continuing efforts to increase awarness of music education in our nation's schools.";
+}
     }
     if(!(sponsors instanceof Array)){
         message = "API lookup error: responseBody must be an array";
@@ -136,13 +142,11 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
             message = msg;
         }
     }
-    console.log(fString + "PAGE: " + page);
-    console.log(fString + "SPONSORS[0].SPONSOR: " + sponsors[0].sponsor);
     res.render(page, {
         title: page,
         pageHeader: {
-            title: title.toUpperCase(),
-            strapline: 'sponsors'
+            title: title,
+            strapline: strapline
         },
         sponsors : sponsors,
         message : message
@@ -154,7 +158,7 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
 
 module.exports.sponsors = function (req, res) {
     var fString = flString + "SPONSORS: ";
-    console.log(fString);
+
     var requestOptions, path, page, message;
     var sortQuery = 'sponsor';
     var findvalue = "";
@@ -195,7 +199,6 @@ module.exports.sponsors = function (req, res) {
                 console.log(fString + "LIST REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
                 console.log(fString + "REQUEST SUCCEEDED WITH RESPONSE OF: " + response.statusCode);
-                console.log(fString + "REQUEST BODY:" + body[0].sponsor);
                 renderSponsorList(req, res, body, page, message, title);
             } else {
                 console.log(fString + "LIST REQUEST STATUS: " + response.statusCode);
@@ -206,8 +209,6 @@ module.exports.sponsors = function (req, res) {
 
 var renderSponsorPage = function (req, res, page, sponsor) {
     var fString = flString + "RENDER_SPONSOR_PAGE: ";
-    console.log(fString);
-    console.log(fString + "SPONSOR: " + sponsor);
     res.render(page, {
         title: sponsor.sponsor,
         pageHeader: {title : "SPONSORS: " + sponsor.sponsor},
@@ -274,12 +275,10 @@ module.exports.doSponsorCreate = function(req, res){
 
 module.exports.sponsorRead = function(req, res){
     var fString = flString + "SPONSOR_READ: ";
-    console.log(fString);
+
     var requestOptions, path, page;
     page = "sponsor.pug";
     path = "/api/sponsorsRead/" + req.params.sponsorid;;
-    console.log(fString + "PATH: " + path);
-    console.log(fString + 'SPONSORID: ' + req.params.sponsorid);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
@@ -303,18 +302,16 @@ module.exports.sponsorRead = function(req, res){
 
 module.exports.sponsorUpdate = function (req, res){
     var fString = flString + "SPONSOR_UPDATE: ";
-    console.log(fString);
+
     var requestOptions, path;
     path = "/api/sponsorsRead/" + req.params.sponsorid;
     var page = 'sponsorUpdate';
-    console.log(fString + "PATH: " + path);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {},
         qs : {}
     };
-    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body){
@@ -326,7 +323,7 @@ module.exports.sponsorUpdate = function (req, res){
 
 module.exports.doSponsorUpdate = function(req, res){
     var fString = flString + "DO_SPONSOR_UPDATE: ";
-    console.log(fString);
+
     var sponsorid = req.params.sponsorid;
     var requestOptions, path;
     path = "/api/sponsorUpdate/" + sponsorid;

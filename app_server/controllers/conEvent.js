@@ -255,6 +255,7 @@ var renderList = function(req, res, events, page, msg, title) {
     });
     for(var i = 0; i < textArray.length; i++) {
         renderText(req, res, events, page, msg, textArray[i]);
+        table.doDisplay("Hyatt", "02/17/2017", events, res);
     }
 };
 

@@ -11,13 +11,13 @@ block content
           a(href='/events') Events: Dropdown that exposes the following...
         ul
           li
-            a(href='/events') List: List of all events
+            a(href='/new') New Event: Use this to create a new event and add it to the database
+          li
+            a(href='/events') Events: List of all events
           li
             a(href='/presenters') Presenters: List of all presenters attached to an event
           li
             a(href='/performers') Performers: List of all performers attached to an event
-          li
-            a(href='/new') New Event: Use this to create a new event and add it to the database
           li
             a(href='/conflicts') Conflicts: List of conflicts generated when a room is being used by more than one event at the same time
         li Exhibits: Dropdown that exposes the following...
@@ -43,9 +43,9 @@ block content
         li CaaG - Conference at a Glance - this is a good starting off place.
         ul
           li selecting an event will take you to that events update page
-          li selecting a '+' will take you to the 'New Event' page with building, room, date, and start time already filled in
-        li Development is a dropdown of stuff just used in development - not for production - YET!
-    p= "The following buttons appear on various event pages..."
+          li selecting a blank cell will take you to the 'New Event' page with building, room, date, and start time already filled in
+        li Development is a dropdown of stuff just used in development - not for production.
+    p= "The following buttons appear on various single event pages..."
       ul
         li Submit: to submit the data just added or updated
         li Cancel: well duh!

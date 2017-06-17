@@ -8,15 +8,13 @@ block content
       h1= pageHeader.title
       p= pageHeader.strapline
   .row
-    .col-xs-12.col-md-12
-      form.form-horizontal(action="/sponsorUpdate/" + sponsor._id method="post" role="form")
-        .col-xs-12.col-sm-6.col-md-4
-          .form-group
-            .col-xs-12.col-sm-12.col-md-12
-              input#sponsor.form-control(autofocus=true name="sponsor", placeholder="sponsor", value=sponsor.sponsor)
-              input#institution.form-control(name="institution", placeholder="institution", value=sponsor.institution)
-              p
+    form.form-horizontal(action="/sponsorUpdate/" + sponsor._id method="post" role="form")
+      .form-group
+        .col-xs-12.col-sm-12.col-md-6
+          input#sponsor.form-control(autofocus=true name="sponsor", placeholder="sponsor", value=sponsor.sponsor)
+          input#institution.form-control(name="institution", placeholder="institution", value=sponsor.institution)
+          p
 
-              a.btn.btn-default(href='/sponsors?sort=sponsor' role='button') Cancel
-              button.btn.btn-default(type="submit" value= 'Submit') Submit
-              a.btn.btn-default.pull-right(href="/sponsorDelete/" + sponsor._id role='button') Delete
+          a.btn.btn-default(href='/sponsors?sort=sponsor' role='button') Cancel
+          button.btn.btn-default(type="submit" value= 'Submit') Submit
+          a.btn.btn-default.pull-right(href="/sponsorDelete/" + sponsor._id role='button') Delete

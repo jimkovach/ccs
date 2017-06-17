@@ -50,21 +50,25 @@ a {
 }
 
 .blank{
+    color: #eeeeee;
     background-color: #eeeeee;
 }
 
 .blank a{
     color: #cccccc;
-    font-size: 2em;
+    font-size: 5em;
+    display:block;
+    width:100%;
+    height:100%;
 }
 
-.blank a:hover{
-    color: #33DD33;
+.blank:hover{
     text-decoration: none;
     font-weight: bold;
+    background-color: gray;
 }
 
 .table-header{
-    background-color: #000000;
+    background-color: #333333;
     color: #ffffff;
 }
