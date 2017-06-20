@@ -8,9 +8,21 @@ var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : "http://localhost:3000"
 };
-if (process.env.NODE_ENV === 'production') {
+
+switch (process.env.NODE_ENV){
+case "production":
     apiOptions.server ="http://ccs.herokuapp.com";
+    break;
+case "heroku_development":
+    apiOptions.server = "http://localhost:5000";
+    break;
+default:
+    apiOptions.server = "http://localhost:3000";
+    break;
 }
+
+console.log(flString + "process.env.NODE_ENV: " + process.env.NODE_ENV);
+console.log(flString + "apiOptions.server: " + apiOptions.server);
 
 var _showError = function(req, res, status) {
     var fString = (flString + "_SHOWeRROR: ");
@@ -37,7 +49,7 @@ var _showError = function(req, res, status) {
 var renderPdf = function(req, res, events, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
-    var file = 'texts/' + page + '.pdf';
+    var file = 'texts/pdf/' + page + '.pdf';
     var i = 0;
     pdf.pipe(fs.createWriteStream(file));
     pdf.font('Times-Roman');
@@ -120,24 +132,25 @@ var renderText = function(req, res, events, page, msg, type) {
     switch(type){
     case 'tab':
         delimiter = '\t';
-        postfix = '.tab';
+        postfix = 'tab';
         break;
     case 'comma':
         delimiter = ',';
-        postfix = '.csv';
+        postfix = 'csv';
         break;
     case 'line':
         delimiter = '\n';
-        postfix = '.lb.txt';
+        postfix = 'lb_txt';
         break;
     case 'pdf':
         renderPdf(req, res, events, page, msg);
         break;
     default:
         delimiter = ' ';
-        postfix = '.txt';
+        postfix = 'txt';
     }
-    file = 'texts/' + page + postfix;
+
+    file = 'texts/' + postfix + "/" + page + "." + postfix;
     if(type = 'comma'){
         event_string =
             '' + delimiter +
@@ -222,7 +235,6 @@ var renderText = function(req, res, events, page, msg, type) {
     fs.writeFile(file, event_string, function(err) {
         if (err){
             return console.error(fString + 'ERR: ' + err);
-        } else {
         }
     });
 };
@@ -255,13 +267,14 @@ var renderList = function(req, res, events, page, msg, title) {
     });
     for(var i = 0; i < textArray.length; i++) {
         renderText(req, res, events, page, msg, textArray[i]);
-        table.doDisplay("Hyatt", "02/17/2017", events, res);
     }
 };
 
 /* GET events */
 module.exports.events = function (req, res){
     var fString = flString + "EVENTS: ";
+    console.log(fString);
+    
     var requestOptions, path, page, message;
     var sortQuery = "dateStart";
     var findvalue = "";
@@ -272,7 +285,6 @@ module.exports.events = function (req, res){
         page = "events";
         path = "/api/events";
     };
-    console.log(fString + req.query.sort);
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
@@ -295,11 +307,11 @@ module.exports.events = function (req, res){
         requestOptions,
         function(err, response, body) {
             if (err) {
-                console.log("LIST REQUEST ERROR: " + err);
+                console.log(fString + "LIST REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
                 renderList(req, res, body, page, message, title);
             } else {
-                console.log("LIST REQUEST STATUS: " + response.statusCode);
+                console.log(fString + "LIST REQUEST STATUS: " + response.statusCode);
             }
         }
     );
@@ -384,80 +396,12 @@ module.exports.tables = function (req, res){
                 console.log(fString + "response.statusCode: " + response.statusCode);
                 console.log(fString + "request: body.length: " + body.length);
                 renderTable(req, res, body, page, message, title);
-//                table.doDisplay(building, date, body, res);
             } else {
                 console.log(fString + "LIST REQUEST STATUS: " + response.statusCode);
             }
         }
     );
 };
-
-/*        
-//CONCERT AT A GLANCE (CAAG)
-module.exports.caag = function (req, res){
-    fString= flString + "CAAG: ";
-    var requestOptions, path, page;
-    path = '/api/caag';
-    var findQuery = {"date" : "02/17/2017", "start" : "08:30 AM", "building" : "Westin"};
-    page = "caag";
-    requestOptions= {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {},
-        qs : {findQuery}
-    }
-    request(
-        requestOptions,
-        function(err, response, body) {
-            if (err) {
-                console.log(fString + "LIST REQUEST ERROR: " + err);
-            } else if (response.statusCode === 200) {
-                //PROBLEM???????
-                renderList(req, res, body, page);
-            } else {
-                console.log("LIST REQUEST STATUS: " + response.statusCode);
-            }
-        }
-    );
-    //PROBLEM???????????
-    res.render(page, {
-        title: page,
-        events : events
-    });
-};
-
-module.exports.caaghs = function(req, res){
-    fString = flString + "CAAGHS: ";
-    var requestOptions, path, page;
-    path = '/api/caag';
-    var findQuery = {"date" : "02/19/2017", "start" : "08:30 AM", "building" : "Hyatt"};
-    page = "caaghs";
-    requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {},
-        qs : {findQuery}
-    }
-    request(
-        requestOptions,
-        function(err, response, body) {
-            if (err) {
-                console.log(fString + "LIST REQUEST ERROR: " + err);
-            } else if (response.statusCode === 200) {
-                //PROBLEM???????
-                renderList(req, res, body, page);
-            } else {
-                console.log("LIST REQUEST STATUS: " + response.statusCode);
-            }
-        }
-    );
-    //PROBLEM???????????
-    res.render(page, {
-        title: page,
-        events : events
-    });
-};
-*/
 
 module.exports.presenters = function(req, res){
     var requestOptions, path, sortQuery, findQuery, page;
@@ -484,6 +428,71 @@ module.exports.presenters = function(req, res){
                 renderList(req, res, body, page, msg, 'PRESENTERS');
             } else {
                 console.log("PRESENTERS REQUEST STATUS: " + response.status.code);
+            }
+        }
+    );
+};
+
+module.exports.presenterConflicts = function(req, res){
+    var fString = flString + "PRESENTER_CONFLICTS: ";
+    console.log(fString);
+    
+    var requestOptions, path, sortQuery, findQuery, page;
+    var msg = "";
+    page = 'presenterConflicts';
+    sortQuery = "presenterLast";
+    if (req.query.sort) {
+        sortQuery = req.query.sort;
+    }
+    path= '/api/presenterConflicts';
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery}
+    }
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                console.log(fString + "REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                renderList(req, res, body, page, msg, 'PRESENTERS');
+            } else {
+                console.log("REQUEST STATUS: " + response.status.code);
+            }
+        }
+    );
+};
+
+
+module.exports.performerConflicts = function(req, res){
+    var fString = flString + "PERFORMER_CONFLICTS: ";
+    console.log(fString);
+    
+    var requestOptions, path, sortQuery, findQuery, page;
+    var msg = "";
+    page = 'performerConflicts';
+    sortQuery = "performerName";
+    if (req.query.sort) {
+        sortQuery = req.query.sort;
+    }
+    path= '/api/performerConflicts';
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery}
+    }
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (err) {
+                console.log(fString + "REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200) {
+                renderList(req, res, body, page, msg, 'PERFORMER CONFLICTS');
+            } else {
+                console.log("REQUEST STATUS: " + response.status.code);
             }
         }
     );

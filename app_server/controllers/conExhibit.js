@@ -9,9 +9,24 @@ var apiOptions = {
     server : "http://localhost:3000"
 };
 
+
+switch (process.env.NODE_ENV){
+case "production":
+    apiOptions.server ="http://ccs.herokuapp.com";
+    break;
+case "heroku_development":
+    apiOptions.server = "http://localhost:5000";
+    break;
+default:
+    apiOptions.server = "http://localhost:3000";
+    break;
+}
+
+/*
 if (process.env.NODE_ENV === 'production') {
     apiOptions.server - "http://ccs.herokuapp.com";
 }
+*/
 
 var _showError = function(req, res, status) {
     var fString = flString + "_SHOWeRROR: ";
@@ -54,7 +69,7 @@ var expandTab = function(textStart, textEnd){
 var renderPdf = function(req, res, exhibits, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
-    var file = 'texts/' + page + '.pdf';
+    var file = 'texts/pdf/' + page + '.pdf';
     var i = 0;
     pdf.pipe(fs.createWriteStream(file));
     pdf.font('Times-Roman');
@@ -106,23 +121,23 @@ var renderText = function(req, res, exhibits, page, msg, type) {
     switch(type){
     case 'tab':
         delimiter = '\t';
-        postfix = '.tab';
+        postfix = 'tab';
         break;
     case 'comma':
         delimiter = ',';
-        postfix = '.csv';
+        postfix = 'csv';
         break;
     case 'line':
         delimiter = '\n';
-        postfix = '.lb.txt';
+        postfix = 'lb_txt';
         break;
     case 'pdf':
         renderPdf(req, res, exhibits, page, msg);
     default:
         delimiter = ' ';
-        postfix = '.txt';
+        postfix = 'txt';
     }
-    file = 'texts/' + page + postfix;
+    file = 'texts/' + postfix + "/" + page + "." + postfix;
     switch(page){
     case 'exhibitors':
         for(i in exhibits){

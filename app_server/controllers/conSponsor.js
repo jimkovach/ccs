@@ -10,9 +10,24 @@ var apiOptions = {
     server : "http://localhost:3000"
 };
 
+
+switch (process.env.NODE_ENV){
+case "production":
+    apiOptions.server ="http://ccs.herokuapp.com";
+    break;
+case "heroku_development":
+    apiOptions.server = "http://localhost:5000";
+    break;
+default:
+    apiOptions.server = "http://localhost:3000";
+    break;
+}
+
+/*
 if (process.env.NODE_ENV === 'production') {
     apiOptions.server = "http://ccs.herokuapp.com";
 }
+*/
 
 var _showError = function(req, res, status) {
     var fString = (flString + "_SHOWeRROR: ");
@@ -40,7 +55,7 @@ var renderPdf = function(req, res, sponsors, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
     console.log(fString);
-    var file = 'texts/' + page + '.pdf';
+    var file = 'texts/pdf/' + page + '.pdf';
     var currentInstitution = '';
     var oldInstitution = '';
     var i = 0;
@@ -82,28 +97,28 @@ var renderText = function(req, res, sponsors, page, msg, type) {
     switch(type){
     case 'tab':
         delimiter = '\t';
-        postfix = '.tab';
+        postfix = 'tab';
         break;
     case 'comma':
         delimiter = ',';
-        postfix = '.csv';
+        postfix = 'csv';
         break;
     case 'line':
         delimiter = '\n';
-        postfix = '.lb.txt';
+        postfix = 'lb_txt';
         break;
     case 'pdf':
         renderPdf(req, res, sponsors, page, msg);
         break;
     case 'txt':
         delimiter = ' ';
-        postfix = '.txt';
+        postfix = 'txt';
         break;
     default:
         console.log(fString + "UNDEFINED FILETYPE");
         return;
     }
-    file = 'texts/' + page + postfix;
+    file = 'texts/' + postfix + "/" + page + "." + postfix;
     for(i in sponsors){
         sponsor_string +=
             sponsors[i].sponsor + delimiter +

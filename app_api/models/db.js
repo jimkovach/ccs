@@ -1,14 +1,25 @@
+var flString = "APP_API/MODELS/DB.JS: ";
+
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURL = 'mongodb://localhost:27017/ccs';
-var dbExhibits = 'mongodb://localhost:27018/exhibits';
 
-if (process.env.NODE_ENV === 'production') {
-    dbURL = 'mongodb://jimkovach:gabby@ds053428.mlab.com:53428/ccs';
+switch(process.env.NODE_ENV){
+case "production":
+    dbURL = "mongodb://jimkovach:gabby@ds053428.mlab.com:53428/ccs";
+    break;
+case "heroku_development":
+    dbURL = "mongodb://jimkovach:gabby@ds053428.mlab.com:53428/ccs";
+    break;
+default:
+    dbURL = "mongodb://localhost:27017/ccs";
+    break
 }
+
+console.log(flString + "process.env.NODE_ENV: " + process.env.NODE_ENV);
+console.log(flString + "dbURL: " + dbURL);
+
 var retry = null;
 mongoose.connect(dbURL);
-//var db_exhibits = mongoose.createConnection(dbExhibits);
 
 mongoose.connection.on('connected', function(){
     console.log('Mongoose connected to ' + dbURL);
@@ -42,6 +53,7 @@ process.on('SIGINT', function() {
         process.exit(0);
     });
 });
+
 //for Heroku app termination
 process.on('SIGTERM', function() {
     gracefulShutdown('Heroku app shutdown', function() {

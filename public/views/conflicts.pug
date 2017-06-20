@@ -28,10 +28,10 @@ block content
           td
             a(href="/update/" + item.conflict_id)= item.conflict
           td
-            a(href="/list?findkey=start&findvalue=" + item.date)= item.date
+            a(href="/events?findkey=date&findvalue=" + item.date)= item.date
           td
-            a(href="/list?findkey=start&findvalue=" + item.start)= item.start
+            a(href="/events?findkey=start&findvalue=" + item.start)= item.start
           td
-            a(href="/list?findkey=building&findvalue=" + item.building)= item.building
+            a(href="/events?findkey=building&findvalue=" + item.building)= item.building
           td
-            a(href="/list?findkey=room&findvalue=" + item.room)= item.room
+            a(href="/events?findkey=room&findvalue=" + item.room)= item.room

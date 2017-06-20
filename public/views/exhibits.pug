@@ -16,6 +16,7 @@ block content
         a(href="/exhibits?sort=booth") Booth
       th
         a(href="/exhibits?sort=title") Title
+      th Delete
     tbody
       each item in exhibits
         tr
@@ -24,3 +25,6 @@ block content
           td= item.exhibitor
           td= item.booth
           td= item.title
+          td
+            a.btn.btn-glyphicon(href="/exhibitDelete/" + item._id role="button")
+              span.glyphicon.glyphicon-trash

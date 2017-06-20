@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= "PRESENTER CONFLICTS"
+      p= "Conflicts occur when a presenter is giving more than one presentation at the same time. Clicking on the presenter will take you to a list of that presenter's events. Clicking on that presenter's 'Event' or 'Conflict' will take you to the Update page for that event."
+      .error= message
+  table.table.table-striped.table-responsive
+    thead.thead-inverse
+      th
+        a(href="/presenterConflicts?sort=presenterLast") Presenter
+      th
+        a(href="/presenterConflicts?sort=date") Date
+      th
+        a(href="/presenterConflicts?sort=start") Time
+      th Event
+      th Conflict
+        
+    tbody
+      each item in events
+        tr
+          td
+            a(href="/events?findkey=presenterLast&findvalue=" + item.last)= item.base
+          td
+            a(href="/events?findkey=date&findvalue=" + item.date)= item.date
+          td
+            a(href="/events?findkey=start&findvalue=" + item.start)= item.start
+          td
+            a(href="/update/" + item.base_id)= item.event
+          td
+            a(href="/update/" + item.conflict_id)= item.conflict
