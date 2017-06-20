@@ -12,6 +12,7 @@ block content
         a(href="/sponsors?sort=sponsor") Sponsor
       th
         a(href="/sponsors?sort=institution") Institution
+      th Delete
     tbody
       each sponsor in sponsors
         tr
@@ -19,3 +20,6 @@ block content
             a(href="/sponsorUpdate/" + sponsor._id)= sponsor.sponsor
           td
             a(href="/sponsors?findkey=institution&findvalue=" + sponsor.institution)= sponsor.institution
+          td
+            a.btn.btn-glyphicon(href="/sponsorDelete/" + sponsor._id role="button")
+              span.glyphicon.glyphicon-trash

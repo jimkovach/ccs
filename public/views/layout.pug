@@ -24,16 +24,26 @@ html
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Events
               ul.dropdown-menu
+                li.dropdown-header.menu-header Events
                 li
                   a(href='/new') New Event
                 li
                   a(href='/events') Events
                 li
+                  a(href='/conflicts') Conflicts
+                li.divider
+                li.dropdown-header.menu-header Presenters
+                li
                   a(href='/presenters') Presenters
+                li
+                  a(href='/presenterConflicts') Conflicts
+                li.divider
+                li.dropdown-header.menu-header Performers
                 li
                   a(href='/performers') Performers
                 li
-                  a(href='/conflicts') Conflicts
+                  a(href="/performerConflicts") Conflicts
+                
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Exhibits
               ul.dropdown-menu
@@ -45,6 +55,7 @@ html
                   a(href='/exhibits') Exhibits
                 li
                   a(href='/exhibitConflicts') Conflicts
+
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Sponsors
               ul.dropdown-menu
@@ -63,12 +74,6 @@ html
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') CaaG
               ul.dropdown-menu
-                li.dropdown-header.menu-header Working
-                li
-                  a.menu-item(href='/caag') Westin - Friday
-                li
-                  a.menu-item(href='/caaghs') Hyatt - Sunday
-                li.divider
                 li.dropdown-header.menu-header Hyatt
                   a.menu-item(href="/tables?building=Hyatt&date=02/16/2017") Thursday
                   a.menu-item(href="/tables?building=Hyatt&date=02/17/2017") Friday
@@ -80,7 +85,6 @@ html
                   a.menu-item(href="/tables?building=Westin&date=02/17/2017") Friday
                   a.menu-item(href="/tables?building=Westin&date=02/18/2017") Saturday
                   a.menu-item(href="/tables?building=Westin&date=02/19/2017") Sunday
-
 
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Development
@@ -99,7 +103,13 @@ html
     footer
       .row
         .col-xs-12
-          small &copy; 2017 - wmea - jim kovach
+          small &copy; 2017 
+          a.footer(href="http://wmea.org" target="_blank") - wmea - 
+          small jim kovach
+      .row
+        .col-xs-12
+          small icons by 
+            a.footer(href="http://glyphicons.com" target="_blank") Glyphicons
     noscript('this site will not work without javascript enabled, please enable your javascript')
     script(src='../js/conflicts.js')
     script(src='../js/jquery.min.js')

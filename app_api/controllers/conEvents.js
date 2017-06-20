@@ -1,4 +1,6 @@
 var flString = "APP_API/CONTROLLERS/CON_EVENTS.JS: ";
+console.log(flString);
+
 var request = require('request');
 var mongoose = require('mongoose');
 var conflicts = require('./conflicts.js');
@@ -61,10 +63,46 @@ module.exports.eventsGetConflicts = function(req, res){
             });
 };
 
+
+module.exports.eventsGetPresenterConflicts = function(req, res){
+    var fString = flString + "EVENTS_GET_PRESENTER_CONFLICTS: ";
+    console.log(fString);
+    var findQuery = {"presenterLast" : {$gt : ""}};
+    var sortQuery = req.query.sort;
+    Event
+        .find(findQuery)
+        .exec(function(err, events){
+            if (err){
+                sendJsonResponse(res, 404, err);
+            } else {
+                results = conflicts.showConflicts('presenters', events, sortQuery);
+                sendJsonResponse(res, 200, results);
+            }
+        });
+};
+
+module.exports.eventsGetPerformerConflicts = function(req, res){
+    var fString = flString + "EVENTS_GET_PERFORMER_CONFLICTS: ";
+    console.log(fString);
+    var findQuery = {"performerName" : {$gt : ""}};
+    var sortQuery = req.query.sort;
+    Event
+        .find(findQuery)
+        .exec(function(err, events){
+            if (err){
+                sendJsonResponse(res, 404, err);
+            } else {
+                results = conflicts.showConflicts('performers', events, sortQuery);
+                sendJsonResponse(res, 200, results);
+            }
+        });
+};
+
+/*
 module.exports.eventsGetCaag = function(req, res){
     var fString = flString + "CAAG: ";
     console.log(fString);
-    var findQuery = {};
+    var findQuery = {"performerLast" : };
     var events = [];
     Event
         .find(findQuery)
@@ -92,6 +130,7 @@ module.exports.eventsGetCag = function(req, res){
             }
         });
 };
+*/
 
 module.exports.eventsGetPresenters = function(req, res) {
     var sortQuery = req.query.sort + " : " + 1;

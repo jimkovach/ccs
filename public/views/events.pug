@@ -20,6 +20,7 @@ block content
         a(href="events?sort=building") Building
       th
         a(href="events?sort=room") Room
+      th Delete
     tbody
       each item in events
         tr
@@ -35,3 +36,7 @@ block content
             a(href="/events?findkey=building&findvalue=" + item.building)= item.building
           td
             a(href="/events?findkey=room&findvalue=" + item.room)= item.room
+          td
+            a.btn.btn-glyphicon(href='/delete/' + item._id role="button")
+              span.glyphicon.glyphicon-trash
+              

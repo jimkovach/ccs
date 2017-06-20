@@ -18,10 +18,11 @@ router.get('/events/:eventid', ctrlEvents.eventsReadOne);
 router.post('/events', ctrlEvents.eventsCreate);
 router.post('/update/:eventid', ctrlEvents.eventsUpdate);
 router.get('/delete/:eventid', ctrlEvents.eventsDelete);
-router.get('/presenters', ctrlEvents.eventsGetPresenters);
-router.get('/performers', ctrlEvents.eventsGetPerformers);
 router.get('/conflicts', ctrlEvents.eventsGetConflicts);
-//router.get('/caag', ctrlEvents.eventsGetCaag);
+router.get('/presenters', ctrlEvents.eventsGetPresenters);
+router.get('/presenterConflicts', ctrlEvents.eventsGetPresenterConflicts);
+router.get('/performers', ctrlEvents.eventsGetPerformers);
+router.get('/performerConflicts', ctrlEvents.eventsGetPerformerConflicts);
 router.get('/tables', ctrlEvents.eventsTables);
 
 router.get('/exhibits', ctrlExhibits.exhibitsGetAll);

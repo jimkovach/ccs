@@ -24,6 +24,8 @@ block content
         a(href='/instruments?sort=deliveryDate') Delivery Date
       th
         a(href='/instruments?sort=deliveryTime') Delivery Time
+      th Delete
+
     tbody
       each inst in instruments
         tr
@@ -42,3 +44,6 @@ block content
               +formatDate(inst.deliveryDate)
           td
             a(href='/instruments?findkey=deliveryTime&findvalue=' + inst.deliveryTime)= inst.deliveryTime
+          td
+            a.btn.btn-glyphicon(href='/instrumentDelete/' + inst._id role="button")
+              span.glyphicon.glyphicon-trash

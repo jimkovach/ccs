@@ -10,8 +10,15 @@ var conflictP = function(db, base, event){
     case 'events':
         conflictTest = base.building === event.building && base.room === event.room && base.date === event.date && base.start === event.start;
         break;
+    case "presenters":
+        conflictTest = base.presenterLast === event.presenterLast && base.presenterFirst === event.presenterFirst && base.date === event.date && base.start === event.start;
+        break;
+    case "performers":
+        conflictTest = base.performerName === event.performerName && base.date === event.date && base.start === event.start;
+        break;
     case 'exhibits':
         conflictTest = base.booth === event.booth;
+        break;
     }
     return conflictTest;
 };
@@ -60,6 +67,28 @@ module.exports.showConflicts = function(db, collection, sortQuery){
                       "start" : collection[get_id(conflictArray[i].base_id, collection)].start,
                       "building" : collection[get_id(conflictArray[i].base_id, collection)].building,
                       "room" : collection[get_id(conflictArray[i].base_id, collection)].room
+                    });
+            } else if (db === "presenters"){
+                conflicts.push(
+                    {"base_id" : collection[get_id(conflictArray[i].base_id, collection)]._id,
+                     "conflict_id" : collection[get_id(conflictArray[i].conflict_id, collection)]._id,
+                     "base" : collection[get_id(conflictArray[i].conflict_id, collection)].presenterLast + ", " + collection[get_id(conflictArray[i].conflict_id, collection)].presenterFirst,
+                     "last" : collection[get_id(conflictArray[i].conflict_id, collection)].presenterLast,
+                     "first" : collection[get_id(conflictArray[i].conflict_id, collection)].presenterFirst,
+                     "date" : collection[get_id(conflictArray[i].base_id, collection)].date,
+                     "start" : collection[get_id(conflictArray[i].base_id, collection)].start,
+                     "event" : collection[get_id(conflictArray[i].base_id, collection)].title,
+                     "conflict" : collection[get_id(conflictArray[i].conflict_id, collection)].title
+                    });
+                } else if (db === "performers"){
+                conflicts.push(
+                    {"base_id" : collection[get_id(conflictArray[i].base_id, collection)]._id,
+                     "conflict_id" : collection[get_id(conflictArray[i].conflict_id, collection)]._id,
+                     "base" : collection[get_id(conflictArray[i].base_id, collection)].performerName,
+                     "date" : collection[get_id(conflictArray[i].base_id, collection)].date,
+                     "start" : collection[get_id(conflictArray[i].base_id, collection)].start,
+                     "event" : collection[get_id(conflictArray[i].base_id, collection)].title,
+                     "conflict" : collection[get_id(conflictArray[i].conflict_id, collection)].title
                     });
             } else if (db === 'exhibits'){
                 conflicts.push(

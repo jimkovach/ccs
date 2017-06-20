@@ -1,5 +1,5 @@
 var flString="app_api/routes/index.js: ".toUpperCase();
-console.log(flString);
+
 var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
@@ -8,13 +8,13 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-//var path = require('path');
-var path = '../controllers/';
-var main = require(path + 'main.js');
-var ctrlEvent = require(path + 'conEvent.js');
-var ctrlExhibit = require(path + 'conExhibit.js');
-var ctrlSponsor = require(path + 'conSponsor.js');
-var ctrlInstrument = require(path + 'conInst.js');
+var path = require('path');
+var pth = '../controllers/';
+var main = require(pth + 'main.js');
+var ctrlEvent = require(pth + 'conEvent.js');
+var ctrlExhibit = require(pth + 'conExhibit.js');
+var ctrlSponsor = require(pth + 'conSponsor.js');
+var ctrlInstrument = require(pth + 'conInst.js');
 
 router.get('/', main.index);
 
@@ -26,15 +26,13 @@ router.get('/update/:eventid', ctrlEvent.eventUpdate);
 router.post('/update/:eventid', ctrlEvent.doEventUpdate);
 router.get('/delete/:eventid', ctrlEvent.eventDelete);
 router.get('/program/:eventid', ctrlEvent.program);
-router.get('/presenters', ctrlEvent.presenters);
-router.get('/performers', ctrlEvent.performers);
 router.get('/conflicts', ctrlEvent.conflicts);
-router.get('/tables', ctrlEvent.tables);
 
-/*
-router.get('/caag', ctrlEvent.caag);
-router.get('/caaghs', ctrlEvent.caaghs);
-*/
+router.get('/presenters', ctrlEvent.presenters);
+router.get('/presenterConflicts', ctrlEvent.presenterConflicts);
+router.get('/performers', ctrlEvent.performers);
+router.get('/performerConflicts', ctrlEvent.performerConflicts);
+router.get('/tables', ctrlEvent.tables);
 
 router.get('/exhibits', ctrlExhibit.exhibits);
 router.get('/exhibitRead/:exhibitid', ctrlExhibit.exhibitRead);

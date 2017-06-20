@@ -9,9 +9,25 @@ var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : 'http://localhost:3000'
 };
+
+
+switch (process.env.NODE_ENV){
+case "production":
+    apiOptions.server ="http://ccs.herokuapp.com";
+    break;
+case "heroku_development":
+    apiOptions.server = "http://localhost:5000";
+    break;
+default:
+    apiOptions.server = "http://localhost:3000";
+    break;
+}
+
+/*
 if (process.env.NODE_ENV === 'production') {
     apiOptions.server = 'http://ccs.herokuapp.com';
 }
+*/
 
 var _showError = function(req, res, status) {
     var fString = (flString + "_SHOWeRROR: ");
@@ -38,8 +54,7 @@ var _showError = function(req, res, status) {
 var renderPdf = function(req, res, instruments, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
-    console.log(fString)
-    var file = 'texts/' + page + '.pdf';
+    var file = 'texts/pdf/' + page + '.pdf';
     var i = 0;
     pdf.pipe(fs.createWriteStream(file));
     pdf.font('Times-Roman');
@@ -84,7 +99,6 @@ var renderPdf = function(req, res, instruments, page, msg) {
 // CREATE TEXT FILES
 var renderText = function(req, res, instruments, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
-    console.log(fString + type);
     var message;
     var delimiter, postfix;
     var file;
@@ -93,24 +107,24 @@ var renderText = function(req, res, instruments, page, msg, type) {
     switch(type){
     case 'tab':
         delimiter = '\t';
-        postfix = '.tab';
+        postfix = 'tab';
         break;
     case 'comma':
         delimiter = ',';
-        postfix = '.csv';
+        postfix = 'csv';
         break;
     case 'line':
         delimiter = '\n';
-        postfix = '.lb.txt';
+        postfix = 'lb_txt';
         break;
     case 'pdf':
         renderPdf(req, res, instruments, page, msg);
         break;
     default:
         delimiter = ' ';
-        postfix = '.txt';
+        postfix = 'txt';
     }
-    file = 'texts/' + page + postfix;
+    file = 'texts/' + postfix + "/" + page + "." + postfix;
     if(type === 'comma'){
         instrument_string =
             '' + delimiter +
@@ -181,14 +195,13 @@ var renderText = function(req, res, instruments, page, msg, type) {
         if (err) {
             return console.error(fString + 'ER: ' + err);
         } else {
-            console.log(fString + "Success!");
         }
     });
 };
 
 var renderInstruments = function(req, res, instruments, page, msg, title) {
     fString = flString + "RENDER_INSTRUMENT: ";
-    console.log(fString);
+
     var message;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
         if(!title){
@@ -207,7 +220,7 @@ var renderInstruments = function(req, res, instruments, page, msg, title) {
             message = msg;
         }
     }
-    console.log(fString + "PAGE: " + page);
+
     res.render(page, {
         title: page,
         pageHeader: {
@@ -234,7 +247,7 @@ module.exports.instruments = function (req, res){
         page = "instruments";
         path = '/api/instruments';
     };
-    console.log(fString + req.query.sort);
+
     if (req.query.sort) {
         sortQuery = req.query.sort;
     }
@@ -259,7 +272,6 @@ module.exports.instruments = function (req, res){
             if (err) {
                 console.log(fString + "REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                console.log(fString + "RESPONSE.STATUS_CODE: " + response.statusCode);
                 renderInstruments(req, res, body, page, message, title);
             } else {
                 console.log(fString + "REQUEST STATUS: " + response.statusCode);
@@ -270,9 +282,6 @@ module.exports.instruments = function (req, res){
 
 var renderInstrumentPage = function (req, res, page, instrument) {
     var fString = flString + "RENDER_INSTRUMENT_PAGE ";
-    console.log(fString);
-    console.log(fString + "PAGE: " + page);
-    console.log(fString + "INSTRUMENT: " + instrument + ": " + instrument.instrument);
     res.render(page, {
         title: instrument.instrument,
         pageHeader: {title : "INSTRUMENTS: " + instrument.instrument + " #" + instrument.serial},
@@ -282,7 +291,6 @@ var renderInstrumentPage = function (req, res, page, instrument) {
 
 module.exports.instrumentRead = function (req, res){
     var fString = flString + "INSTRUMENT_READ: ";
-    console.log (fString);
     var requestOptions, path, page;
     page="instrument";
     path = "/api/instrumentsRead/" + req.params.instrumentid;
@@ -297,7 +305,6 @@ module.exports.instrumentRead = function (req, res){
             if(err) {
                 console.log(fString + "REQUEST ERR: " + err);
             } else if (response.statusCode === 200) {
-                console.log(fString + "REQUEST SUCCESSFUL, RESPONSE: " + response.statusCode);
                 renderInstrumentPage(req, res, page, body);
             } else {
                 console.log(fString + "REQUEST STATUSE: " + response.statusCode);
@@ -317,7 +324,6 @@ module.exports.instrumentCreate = function (req, res){
 
 module.exports.doInstrumentCreate = function(req, res){
     var fString = flString + "DO_INSTRUMENT_CREATE: ";
-    console.log(fString);
     var requestOptions, path, message;
     path = '/api/instrumentsCreate';
     var postData = {
@@ -360,9 +366,7 @@ module.exports.doInstrumentCreate = function(req, res){
     request(
         requestOptions,
         function(err, response, body){
-            console.log(fString + 'RESPONSE.STATUS_CODE: ' + response.statusCode);
             if (response.statusCode === 200 || response.statusCode === 201){
-                console.log(fString + "SUCCESSFULLY POSTED: " + postData.instrument + " WITH A STATUS OF " + response.statusCode);
                 message = "Successfully posted " + postData.instrument;
                 res.redirect('/instruments');
             } else {
@@ -378,7 +382,6 @@ module.exports.instrumentUpdate = function (req, res){
     var requestOptions, path;
     path = "/api/instrumentsRead/" + req.params.instrumentid;
     var page = 'instrumentUpdate';
-    console.log(fString + "PATH: " + path);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
@@ -397,7 +400,6 @@ module.exports.instrumentUpdate = function (req, res){
 
 module.exports.doInstrumentUpdate = function(req, res){
     var fString = flString + "DO_INSTRUMENT_UPDATE: ";
-    console.log(fString);
     var instrumentid = req.params.instrumentid;
     var requestOptions, path;
     path = "/api/instrumentUpdate/" + instrumentid;
@@ -434,7 +436,6 @@ module.exports.doInstrumentUpdate = function(req, res){
         json : postData,
         qs : {}
     };
-    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request(
         requestOptions,
         function(err, response, body){
@@ -449,7 +450,6 @@ module.exports.doInstrumentUpdate = function(req, res){
 
 module.exports.instrumentDelete = function(req, res){
     var fString = flString + "INSTRUMENT_DELETE: ";
-    console.log(fString);
     var requestOptions, path;
     path = "/api/instrumentsDelete/" + req.params.instrumentid;
     requestOptions = {
@@ -461,7 +461,6 @@ module.exports.instrumentDelete = function(req, res){
         requestOptions,
         function(err, response, body){
             if(response.statusCode === 204){
-                console.log(fString + "SUCCESSFULLY DELETED: " + req.params.instrumentid);
                 res.redirect('/instruments');
             } else {
                 _showError(req, res, response.statusCode);

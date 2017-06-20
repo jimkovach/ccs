@@ -59,11 +59,15 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 40px;
+    height: 60px;
     padding-top : 10px;
     background-color : gray;
     color: silver;
     text-align : center;
+}
+
+a.footer{
+    color:silver;
 }
 
 .form-group{
@@ -169,4 +173,9 @@ h1{
 }
 .menu-header {
     font-size:1.25em;
+}
+
+.btn-glyphicon{
+    padding-top:0;
+    padding-bottom:0;
 }
