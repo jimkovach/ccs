@@ -260,7 +260,7 @@ var renderList = function(req, res, events, page, msg, title) {
         title: title,
         pageHeader: {
             title: title.toUpperCase(),
-            strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
+            strapline: 'select a title to find details and update that specific event. select a table header to sort by that item.'
         },
         events : events,
         message : message
