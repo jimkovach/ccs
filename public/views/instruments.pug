@@ -10,6 +10,7 @@ block content
       .error= message
   table.table.table-striped.table-responsive
     thead
+      th Details
       th
         a(href='/instruments?sort=instrument') Instrument
       th
@@ -29,6 +30,9 @@ block content
     tbody
       each inst in instruments
         tr
+          td
+            a(href="/instrumentRead/" + inst._id)
+              span.glyphicon.glyphicon-zoom-in
           td
             a(href='/instrumentUpdate/' + inst._id)= inst.instrument
           td= inst.serial

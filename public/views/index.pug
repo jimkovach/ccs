@@ -15,11 +15,16 @@ block content
           li
             a(href='/events') Events: List of all events
           li
+            a(href='/conflicts') Conflicts: List of conflicts generated when a room is being used by more than one event at the same time
+          li
             a(href='/presenters') Presenters: List of all presenters attached to an event
+          li
+            a(href='/presenterConflicts') Conflicts: List of conflicts generated when a presenter is assigned to more than one event at the same time.
           li
             a(href='/performers') Performers: List of all performers attached to an event
           li
-            a(href='/conflicts') Conflicts: List of conflicts generated when a room is being used by more than one event at the same time
+            a(href='/performerConflicts') Conflicts: List of conflicts generated when a performer is assigned to more than one event at the same time.
+
         li Exhibits: Dropdown that exposes the following...
         ul
           li
@@ -28,12 +33,16 @@ block content
             a(href='/exhibitors') Exhibitors: List of exhibitors
           li
             a(href='/exhibits') Exhibits: List of exhibits
+          li
+            a(href='/exhibitConflicts') Conflicts: List of conflicts generated when more than one exhibit is assigned to the same booth.
         li Sponsors: Dropdown that exposes the following...
         ul
           li
             a(href='/sponsorCreate') New Sponsor: Create a new sponsor
           li
             a(href='/sponsors') Sponsors: List of all sponsors
+          li
+            a(href="/sponsorConflicts") Conflicts: List of conflicts genrated when there is a duplicate for the sponsor.
         li Instruments: Dropdown that exposes the following...
         ul
           li
@@ -46,18 +55,24 @@ block content
           li selecting a blank cell will take you to the 'New Event' page with building, room, date, and start time already filled in
 
         li Development is a dropdown of stuff just used in development - not for production.
-    p= "The following buttons appear on various single event pages..."
+    p= "The following buttons appear on various single event and update pages..."
       ul
         li Submit: to submit the data just added or updated
         li Cancel: well duh!
         li New: add a new item
-        li Update: takes you to the update page where you can change data stored for an event
+        li Update: takes you to the update page where you can change data stored for an event/exhibit/sponsor etc
         li Delete: removes the current event from the database. WARNING: there is no warning or second chance yet. If you click this button, the event is gone
         li Program: Takes you to a program view of that event, how the event will layout in the program
         li note: you will often see a 'checked' reference that is labeled as 'false' - not yet implemented but is there for future updates where you can select individual events for block treatment (deleting, updating in mass, etc.)
     p= "List pages (list, performers, presenters, exhibits, exhibitors, etc.) have the following behavior..."
       ul
+        li Clicking the Details icon will take you to the detail page for that event.
         li Clicking on a table header item will usually sort by that item
         li Clicking on an event/exhibit title will take you to that event's/exhibit's update page
         li Clicking on an item in the table (except for the title) will usually display just the entries that contain that item. For instance, in the List, clicking on a category will show all entries in that particular category - try it, you'll see what I mean
-        li Clicking on the Trashcan will delete that item from the database. WARNING - there is no undo for this!        
+        li Clicking on the Trashcan will delete that item from the database. WARNING - there is no undo for this!
+    p= "A note on CONFLICTS"
+      ul
+        li Conflicts are not automatically generated. I feel that as the conference is being built conflicts will naturally occur until we have the final product. Once the product is built conflicts should be checked and dealt with.
+        li Besides the CONFLICT menu items, one way to tell if there is a conflict with the events is to go to the CaaG (Conference at a Glance) menus. If a row extends beyond the table, that is a sure sign that there are duplicate events assigned to the same room at that time.
+        li I have not developed conflicts for instruments. It seems that instruments may be passed around from site to site. If this is not the case then that functionality can be included.

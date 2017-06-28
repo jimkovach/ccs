@@ -1,5 +1,4 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_EXHIBIT.JS ";
-console.log(flString);
 
 var fs=require('fs');
 var request = require('request');
@@ -8,7 +7,6 @@ var utilities = require('../../public/js/utilities');
 var apiOptions = {
     server : "http://localhost:3000"
 };
-
 
 switch (process.env.NODE_ENV){
 case "production":
@@ -44,7 +42,7 @@ var _showError = function(req, res, status) {
     }
     console.log(fString + title + " " + content);
     res.status(status);
-    res.render('main', {
+    res.render('error', {
         title : title,
         content : content
     });
@@ -52,12 +50,9 @@ var _showError = function(req, res, status) {
 
 var expandTab = function(textStart, textEnd){
     var fString = flString + "EXPAND_TAB: ";
-    console.log(fString);
     var newText = "";
     var textLength = textStart.length + textEnd.length;
     newText = textStart;
-    console.log(fString + "TEXT_LENGTH: " + textLength);
-    console.log(fString + "100 - TEXT_LENGTH: " + (100 - textLength));
     for(var i = 0; i < 100 - textLength; i++){
         newText += '.';
     };
@@ -170,12 +165,11 @@ var renderText = function(req, res, exhibits, page, msg, type) {
     }fs.writeFile(file, exhibit_string, function(err) {
         if (err) {
             return console.error(fString + 'ER: ' + err);
-        } else {
-        }
+        } 
     });
 };
 
-var renderExhibits = function(req, res, exhibits, page, msg, title) {
+var renderExhibits = function(req, res, exhibits, page, title, msg) {
     fString = flString + "RENDER_EXHIBITS: ";
     var message = msg;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
@@ -195,7 +189,7 @@ var renderExhibits = function(req, res, exhibits, page, msg, title) {
     res.render(page, {
         title: page,
         pageHeader: {
-            title: page.toUpperCase(),
+            title: title.toUpperCase(),
             strapline: 'select a title to find details on that specific event. select a table header to sort by that item.'
         },
         exhibits : exhibits,
@@ -208,7 +202,6 @@ var renderExhibits = function(req, res, exhibits, page, msg, title) {
 
 module.exports.exhibits = function(req, res){
     var fString = flString + "EXHIBITS: ";
-    console.log(fString);
     var requestOptions, path, page, message, title;
     var sortQuery = "exhibit";
     var findvalue = "";
@@ -219,7 +212,6 @@ module.exports.exhibits = function(req, res){
         page = "exhibits";
         path = "/api/exhibits";
     };
-    console.log(fString + "PAGE: " + page);
     if(req.query.sort) {
         sortQuery = req.query.sort;
     }
@@ -239,14 +231,13 @@ module.exports.exhibits = function(req, res){
             findvalue : findvalue
         }
     };
-    console.log(fString + "URL: " + requestOptions.url);
     request(
         requestOptions,
         function(err, response, body) {
             if (err) {
                 console.log(fString + "LIST REQUEST ERROR: " + err);
             } else if (response.statusCode == 200) {
-                renderExhibits(req, res, body, page, message, title);
+                renderExhibits(req, res, body, page, title, message);
             } else {
                 console.log(fString + "LIST REQUEST STATUS: " + response.statusCode);
             }
@@ -256,7 +247,6 @@ module.exports.exhibits = function(req, res){
 
 module.exports.exhibitors = function(req, res){
     var fString = flString + "EXHIBITORS: ";
-    console.log(fString);
     var requestOptions, path, page, sortQuery, findQuery;
     var msg = "";
     sortQuery = "exhibitors";
@@ -272,15 +262,13 @@ module.exports.exhibitors = function(req, res){
         json : {},
         qs : {sort : sortQuery, find : findQuery}
     };
-    console.log(fString + "REQUEST_OPTIONS URL: " + requestOptions.url);
     request(
         requestOptions,
         function(err, response, body){
             if(err) {
                 console.log(fString + "EXHIBITORS REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                renderExhibits(req, res, body, page, msg, utilities.toTitleCase(page));
-                console.log(fString + "EXHIBITORS RESPONSE: " + response.statusCode);
+                renderExhibits(req, res, body, page, utilities.toTitleCase(page), msg);
             } else {
                 console.log(fString + "EXHIBITORS REQUEST STATUS: " + response.statusCode);
             }
@@ -288,38 +276,32 @@ module.exports.exhibitors = function(req, res){
     );
 };
 
-var renderExhibitPage = function (req, res, page, exhibit) {
+var renderExhibitPage = function (req, res, page, title, exhibit) {
     var fString = flString + "RENDER_EXHIBIT_PAGE: "
-    console.log(fString + "PAGE: " + page);
-    console.log(fString + "EXHIBIT . EXHIBIT: " + exhibit.exhibit)
     res.render(page, {
         title : exhibit.exhibit,
-        pageHeader: { title: 'EXHIBITS ' + page.toUpperCase() + ": " + exhibit.exhibit},
+        pageHeader: { title: 'EXHIBIT ' + title + exhibit.exhibit},
         exhibit : exhibit
     });
 };
 
 module.exports.exhibitRead = function(req, res){
     var fString = flString + "EXHIBIT: ";
-    console.log(fString);
     var requestOptions, path, page;
     page = "exhibit.pug";
     path = "/api/exhibitsRead/" + req.params.exhibitid;
-    console.log(fString + "PATH: " + path);
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {}
     };
-    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body) {
             if(err) {
                 console.log(fString + "REQUEST ERR: " + err);
             } else if (response.statusCode === 200) {
-                console.log(fString + "REQUEST SUCCESSFUL, RESPONSE: " + response.statusCode);
-                renderExhibitPage(req, res, page, body);
+                renderExhibitPage(req, res, page, "PROGRAM VIEW: ", body);
             } else {
                 console.log(fString + "REQUEST STATUS" + response.statusCode);
             }
@@ -329,7 +311,6 @@ module.exports.exhibitRead = function(req, res){
 
 module.exports.exhibitNew = function(req, res){
     var fString = flString + "EXHIBIT_NEW: ";
-    console.log(fString);
     var page = "exhibitNew";
     res.render(page, {
         title: 'CCS - New Exhibit',
@@ -342,7 +323,6 @@ module.exports.exhibitNew = function(req, res){
 
 module.exports.doExhibitNew = function(req, res){
     var fString = flString + "DO_EXHIBIT_NEW: ";
-    console.log(fString);
     var page = "exhibitNew";
     var requestOptions, path, message;
     path = "/api/exhibits/new";
@@ -364,7 +344,6 @@ module.exports.doExhibitNew = function(req, res){
         cancelled : req.body.cancelled,
         checked : req.body.checked
     };
-    console.log(fString + "POST_DATA.EXHIBIT: " + postData.exhibit);
     if(!postData.exhibit){
         console.log("exhibit name is required");
         _showError(req, res, "exhibit name is required");
@@ -378,13 +357,10 @@ module.exports.doExhibitNew = function(req, res){
     request(
         requestOptions,
         function(err, response, body){
-            console.log(fString + "REQUEST RESPONSE.STATUS_CODE: " + response.statusCode);
             if(response.statusCode === 200) {
-                console.log(fString + "SUCCESSFULLY POSTED: " + postData.exhibit + " WITH A STATUS OF 200");
                 message = fString + "Successfully posted " + postData.exhibit;
                 res.redirect('/exhibits');
             } else if (response.statusCode === 201) {
-                console.log(fString + "SUCCESFULLY CREATED NEW EXHIBIT WITH A STATUS OF 201");
                 message = "Successfully posted " + postData.exhibit;
                 res.redirect('/exhibits');
             }else{
@@ -394,26 +370,23 @@ module.exports.doExhibitNew = function(req, res){
     );
 };
 
-
 module.exports.exhibitUpdate = function(req, res) {
     var fString = flString + "EXHIBIT_UPDATE: ";
-    console.log(fString);
     var requestOptions, path;
     path = "/api/exhibitsRead/" + req.params.exhibitid;
     var page = 'exhibitUpdate';
-    console.log(fString + "PATH: " + path);    
+    var title = "UPDATE: ";
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
         json : {},
         qs : {}
     };
-    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body) {
             console.log(fString + "REQUEST FUNCTION ERR: " + err);
-            renderExhibitPage(req, res, page, body);
+            renderExhibitPage(req, res, page, title, body);
         }
     );
 };    
@@ -453,7 +426,6 @@ module.exports.doExhibitUpdate = function(req, res) {
         requestOptions,
         function(err, response, body) {
             if (response.statusCode === 200) {
-                console.log(fString + "REQUEST RESPONSE.STATUSCODE: " + response.statusCode);
                 res.redirect('/exhibitRead/' + exhibitid);
             } else {
                 _showError(req, res, response.statusCode);
@@ -464,7 +436,6 @@ module.exports.doExhibitUpdate = function(req, res) {
 
 module.exports.exhibitDelete = function(req, res) {
     var fString = flString + "EXHIBIT_DELETE: ";
-    console.log(fString);
     var requestOptions, path;
     path = "/api/exhibits/delete/" + req.params.exhibitid;
     requestOptions = {
@@ -476,7 +447,6 @@ module.exports.exhibitDelete = function(req, res) {
         requestOptions,
         function (err, response, body){
             if (response.statusCode === 204) {
-                console.log(fString + "SUCCESSFULLY DELETED: " + req.params.exhibitid);
                 res.redirect('/exhibits');
             } else {
                 _showError(req, res, response.statusCode);
@@ -488,11 +458,11 @@ module.exports.exhibitDelete = function(req, res) {
 
 module.exports.exhibitConflicts = function(req, res){
     var fString = flString + "EXHIBIT_CONFLICTS: ";
-    console.log(fString);
     var requestOptions, path, page;
     page = 'exhibitConflicts';
     path= '/api/exhibitConflicts';
     var sortQuery = "booth";
+    var title = "EXHIBIT CONFLICTS";
     if(req.query.sort){
         sortQuery = req.query.sort;
     }
@@ -502,15 +472,13 @@ module.exports.exhibitConflicts = function(req, res){
         json : {},
         qs : {sort : sortQuery}
     }
-    console.log(fString + 'REQUEST_OPTIONS.URL: ' + requestOptions.url);
     request(
         requestOptions,
         function(err, response, body) {
             if (err) {
                 console.log(fString + " REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                console.log(fString + "REQUEST RENDER: " + requestOptions.url);
-                renderExhibits(req, res, body, page);
+                renderExhibits(req, res, body, page, title);
             } else {
                 console.log(fString + " REQUEST STATUS: " + response.status.code);
             }

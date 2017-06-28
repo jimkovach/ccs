@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= "SPONSOR CONFLICTS"
+      p= pageHeader.strapline
+      .error= message
+  table.table.table-striped.table-responsive
+    thead.thead-inverse
+      th
+        a(href="/sponsors?sort=sponsor") Sponsor
+      th
+        a(href="/sponsors?sort=sponsor") Conflict
+    tbody
+      each item in sponsors
+        tr
+          td
+            a(href="/sponsors?findkey=sponsor&findvalue=" + item.base)= item.base
+          td
+            a(href="/sponsors?findkey=sponsor&findvalue=" + item.base)= item.conflict
+          td

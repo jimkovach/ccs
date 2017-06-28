@@ -25,7 +25,6 @@ module.exports.getSortOrder = function(key){
 module.exports.convertToDate = function(dateObject) {
     var fString = flString + "CONVERT_TO_DATE: ";
     var d = dateObject;
-    console.log(flString + d);
     //allows the use of either 'a or 'p instead of full designation
     if(! d.toUpperCase().endsWith("M")){
         d += "M";
@@ -38,7 +37,6 @@ module.exports.convertToDate = function(dateObject) {
     }
     //get the date number
     var date = Date.parse(d);
-    console.log(fString + "return: " + date);
     return(date);
 };
  
@@ -48,7 +46,6 @@ module.exports.dateFromNum = function(num){
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
     date = month + "/" + day + "/" + year;
-    console.log(date);
     return(date);
 };
 
@@ -64,7 +61,6 @@ module.exports.timeFromNum = function(num){
     }
     minutes = date.getMinutes();
     time = hours + ":" + minutes + "0 " + ampm;
-    console.log(time);
     return(hours + ":" + minutes + "0 " + ampm);
 };
 
@@ -84,6 +80,5 @@ module.exports.fillTable = function(events) {
         for (r in roomArray){
             string += roomArray[i];
         }
-        console.log(string);
     }
 }

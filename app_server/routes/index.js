@@ -51,6 +51,7 @@ router.get('/sponsorRead/:sponsorid', ctrlSponsor.sponsorRead);
 router.get('/sponsorUpdate/:sponsorid', ctrlSponsor.sponsorUpdate);
 router.post('/sponsorUpdate/:sponsorid', ctrlSponsor.doSponsorUpdate);
 router.get('/sponsorDelete/:sponsorid', ctrlSponsor.sponsorDelete);
+router.get('/sponsorConflicts', ctrlSponsor.sponsorConflicts);
 
 router.get('/instrumentCreate', ctrlInstrument.instrumentCreate);
 router.post('/instrumentCreate', ctrlInstrument.doInstrumentCreate);

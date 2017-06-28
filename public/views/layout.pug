@@ -1,20 +1,20 @@
 include _includes/sharedHTMLfunctions
 
 doctype html
-html
+html(ng-app="ccsApp")
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
+    script(src='../js/jquery.min.js')
     link(rel='stylesheet', href='../css/bootstrap.min.css')
     link(rel='stylesheet', href='../css/custom.css')
-    noscript
-      Your browser is not supporting javascript, unfortunately this site will not work without javascript, please enable.
+    script(src='../js/bootstrap.js')
   body
     .navbar.navbar-default.navbar-fixed-top
       .container-fluid
         .navbar-header
           a.navbar-brand(href='/') CCS - Menu
-            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
             span.icon-bar
             span.icon-bar
             span.icon-bar
@@ -63,6 +63,8 @@ html
                   a(href='/sponsorCreate') New Sponsor
                 li
                   a(href='/sponsors') Sponsors
+                li
+                  a(href="/sponsorConflicts") Conflicts
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Instruments
               ul.dropdown-menu
@@ -98,11 +100,11 @@ html
                 li
                   a(href='/api/exhibitsRead/5918dd18604537059eba6534') Get Exhibit
 
-    .container          
+    .container
       block content
     footer
       .row
-        .col-xs-12
+        .col-xs-12.col-m-12.col-lg-12.col-s-12
           small &copy; 2017 
           a.footer(href="http://wmea.org" target="_blank") - wmea - 
           small jim kovach
@@ -112,5 +114,5 @@ html
             a.footer(href="http://glyphicons.com" target="_blank") Glyphicons
     noscript('this site will not work without javascript enabled, please enable your javascript')
     script(src='../js/conflicts.js')
-    script(src='../js/jquery.min.js')
-    script(src='../js/bootstrap.js')
+    script(src="../js/angular.min.js")
+    script(src="../js/ccs.angular.js")

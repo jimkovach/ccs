@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= "Set Up"
+
+  .row
+    .col-xs-12
+      form.form-horizontal(name="setupForm" action="", method="post", role="form)
+        .col-xs-12
+          .form-group
+            label Year
+              input#year.form-control.input-required(autofocus, name="year, placeholder="Required", required)
+            label Building
+              input#building.form-control(name="building")

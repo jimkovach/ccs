@@ -12,6 +12,7 @@ body {
     padding: 50px;
     background-size: cover;
 }
+
 p{
     margin-bottom: 4px;
     color: black;
@@ -75,12 +76,12 @@ a.footer{
 }
 
 input{
-    padding: 1px 8px;
+
 }
 
 .form-control{
     padding: 1px 8px;
-    height: 30 px;
+    height: 26px;
     color: black;
 }
 
@@ -123,6 +124,7 @@ p.exhibit_exhibitor{
     text-align: center;
     font-size: 120%;
 }
+
 .exhibit_info {
     font-family: "Times";
     font-size: 120%;
@@ -141,10 +143,10 @@ p.exhibit_exhibitor{
     padding-top: 10px;
 }
 
-
 .error{
     color: red;
 }
+
 h1{
     font-size:1.5em;
 }
@@ -171,6 +173,7 @@ h1{
     }
 
 }
+
 .menu-header {
     font-size:1.25em;
 }
@@ -178,4 +181,24 @@ h1{
 .btn-glyphicon{
     padding-top:0;
     padding-bottom:0;
+}
+
+
+label {
+    width: 100%;
+    display: inline-block;
+    color: #cccccc;
+}
+
+input{
+    display: inline-block;
+}
+
+input.ng-touched.ng-invalid {
+    background-color: #ffa6a6;
+    color: black;
+}
+
+input.ng-touched.ng-invalid::-webkit-input-placeholder {
+    color: black;
 }

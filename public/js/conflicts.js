@@ -1,6 +1,4 @@
 var flString = "PUBLIC/JS/CONFLICTS.JS: ";
-console.log(flString);
-
 var conflictString = function(db, entry){
     var fString = flString + "CONFLICT_STRING: " + db;
     console.log(fString);
@@ -11,6 +9,9 @@ var conflictString = function(db, entry){
         break;
     case 'exhibits':
         conflictTest = "e:" + entry.exhibit + "|b:" + entry.booth;
+        break;
+    case "sponsors":
+        conflictTest = "s:" + entry.sponsor;
         break;
     }
     console.log(fString + "CONFLICT_TEST: " + conflictTest);

@@ -38,6 +38,7 @@ router.post('/sponsorsCreate', ctrlSponsors.sponsorsCreate);
 router.get('/sponsorsRead/:sponsorid', ctrlSponsors.sponsorsReadOne);
 router.post('/sponsorUpdate/:sponsorid', ctrlSponsors.sponsorsUpdate);
 router.get('/sponsorsDelete/:sponsorid', ctrlSponsors.sponsorsDelete);
+router.get('/sponsorConflicts/', ctrlSponsors.sponsorsGetConflicts);
 
 router.post('/instrumentsCreate', ctrlInstruments.instrumentsCreate);
 router.get('/instruments', ctrlInstruments.instrumentsReadAll);

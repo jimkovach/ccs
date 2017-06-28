@@ -8,6 +8,7 @@ block content
       .error= message
   table.table.table-striped.table-responsive
     thead.thead-inverse
+      th Details
       th
         a(href="/exhibits?sort=exhibit") Exhibit
       th
@@ -20,6 +21,9 @@ block content
     tbody
       each item in exhibits
         tr
+          td
+            a.btn.btn-glyphicon(href="/exhibitRead/" + item._id role="button")
+              span.glyphicon.glyphicon-zoom-in
           td
             a(href="/exhibitUpdate/" + item._id)= item.exhibit
           td= item.exhibitor

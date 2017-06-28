@@ -12,8 +12,13 @@ th, td{
     width: 6.66%;
 }
 
-td:hover,a{
-    color:gray:
+td:hover{
+    background-color: gray;
+    color: silver;
+}
+
+td:hover a{
+    color:silver;
 }
 
 .category{

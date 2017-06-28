@@ -3,56 +3,84 @@ extends layout
 block content
   .row.page-header
     .col-lg-12
-      h1= pageHeader.title
-      p= pageHeader.strapline
+      h1= "EVENTS - Create New Event"
+      p= "NOTE! Event Title, Date, Start Time and End Time are all required before you can successfully save"
       .error= message
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(action="", method="post", role="form")
-        .col-xs-12.col-sm-6.col-md-4
-
-          .form-group
-            .col-xs-12.col-sm-12
-              input#title.form-control(autofocus=true name="title", placeholder="title")
-              input#category.form-control(name="category", placeholder="category")
-              input#date.form-control(name="date", placeholder="date", value=event.date)
-              input#start.form-control(name="start", placeholder="start time", value=event.time)
-              input#start.form-control(name="end", placeholder="end time")
-              input#building.form-control(name="building", placeholder="building", value=event.building)
-              input#room.form-control(name="room", placeholder="room", value=event.room)
-
-          .form-group
-            .col-xs-12.col-sm-12
-              input#hostName.form-control(name="hostName", placeholder="host")
-              input#hostEmail.form-control(type="email" name="hostEmail", placeholder="email")
-              input#hostInstitution.form-control(name="hostInstitution", placeholder="institution")
-              input#hostCity.form-control(name="hostCity", placeholder="city")
-              input#hostState.form-control(name="hostState", placeholder="state")
-
+      form.form-horizontal(name="newForm" action="", method="post", role="form" novalidate)
+        - if (error == "val")
+          .alert.alert-danger(role="alert") All fileds required, pleaset try again
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
-              input#presenterFirst.form-control(name="presenterFirst", placeholder="presenter first")
-              input#presenterLast.form-control(name="presenterLast", placeholder="presenter last")
-              input#presenterEmail.form-control(type="email" name="presenterEmail", placeholder="email")
-              input#presenterInstitution.form-control(name="presenterInstitution", placeholder="institution")
-              input#presenterCity.form-control(name="presenterCity", placeholder="city")
-              input#presenterState.form-control(name="presenterState", placeholder="state")
+              label Title
+                input#title.form-control.input-required(autofocus, name="title", ng-model="title", placeholder="Required", required)
+              label Category
+                input#category.form-control(name="category")
+              label Date
+                input#date.form-control.input-required(name="date", ng-model="date", placeholder="MM/DD/YYYY", value=event.date, required)
+              label Start Time
+                input#start.form-control.input-required(name="start", ng-model="start", placeholder="H:MM AM/PM (no preceding zero please)", value=event.time, required)
+              label End Time
+                input#start.form-control.input-required(name="end", ng-model="end", placeholder="H:MM AM/PM (no preceding zero)", required)
+              label Building
+                input#building.form-control(name="building", value=event.building)
+              label Room
+                input#room.form-control(name="room", value=event.room)
+
+          .form-group
+            .col-xs-12.col-sm-12
+              label HOST
+                input#hostName.form-control(name="hostName")
+              label email
+                input#hostEmail.form-control(type="email" name="hostEmail", ng-model="hostEmail")
+              label Institution
+                input#hostInstitution.form-control(name="hostInstitution")
+              label City
+                input#hostCity.form-control(name="hostCity")
+              label State
+                input#hostState.form-control(name="hostState", placeholder="ST")
+
+        .col-xs-12.col-sm-6.col-md-4
+          .form-group
+            .col-xs-12.col-sm-12
+              label PRESENTER
+              label First
+                input#presenterFirst.form-control(name="presenterFirst")
+              label Last
+                input#presenterLast.form-control(name="presenterLast")
+              label email
+                input#presenterEmail.form-control(type="email" name="presenterEmail", ng-model="presenterEmail")
+              label Institution
+                input#presenterInstitution.form-control(name="presenterInstitution")
+              label City
+                input#presenterCity.form-control(name="presenterCity")
+              label State
+                input#presenterState.form-control(name="presenterState", placeholder="ST")
             .col-xs-12.col-sm-12
             
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
-              input#performerName.form-control(name="performerName", placeholder="performer")
-              input#performerDirector.form-control(name="performerDirector", placeholder="director")
-              input#performerEmail.form-control(type="email" name="performerEmail", placeholder="email")
-              input#performerInstitution.form-control(name="performerInstitution", placeholder="institution")
-              input#performerCity.form-control(name="performerCity", placeholder="city")
-              input#performerState.form-control(name="performerState", placeholder="state")
+              label PERFORMER
+                input#performerName.form-control(name="performerName")
+              label Director
+                input#performerDirector.form-control(name="performerDirector")
+              label email
+                input#performerEmail.form-control(type="email" name="performerEmail", ng-model="performerEmail")
+              label Institution
+                input#performerInstitution.form-control(name="performerInstitution")
+              label City
+                input#performerCity.form-control(name="performerCity")
+              label State
+                input#performerState.form-control(name="performerState", placeholder="ST")
           .form-group
             .col-xs-12.col-sm-12
               p
-              textarea#description.form-control(name="description", placeholder="description", rows="7")
+              label Description
+                textarea#description.form-control(name="description", rows="7")
               p
-              a.button.btn.btn-default(href='/events' role='button') Cancel
-              button.btn.btn-default.pull-right(type="Submit" value='Submit') Submit
+              hr
+              a.button.btn.btn-default(onclick="window.history.back()" role='button') Cancel
+              button.btn.btn-default.pull-right(type="Submit" value='Submit') Save

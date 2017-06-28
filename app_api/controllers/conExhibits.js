@@ -1,5 +1,4 @@
 var flString = "APP_API/CONTROLLERS/CON_EXHIBITS.JS: ";
-console.log(flString);
 
 var request = require('request');
 var mongoose = require('mongoose');
@@ -14,7 +13,6 @@ var sendJsonResponse = function(res, status, content){
 
 module.exports.exhibitsGetAll = function(req, res){
     var fString = flString + "EXHIBITS_GET_ALL: ";
-    console.log(fString);
     var findQueryObject = {};
     var findValue = req.query.findvalue;
     var findKey = req.query.findkey;
@@ -50,7 +48,6 @@ module.exports.exhibitsGetAll = function(req, res){
 
 module.exports.exhibitorsReadAll = function(req, res) {
     var fString = flString + "EXHIBITORS_READ_ALL: ";
-    console.log(fString);
     var sortQuery = req.query.sort;
     var findQuery = req.query.find;
     var results = [];
@@ -68,9 +65,7 @@ module.exports.exhibitorsReadAll = function(req, res) {
 
 module.exports.exhibitsReadOne = function(req, res) {
     var fString = flString + "EXHIBITS_READ_ONE: ";
-    console.log(fString);
     var exhibitid = req.params.exhibitid;
-    console.log(fString + "EXHIBITID: " + exhibitid);
     Exhibit
         .findById(exhibitid)
         .exec(function(err, exhibits) {
@@ -93,7 +88,6 @@ module.exports.exhibitsReadOne = function(req, res) {
 
 module.exports.exhibitsCreate = function(req, res) {
     var fString = flString + "EXHIBITS_CREATE: ";
-    console.log(fString);
     Exhibit.create({
         exhibit : req.body.exhibit,
         booth : req.body.booth,
@@ -121,7 +115,6 @@ module.exports.exhibitsCreate = function(req, res) {
 
 module.exports.exhibitsUpdate = function(req, res) {
     var fString = flString + "EXHIBITS_UPDATE: ";
-    console.log(fString);
     if(!req.params.exhibitid){
         console.log(fString + "NO REQ.PARAMS.EXHIBITID: " + req.params.exhibited);
         sendJsonResponse(res, 404, {
@@ -163,7 +156,6 @@ module.exports.exhibitsUpdate = function(req, res) {
                     console.log(fString + "ERR: " + err);
                     sendJsonResponse(res, 404, err);
                 } else {
-                    console.log(fString + "Success: " + exhibits.exhibit);
                     sendJsonResponse(res, 200, exhibits);
                 }
             });
@@ -173,9 +165,7 @@ module.exports.exhibitsUpdate = function(req, res) {
 
 module.exports.exhibitsDelete = function(req, res) {
     var fString = flString + "EXHIBITS_DELETE: ";
-    console.log(fString);
     var exhibitid = req.params.exhibitid;
-    console.log(fString + "EXHIBIT_ID: " + exhibitid);
     if (exhibitid) {
         Exhibit
         .findByIdAndRemove(exhibitid)
@@ -197,7 +187,6 @@ module.exports.exhibitsDelete = function(req, res) {
 
 module.exports.exhibitsGetConflicts = function(req, res){
     var fString = flString + "EXHIBITS_GET_CONFLICTS: ";
-    console.log(fString);
     var sortQuery = 'booth';
     if(req.query.sort){
         sortQuery = req.query.sort;
@@ -211,7 +200,6 @@ module.exports.exhibitsGetConflicts = function(req, res){
                     sendJsonResponse(res, 404, err);
                 } else {
                     results = conflicts.showConflicts('exhibits', exhibits, sortQuery);
-                    console.log(fString + "RESULTS: " + results.length);
                     sendJsonResponse(res, 200, results);
                 }
             });

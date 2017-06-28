@@ -1,8 +1,8 @@
 var flString = "APP_API/CONTROLLERS/CON_SPONSORS.JS: ";
-console.log(flString);
 
 var request = require('request');
 var mongoose = require('mongoose');
+conflicts = require("./conflicts.js");
 var utilities = require('../../public/js/utilities.js');
 var Sponsor = mongoose.model('Sponsor');
 
@@ -13,7 +13,6 @@ var sendJsonResponse = function(res, status, content) {
 
 module.exports.sponsorsGetAll = function(req, res) {
     var fString = flString + "SPONSORS_GET_ALL: ";
-    console.log(fString);
     var findQueryObject = {};
     var findValue = req.query.findvalue;
     var findKey = req.query.findkey;
@@ -21,7 +20,6 @@ module.exports.sponsorsGetAll = function(req, res) {
         findQueryObject[findKey] = findValue;
     }
     var sortQuery = req.query.sort;
-    console.log(fString + sortQuery);
     var results = [];
     if (findKey != ""){
         Sponsor
@@ -50,7 +48,6 @@ module.exports.sponsorsGetAll = function(req, res) {
 
 module.exports.sponsorsCreate = function(req, res) {
     var fString = flString + "SPONSORS_CREATE: ";
-    console.log(fString);
     Sponsor.create({
         sponsor : req.body.sponsor,
         institution : req.body.institution,
@@ -69,9 +66,7 @@ module.exports.sponsorsCreate = function(req, res) {
 
 module.exports.sponsorsReadOne = function(req, res){
     var fString = flString + "SPONSOR_READ: ";
-    console.log(fString);
     var sponsorid = req.params.sponsorid;
-    console.log(fString + "SPONSORID:: " + sponsorid);
     Sponsor
         .findById(sponsorid)
         .exec(function(err, sponsors) {
@@ -94,7 +89,6 @@ module.exports.sponsorsReadOne = function(req, res){
 
 module.exports.sponsorsUpdate = function(req, res) {
     var fString = flString + "SPONSORS_UPDATE: ";
-    console.log(fString);
     if(!req.params.sponsorid){
         sendJsonResponse(res, 404, {
             "message" : fString + "Not founde, sponsorid is required"
@@ -132,9 +126,7 @@ module.exports.sponsorsUpdate = function(req, res) {
 
 module.exports.sponsorsDelete = function(req, res) {
     var fString = flString + "SPONSORS_DELETE: ";
-    console.log(fString);
     var sponsorid = req.params.sponsorid;
-    console.log(fString + "SPONSOR_ID: " + sponsorid);
     if (sponsorid) {
         Sponsor
         .findByIdAndRemove(sponsorid)
@@ -152,4 +144,24 @@ module.exports.sponsorsDelete = function(req, res) {
         "message": "No sponsorid"
     });
    }
+};
+
+module.exports.sponsorsGetConflicts = function(req, res){
+    var fString = flString + "SPONSORS_GET_CONFLICTS: ";
+    var sortQuery = "sponsor";
+    if(req.query.sort){
+        sortQuery = req.query.sort;
+    }
+    var results = [];
+    Sponsor
+        .find()
+        .exec(function(err, sponsors){
+            if (err){
+                console.log(fString + "ERR: " + err);
+                sendJsonResponse(res, 404, err);
+            } else {
+                results = conflicts.showConflicts('sponsors', sponsors, sortQuery);
+                sendJsonResponse(res, 200, results);
+            }
+        });
 };

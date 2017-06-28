@@ -1,6 +1,4 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_SPONSOR.JS ";
-console.log(flString);
-
 var fs = require('fs');
 var request = require('request');
 var PDFDocument = require('pdfkit');
@@ -9,7 +7,6 @@ var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : "http://localhost:3000"
 };
-
 
 switch (process.env.NODE_ENV){
 case "production":
@@ -22,12 +19,6 @@ default:
     apiOptions.server = "http://localhost:3000";
     break;
 }
-
-/*
-if (process.env.NODE_ENV === 'production') {
-    apiOptions.server = "http://ccs.herokuapp.com";
-}
-*/
 
 var _showError = function(req, res, status) {
     var fString = (flString + "_SHOWeRROR: ");
@@ -44,7 +35,7 @@ var _showError = function(req, res, status) {
     }
     console.log(fString + title + " " + content);
     res.status(status);
-    res.render('main', {
+    res.render('error', {
         title : title,
         content : content
     });
@@ -54,7 +45,6 @@ var _showError = function(req, res, status) {
 var renderPdf = function(req, res, sponsors, page, msg) {
     var pdf = new PDFDocument;
     fString = flString + "RENDER_PDF: ";
-    console.log(fString);
     var file = 'texts/pdf/' + page + '.pdf';
     var currentInstitution = '';
     var oldInstitution = '';
@@ -88,7 +78,6 @@ var renderPdf = function(req, res, sponsors, page, msg) {
 // CREATE TEXT FILES
 var renderText = function(req, res, sponsors, page, msg, type) {
     fString = flString + "RENDER_TEXT: ";
-
     var message;
     var delimiter, postfix;
     var file;
@@ -118,31 +107,32 @@ var renderText = function(req, res, sponsors, page, msg, type) {
         console.log(fString + "UNDEFINED FILETYPE");
         return;
     }
-    file = 'texts/' + postfix + "/" + page + "." + postfix;
-    for(i in sponsors){
-        sponsor_string +=
-            sponsors[i].sponsor + delimiter +
-            sponsors[i].institution +
-            '\n';
-    }
-    fs.writeFile(file, sponsor_string, function(err) {
-        if (err){
-            return console.error(fString + 'ERR: ' + err);
+    if (! type == ".pdf"){
+        file = 'texts/' + postfix + "/" + page + "." + postfix;
+        for(i in sponsors){
+            sponsor_string +=
+                sponsors[i].sponsor + delimiter +
+                sponsors[i].institution +
+                '\n';
         }
-    });
+        fs.writeFile(file, sponsor_string, function(err) {
+            if (err){
+                return console.error(fString + 'ERR: ' + err);
+            }
+        });
+    }         
 };
 
 var renderSponsorList = function(req, res, sponsors, page, msg, title){
     fString = flString + "RENDER_SPONSOR_LIST: ";
-
     var message;
     var strapline = "Partners in Promoting Music Education";
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
     if(!title){
-        title = page.toUpperCase();
+        title = "";
     }
     if(req.query.findkey == "institution"){
-        title = "SPONSORS: " + title;
+        title = title;
         if(req.query.findvalue == "NAfME Corporate Members") {
             strapline = "NAfME corporate members provide vital support for NAfME programs and assist in the continuing efforts to increase awarness of music education in our nation's schools.";
 }
@@ -158,7 +148,7 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
         }
     }
     res.render(page, {
-        title: page,
+        title: title,
         pageHeader: {
             title: title,
             strapline: strapline
@@ -173,18 +163,13 @@ var renderSponsorList = function(req, res, sponsors, page, msg, title){
 
 module.exports.sponsors = function (req, res) {
     var fString = flString + "SPONSORS: ";
-
     var requestOptions, path, page, message;
     var sortQuery = 'sponsor';
     var findvalue = "";
     var findkey = "";
-    var title = "Sponsors";
-    message = "";
-    if(!page){
-        page = "sponsors";
-        path = '/api/sponsors';
-    };
-    console.log(fString + "REQ.QUERY.SORT: " + req.query.sort);
+    var title = "";
+    page = "sponsors";
+    path = '/api/sponsors';
     if (req.query.sortb) {
         sortQuery = (req.query.sort, req.query.sortb);
     } else {
@@ -213,7 +198,6 @@ module.exports.sponsors = function (req, res) {
             if (err) {
                 console.log(fString + "LIST REQUEST ERROR: " + err);
             } else if (response.statusCode === 200) {
-                console.log(fString + "REQUEST SUCCEEDED WITH RESPONSE OF: " + response.statusCode);
                 renderSponsorList(req, res, body, page, message, title);
             } else {
                 console.log(fString + "LIST REQUEST STATUS: " + response.statusCode);
@@ -233,7 +217,6 @@ var renderSponsorPage = function (req, res, page, sponsor) {
 
 module.exports.sponsorCreate = function(req, res){
     var fString = flString + "SPONSOR_CREATE: ";
-    console.log(fString);
     var page = "sponsorNew";
     res.render(page, {
         title: 'CCS - New Sponsor',
@@ -246,7 +229,6 @@ module.exports.sponsorCreate = function(req, res){
 
 module.exports.doSponsorCreate = function(req, res){
     var fString = flString + "DO_SPONSOR_CREATE: ";
-    console.log(fString);
     var page = "sponsorNew";
     var requestOptions, path, message;
     path = "/api/sponsorsCreate";
@@ -258,7 +240,6 @@ module.exports.doSponsorCreate = function(req, res){
         cancelled : req.body.cancelled,
         checked : req.body.checked
     };
-    console.log(fString + "POST_DATA.SPONSOR: " + postData.sponsor);
     if(!postData.sponsor){
         console.log("sponsor name is required");
         _showError(req, res, "sponsor name is required");
@@ -272,13 +253,10 @@ module.exports.doSponsorCreate = function(req, res){
     request(
         requestOptions,
         function(err, response, body){
-            console.log(fString + "REQUEST RESPONSE.STATUS_CODE: " + response.statusCode);
             if(response.statusCode === 200) {
-                console.log(fString + "SUCCESSFULLY POSTED: " + postData.sponsor + " WITH A STATUS OF 200");
                 message = fString + "Successfully posted " + postData.sponsor;
                 res.redirect('/sponsors');
             } else if (response.statusCode === 201) {
-                console.log(fString + "SUCCESFULLY CREATED NEW sponsor WITH A STATUS OF 201");
                 message = "Successfully posted " + postData.sponsor;
                 res.redirect('/sponsors');
             }else{
@@ -290,23 +268,25 @@ module.exports.doSponsorCreate = function(req, res){
 
 module.exports.sponsorRead = function(req, res){
     var fString = flString + "SPONSOR_READ: ";
-
     var requestOptions, path, page;
     page = "sponsor.pug";
-    path = "/api/sponsorsRead/" + req.params.sponsorid;;
+    path = "/api/sponsorsRead/" + req.params.sponsorid;
+    var findQuery = "";
+    if(req.query.find){
+        findQuery = req.query.find
+    }
     requestOptions = {
         url : apiOptions.server + path,
         method : "GET",
-        json : {}
+        json : {},
+        qs : {find : findQuery}
     };
-    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body) {
             if(err) {
                 console.log(fString + "REQUEST ERR: " + err);
             } else if (response.statusCode === 200) {
-                console.log(fString + "REQUEST SUCCESSFUL, RESPONSE: " + response.statusCode);
                 renderSponsorPage(req, res, page, body);
             } else {
                 console.log(fString + "REQUEST STATUS" + response.statusCode);
@@ -317,7 +297,6 @@ module.exports.sponsorRead = function(req, res){
 
 module.exports.sponsorUpdate = function (req, res){
     var fString = flString + "SPONSOR_UPDATE: ";
-
     var requestOptions, path;
     path = "/api/sponsorsRead/" + req.params.sponsorid;
     var page = 'sponsorUpdate';
@@ -338,7 +317,6 @@ module.exports.sponsorUpdate = function (req, res){
 
 module.exports.doSponsorUpdate = function(req, res){
     var fString = flString + "DO_SPONSOR_UPDATE: ";
-
     var sponsorid = req.params.sponsorid;
     var requestOptions, path;
     path = "/api/sponsorUpdate/" + sponsorid;
@@ -379,11 +357,41 @@ module.exports.sponsorDelete = function(req, res){
         requestOptions,
         function (err, response, body){
             if (response.statusCode === 204) {
-                console.log("SUCCESSFULLY DELETED: " + req.params.sponsorid);
                 res.redirect('/sponsors');
             } else {
                 _showError(req, res, response.statusCode);
                 console.log("DELETE ERROR");
+            }
+        }
+    );
+};
+
+module.exports.sponsorConflicts = function(req, res){
+    var fString = flString + "SPONSOR_CONFLICTS: ";
+    console.log(fString);
+    var requestOptions, path, page, message;
+    page = "sponsorConflicts";
+    path = "/api/sponsorConflicts";
+    var sortQuery = "sponsor";
+    var title = "SPONSOR CONFLICTS";
+    if(req.query.sort){
+        sortQuery = req.query.sort
+    }
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        qs : {sort : sortQuery}
+    }
+    request(
+        requestOptions,
+        function(err, response, body){
+            if (err){
+                console.log(fString + "REQUEST ERROR: " + err);
+            } else if (response.statusCode === 200){
+                renderSponsorList(req, res, body, page, message, title);
+            } else {
+                console.log(fString + "REQUEST STATUS: " + response.status.code);
             }
         }
     );

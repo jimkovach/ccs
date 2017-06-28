@@ -1,5 +1,4 @@
 var flString = "APP_API/CONTROLLERS/CON_INSTRUMENTS.JS: ";
-console.log(flString);
 
 var request = require('request');
 var mongoose = require('mongoose');
@@ -12,7 +11,6 @@ var sendJsonResponse = function(res, status, content){
 
 module.exports.instrumentsCreate = function(req, res) {
     var fString = flString + "INSTRUMENTS_CREATE: ";
-    console.log(fString);
     Instrument.create({
         instrument : req.body.instrument,
         serial : req.body.serial,
@@ -55,7 +53,6 @@ module.exports.instrumentsReadAll = function(req, res) {
         findQueryObject[findKey] = findValue;
     }
     var sortQuery = req.query.sort;
-    console.log(fString + sortQuery);
     var results = [];
     if (findKey != ""){
         Instrument
@@ -84,7 +81,6 @@ module.exports.instrumentsReadAll = function(req, res) {
 
 module.exports.instrumentsRead = function (req, res) {
     var fString = flString + "INSTRUMENTS_READ";
-    console.log(fString);
     var instrumentid = req.params.instrumentid;
     Instrument
         .findById(instrumentid)
@@ -108,7 +104,6 @@ module.exports.instrumentsRead = function (req, res) {
 
 module.exports.instrumentsUpdate = function(req, res) {
     var fString = flString + "INSTRUMENTS_UPDATE: ";
-    console.log(fString);
     if(!req.params.instrumentid){
         sendJsonResponse(res, 404, {
             "message" : fString + "Not founde, instrumentid is required"
@@ -163,9 +158,7 @@ module.exports.instrumentsUpdate = function(req, res) {
 
 module.exports.instrumentsDelete = function(req, res) {
     var fString = flString + "INSTRUMENTS_DELETE: ";
-    console.log(fString);
     var instrumentid = req.params.instrumentid;
-    console.log(fString + "INSTRUMENT_ID: " + instrumentid);
     if (instrumentid) {
         Instrument
         .findByIdAndRemove(instrumentid)

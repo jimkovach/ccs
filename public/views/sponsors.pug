@@ -3,11 +3,12 @@ extends layout
 block content
   .row.page-header
     .col-lg-12
-      h1= pageHeader.title
+      h1= "SPONSORS: " + pageHeader.title
       p= pageHeader.strapline
       .error= message
   table.table.table-striped.table-responsive
     thead.thead-inverse
+      th Details
       th
         a(href="/sponsors?sort=sponsor") Sponsor
       th
@@ -16,6 +17,9 @@ block content
     tbody
       each sponsor in sponsors
         tr
+          td
+            a.btn.btn-glyphicon(href="/sponsorRead/" + sponsor._id role="button")
+              span.glyphicon.glyphicon-zoom-in
           td
             a(href="/sponsorUpdate/" + sponsor._id)= sponsor.sponsor
           td

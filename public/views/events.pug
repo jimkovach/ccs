@@ -8,6 +8,7 @@ block content
       .error= message
   table.table.table-striped.table-responsive
     thead.thead-inverse
+      th Details
       th
         a(href="/events?sort=title") Title
       th
@@ -24,6 +25,9 @@ block content
     tbody
       each item in events
         tr
+          td
+            a.btn.btn-glyphicon(href="/event/" + item._id role="button")
+              span.glyphicon.glyphicon-zoom-in
           td
             a(href="/update/" + item._id)= item.title
           td

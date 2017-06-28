@@ -1,5 +1,4 @@
 var flString = "APP_API/CONTROLLERS/CON_EVENTS.JS: ";
-console.log(flString);
 
 var request = require('request');
 var mongoose = require('mongoose');
@@ -63,10 +62,8 @@ module.exports.eventsGetConflicts = function(req, res){
             });
 };
 
-
 module.exports.eventsGetPresenterConflicts = function(req, res){
     var fString = flString + "EVENTS_GET_PRESENTER_CONFLICTS: ";
-    console.log(fString);
     var findQuery = {"presenterLast" : {$gt : ""}};
     var sortQuery = req.query.sort;
     Event
@@ -83,7 +80,6 @@ module.exports.eventsGetPresenterConflicts = function(req, res){
 
 module.exports.eventsGetPerformerConflicts = function(req, res){
     var fString = flString + "EVENTS_GET_PERFORMER_CONFLICTS: ";
-    console.log(fString);
     var findQuery = {"performerName" : {$gt : ""}};
     var sortQuery = req.query.sort;
     Event
@@ -166,13 +162,12 @@ module.exports.eventsGetPerformers = function(req, res) {
 
 module.exports.eventsTables = function(req, res) {
     var fString = flString + "EVENTS_TABLES: ";
-    console.log(fString);
+
     
     var sortQuery = req.query.sort + " : " + 1;
     var findQuery = {"building" : req.query.building,
                      "date" : req.query.date
                     }
-    console.log(fString + "findQuery: " + findQuery.building);
     Event
         .find(findQuery)
         .sort(sortQuery)
@@ -181,7 +176,6 @@ module.exports.eventsTables = function(req, res) {
                 console.log(fString + "Event.exec.ERR");
                 sendJsonResponse(res, 404, err);
             } else {
-                console.log(fString + "Event.exec.success");
                 sendJsonResponse(res, 200, events);
             }
         });
@@ -241,6 +235,7 @@ module.exports.eventsCreate = function(req, res) {
         checked : req.body.checked
     }, function(err, events) {
         if (err) {
+            console.log(fString + err);
             sendJsonResponse(res, 400, err);
         } else {
             sendJsonResponse(res, 201, events);

@@ -19,6 +19,9 @@ var conflictP = function(db, base, event){
     case 'exhibits':
         conflictTest = base.booth === event.booth;
         break;
+    case "sponsors":
+        conflictTest = base.sponsor === event.sponsor;
+        break;
     }
     return conflictTest;
 };
@@ -34,7 +37,7 @@ var get_id = function(id, collection) {
 
 var buildConflictArray = function(db, collection){
     var fString = flString + "BUILD_CONFLICT_ARRAY: ";
-    console.log(fString);
+
     var conflictArray = [];
     for(var base = 0; base < collection.length; base++){
         for(var entry = base + 1; entry < collection.length; entry++){
@@ -48,7 +51,7 @@ var buildConflictArray = function(db, collection){
 
 module.exports.showConflicts = function(db, collection, sortQuery){
     var fString = flString + "SHOW_CONFLICTS: ";
-    console.log(fString);
+
     var conflictArray = [];
     var conflicts = [];
     if(!sortQuery){
@@ -99,9 +102,17 @@ module.exports.showConflicts = function(db, collection, sortQuery){
                        "conflict" : collection[get_id(conflictArray[i].conflict_id, collection)].exhibit,
                        "booth" : collection[get_id(conflictArray[i].conflict_id, collection)].booth
                     });
+            } else if (db === "sponsors"){
+                conflicts.push(
+                    {
+                        "base_id" : collection[get_id(conflictArray[i].base_id, collection)]._id,
+                        "conflict_id" : collection[get_id(conflictArray[i].conflict_id, collection)]._id,
+                        "base" : collection[get_id(conflictArray[i].base_id, collection)].sponsor,
+                        "conflict" : collection[get_id(conflictArray[i].conflict_id, collection)].sponsor
+                    });
             }
         }
-        console.log(fString + 'CONFLICT_ARRAY.LENGTH: ' + conflictArray.length);
+
         return(conflicts.sort(utilities.getSortOrder(sortQuery)));
     } else {
         return(["No conflicts found."]);

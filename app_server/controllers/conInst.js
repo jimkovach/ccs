@@ -1,5 +1,4 @@
 var flString = "APP_SERVER/CONTROLLERS/CON_INST.JS: ";
-console.log(flString);
 
 var fs = require('fs');
 var request = require('request');
@@ -9,7 +8,6 @@ var utilities = require('../../public/js/utilities.js');
 var apiOptions = {
     server : 'http://localhost:3000'
 };
-
 
 switch (process.env.NODE_ENV){
 case "production":
@@ -22,12 +20,6 @@ default:
     apiOptions.server = "http://localhost:3000";
     break;
 }
-
-/*
-if (process.env.NODE_ENV === 'production') {
-    apiOptions.server = 'http://ccs.herokuapp.com';
-}
-*/
 
 var _showError = function(req, res, status) {
     var fString = (flString + "_SHOWeRROR: ");
@@ -44,7 +36,7 @@ var _showError = function(req, res, status) {
     }
     console.log(fString + title + " " + content);
     res.status(status);
-    res.render('main', {
+    res.render('error', {
         title : title,
         content : content
     });
@@ -378,7 +370,6 @@ module.exports.doInstrumentCreate = function(req, res){
 
 module.exports.instrumentUpdate = function (req, res){
     var fString = flString + "INSTRUMENT_UPDATE: ";
-    console.log(fString);
     var requestOptions, path;
     path = "/api/instrumentsRead/" + req.params.instrumentid;
     var page = 'instrumentUpdate';
@@ -388,7 +379,6 @@ module.exports.instrumentUpdate = function (req, res){
         json : {},
         qs : {}
     };
-    console.log(fString + "REQUEST_OPTIONS.URL: " + requestOptions.url);
     request (
         requestOptions,
         function(err, response, body){
