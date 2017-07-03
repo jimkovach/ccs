@@ -11,10 +11,15 @@ block content
     form.form-horizontal(action="/sponsorUpdate/" + sponsor._id method="post" role="form")
       .form-group
         .col-xs-12.col-sm-12.col-md-6
-          input#sponsor.form-control(autofocus=true name="sponsor", placeholder="sponsor", value=sponsor.sponsor)
-          input#institution.form-control(name="institution", placeholder="institution", value=sponsor.institution)
+          label Sponsor
+            input#sponsor.form-control.input-required(autofocus=true name="sponsor", placeholde="Required", value=sponsor.sponsor)
+          label Institution
+            input#institution.form-control(name="institution", value=sponsor.institution)
+          p
+          hr
           p
 
-          a.btn.btn-default(href='/sponsors?sort=sponsor' role='button') Cancel
+          a.btn.btn-default(onclick="window.history.back()", role='button') Cancel
           button.btn.btn-default(type="submit" value= 'Submit') Save
+          a.btn.btn-default(href="/sponsors", role="button") List
           a.btn.btn-default.pull-right(href="/sponsorDelete/" + sponsor._id role='button') Delete

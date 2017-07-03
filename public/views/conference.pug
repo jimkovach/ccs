@@ -12,5 +12,12 @@ block content
           .form-group
             label Year
               input#year.form-control.input-required(autofocus, name="year, placeholder="Required", required)
-            label Building
-              input#building.form-control(name="building")
+            label Institution
+              input#institution.form-control(name="institution")
+
+            p
+            hr
+            p
+
+            a.button.btn.btn-default(onclick="window.history.back()", role="button") Cancel
+            button.btn.btn-default.pull-right(type="Submit", value="Submit") Save

@@ -1,7 +1,7 @@
 include _includes/sharedHTMLfunctions
 
 doctype html
-html(ng-app="ccsApp")
+html
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
@@ -9,11 +9,12 @@ html(ng-app="ccsApp")
     link(rel='stylesheet', href='../css/bootstrap.min.css')
     link(rel='stylesheet', href='../css/custom.css')
     script(src='../js/bootstrap.js')
-  body
+
+  body(onchange="handleFormChange()")
     .navbar.navbar-default.navbar-fixed-top
       .container-fluid
         .navbar-header
-          a.navbar-brand(href='/') CCS - Menu
+          a.navbar-brand(href='/') CCS
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
             span.icon-bar
             span.icon-bar
@@ -114,5 +115,4 @@ html(ng-app="ccsApp")
             a.footer(href="http://glyphicons.com" target="_blank") Glyphicons
     noscript('this site will not work without javascript enabled, please enable your javascript')
     script(src='../js/conflicts.js')
-    script(src="../js/angular.min.js")
-    script(src="../js/ccs.angular.js")
+    script(src='../js/validation.js')

@@ -13,38 +13,60 @@ block content
           .form-group
             col-xs-12.col-sm-12.col-md-12
               p INSTRUMENT
-              input#instrument.form-control(autofocus=true name="instrument", placeholder="instrument")
-              input#serial.form-control(name="serial", placeholder="serial number")
-              input#make.form-control(name="make", placeholder="make")
-              input#model.form-control(name="model", placeholder="model")
-              input#owner.form-control(name="owner", placeholder="owner")
-              input#group.form-control(name="group", placeholder="assigned to group")
+              label Instrument
+                input#instrument.form-control(autofocus=true name="instrument", placeholder="instrument", required)
+              label Serial Number
+                input#serial.form-control(name="serial", placeholder="serial number")
+              label Make
+                input#make.form-control(name="make", placeholder="make")
+              label Model
+                input#model.form-control(name="model", placeholder="model")
+              label Owner
+                input#owner.form-control(name="owner", placeholder="owner")
+              label Group Assignment
+                input#group.form-control(name="group", placeholder="assigned to group")
         .col-xs-12.col-sm-6.col-md-3
           .form-group
             col-xs-12.col-sm-12.col-md-12
               p PICKUP
-              input#pickupBuilding.form-control(name="pickupBuilding", placeholder="Pickup Building")
-              input#pickupRoom.form-control(name="pickupRoom", placeholder="Pickup Room")
-              input#pickupDate.form-control(name="pickupDate", placeholder="Pickup Date")
-              input#pickupTime.form-control(name="pickupTime", placeholder="Pickup Time")
-              input#pickupPerson.form-control(name="pickupPerson", placeholder="Pickup Person")
+              label Building
+                input#pickupBuilding.form-control(name="pickupBuilding", placeholder="Pickup Building")
+              label Room
+                input#pickupRoom.form-control(name="pickupRoom", placeholder="Pickup Room")
+              label Date
+                input#pickupDate.form-control(name="pickupDate", placeholder="Pickup Date")
+              label Time
+                input#pickupTime.form-control(name="pickupTime", placeholder="Pickup Time")
+              label Manager
+                input#pickupPerson.form-control(name="pickupPerson", placeholder="Pickup Person")
         .col-xs-12.col-sm-6.col-md-3
           .form-group
             col-xs-12.col-sm-12.col-md-12
               p DELIVERY
-              input#deliveryBuilding.form-control(name="deliveryBuilding", placeholder="Delivery Building")
-              input#deliveryRoom.form-control(name="deliveryRoom", placeholder="Delivery Room")
-              input#deliveryDate.form-control(name="deliveryDate", placeholder="Delivery Date")
-              input#deliveryTime.form-control(name="deliveryTime", placeholder="Delivery Time")
-              input#deliveryPerson.form-control(name="deliveryPerson", placeholder="Delivery Manager")
+              label Building
+                input#deliveryBuilding.form-control(name="deliveryBuilding", placeholder="Delivery Building")
+              label Room
+                input#deliveryRoom.form-control(name="deliveryRoom", placeholder="Delivery Room")
+              label Date
+                input#deliveryDate.form-control(name="deliveryDate", placeholder="Delivery Date")
+              label Time
+                input#deliveryTime.form-control(name="deliveryTime", placeholder="Delivery Time")
+              label Manager
+                input#deliveryPerson.form-control(name="deliveryPerson", placeholder="Delivery Manager")
         .col-xs-12.col-sm-6.col-md-3
           .form-group
             col-xs-12.col-sm-12.col-md-12
               p RETURN
-              input#returnDate.form-control(name="returnDate", placeholder="Return Date")
-              input#returnTime.form-control(name="returnTime", placeholder="Return Time")
-              input#returnPerson.form-control(name="returnPerson", placeholder="Return Person")
+              label Date
+                input#returnDate.form-control(name="returnDate", placeholder="Return Date")
+              label Time
+                input#returnTime.form-control(name="returnTime", placeholder="Return Time")
+              label Manager
+                input#returnPerson.form-control(name="returnPerson", placeholder="Return Person")
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              a.btn.btn-default(href='/instruments' role='button') Cancel
+              p
+              hr
+              p
+              a.btn.btn-default(onclick="window.history.back()" role='button') Cancel
               button.btn.btn-default.pull-right(type="submit" value='Submit') Save

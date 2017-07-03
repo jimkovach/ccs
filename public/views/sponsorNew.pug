@@ -8,13 +8,17 @@ block content
       .error= message
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(action="", method="post", role="form")
+      form.form-horizontal(action="", method="post", role="form", novalidate)
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              input#sponsor.form-control(autofocus=true name="sponsor", placeholder="sponsor")
-              input#institution.form-control(name="institution", placeholder="institution")
+              label Sponsor
+                input#sponsor.form-control.input-required(autofocus=truen name="sponsor", placeholder="Required", required)
+              label Institution
+                input#institution.form-control(name="institution")
+              p
+              hr
               p
 
-              a.btn.btn-default(href='/sponsors' role='button') Cancel
+              a.btn.btn-default(onclick="window.history.back()", role='button') Cancel
               button.btn.btn-default.pull-right(type="Submit" value='Submit') Save

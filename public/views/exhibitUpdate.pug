@@ -13,23 +13,37 @@ block content
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12.col-md-12
-              input#exhibit.form-control(autofocus="true" name="exhibit", placeholder="exhibit", value=exhibit.exhibit)
-              input#exhibitor.form-control(name="exhibitor", placeholder="exhibitor", value=exhibit.exhibitor)
-              input#title.form-control(name="title", placeholder="title", value=exhibit.title)
-              input#booth.form-control(name="booth", placeholder="booth", value=exhibit.booth)
-              input#address.form-control(name="address", placeholder="address", value=exhibit.address)
-              input#city.form-control(name="city", placeholder="city", value=exhibit.city)
-              input#state.form-control(name="state", placeholder="state", value=exhibit.state)
-              input#zip.form-control(name="zip", placeholder="zip", value=exhibit.zip)
-              input#email.form-control(type="email" name="email", placeholder="email", value=exhibit.email)
-              input#web.form-control(name="web", placeholder="web", value=exhibit.web)
+              label Exhibit
+                input#exhibit.form-control(autofocus="true" name="exhibit", placeholder="Required", value=exhibit.exhibit, required)
+              label Exhibitor
+                input#exhibitor.form-control(name="exhibitor", value=exhibit.exhibitor)
+              label Title of Exhibitor
+                input#title.form-control(name="title",  value=exhibit.title)
+              label Booth
+                input#booth.form-control(name="booth",  value=exhibit.booth)
+              label Address
+                input#address.form-control(name="address",  value=exhibit.address)
+              label City
+                input#city.form-control(name="city", value=exhibit.city)
+              label State
+                input#state.form-control(name="state", placeholder="ST", value=exhibit.state)
+              label Zip
+                input#zip.form-control(name="zip", value=exhibit.zip)
+              label email
+                input#email.form-control(type="email" name="email", value=exhibit.email)
+              label Phone
+                input#phone.form-control(name="phone", placeholder="XXX-XXX-XXXX")
+              label Website
+                input#web.form-control(name="web", value=exhibit.web)
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12.col-md-12
-              textarea#description.form-control(name="description", placeholder="description", rows=18)= exhibit.description
+              label Description
+                textarea#description.form-control(name="description", rows=18)= exhibit.description
               hr
-              a.btn.btn-default(href='/exhibits?sort=exhibit' role='button') Cancel
+              a.btn.btn-default(onclick="window.history.back()",  role='button') Cancel
               button.btn.btn-default(type="submit" value='Submit') Save
+              a.btn.btn-default(href='/exhibits') List
               a.btn.btn-default(href='/exhibitRead/' + exhibit._id) Program
               a.btn.btn-default.pull-right(href='/exhibitDelete/' + exhibit._id) Delete
 

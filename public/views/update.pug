@@ -8,24 +8,24 @@ block content
       .error= message
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(action="/update/" + event._id method="post" role="form")
+      form.form-horizontal(action="/update/" + event._id method="post" role="form" autocomplete="off")
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12.col-md-12
               label Title
-                input#title.form-control.input-required(autofocus=true name="title", placeholder="Required", value=event.title)
+                input#eventTitle.form-control.input-required(autofocus=true name="title" placeholder="Required" value=event.title required)
               label Category
                 input#category.form-control(name="category",  value=event.category)
               label Building
-                input#building.form-control(name="building",  value=event.building)
+                input#building.form-control(name="building" value=event.building)
               label Room
-                input#room.form-control(name="room",  value=event.room)
+                inut#room.form-control(name="room",  value=event.room)
               label Date
-                input#date.form-control.input-required(name="date", placeholder="MM/DD/YYYY", value=event.date)
+                input#eventDate.form-control.input-required(name="date", placeholder="MM/DD/YYYY", required, value=event.date)
               label Start Time
-                input#start.form-control.input-required(name="start", placeholder="H:MM AM/PM", value=event.start)
+                input#eventStart.form-control.input-required(name="start",  placeholder="H:MM AM/PM", required, value=event.start)
               label End Time
-                input#end.form-control.input-required(name="end", placeholder="H:MM AM/PM", value=event.end)
+                input#eventEnd.form-control.input-required(name="end", placeholder="H:MM AM/PM", required, value=event.end)
 
           .form-group
             .col-xs-12.col-sm-12.col-md-12
@@ -33,7 +33,7 @@ block content
               label Name
                 input#host.form-control(name="hostName",  value=event.hostName)
               label email
-                input#hostEmail.form-control(type="email", value=event.hostEmail)
+                input#hostEmail.form-control(type="email", name="hostEmail", value=event.hostEmail)
               label Institution
                 input#hostInstitution.form-control(name="hostInstitution",  value=event.hostInstitution)
               label City
@@ -83,7 +83,7 @@ block content
               p
               hr
               p
-              a.btn.btn-default(href='/events/' role='button') Cancel
+              a.btn.btn-default(onclick="window.history.back()", role='button') Cancel
               button.btn.btn-default(type="submit" value='Submit') Save
               a.btn.btn-default(href='/program/' + event._id role='button') Program
               a.btn.btn-default.pull-right(href='/delete/' + event._id role='button') Delete

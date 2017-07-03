@@ -51,6 +51,7 @@ ul.event li{
 .padded {
     padding-top : 30px;
 }
+
 .page-header{
     margin-top: 0px;
 }
@@ -73,10 +74,6 @@ a.footer{
 
 .form-group{
     margin-bottom:1;
-}
-
-input{
-
 }
 
 .form-control{
@@ -194,11 +191,6 @@ input{
     display: inline-block;
 }
 
-input.ng-touched.ng-invalid {
-    background-color: #ffa6a6;
-    color: black;
-}
-
-input.ng-touched.ng-invalid::-webkit-input-placeholder {
-    color: black;
+input::invalid{
+    background-color : "red";
 }

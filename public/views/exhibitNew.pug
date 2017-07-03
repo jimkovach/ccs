@@ -12,24 +12,36 @@ block content
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              input#exhibit.form-control(autofocus=true name="exhibit", placeholder="exhibit")
-              input#booth.form-control(name="booth", placeholder="booth")
-              input#exhibitor.form-control(name="exhibitor", placeholder="exhibitor")
-              input#title.form-control(name="title", placeholder="title")
-              input#address.form-control(name="address", placeholder="address")
-              input#city.form-control(name="city", placeholder="city")
-              input#state.form-control(name="state", placeholder="state")
-              input#zip.form-control(name="zip", placeholder="zip")
-              input#email.form-control(type="email" name="email", placeholder="email")
-              input#phone.form-control(type="phone" name="phone", placeholder="phone")
-              input#email.form-control(name="web", placeholder="website")
+              label Exhibit
+                input#exhibit.form-control.input-required(autofocus=true name="exhibit", placeholder="Required", required)
+              label Booth
+                input#booth.form-control(name="booth")
+              label Exhibitor
+                input#exhibitor.form-control(name="exhibitor")
+              label Title of Exhibitor
+                input#title.form-control(name="title")
+              label Address
+                input#address.form-control(name="address")
+              label City
+                input#city.form-control(name="city")
+              label State
+                input#state.form-control(name="state", placeholder="ST")
+              label Zip
+                input#zip.form-control(name="zip")
+              label email
+                input#email.form-control(type="email" ng-model="email", name="email")
+              label Phone
+                input#phone.form-control(type="phone" name="phone", placeholder="XXX-XXX-XXXX")
+              label Website
+                input#web.form-control(name="web")
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
-              textarea#description.form-control(name="description", placeholder="description", rows="16")
+              label Description
+                textarea#description.form-control(name="description",  rows="16")
           .form-group
             .col-xs-12.col-sm-12
               p
               hr
-              a.button.btn.btn-default(href='/exhibits') Cancel              
+              a.button.btn.btn-default(onclick="window.history.back()", role="button") Cancel
               button.btn.btn-default.pull-right(type="Submit" value='Submit') Save

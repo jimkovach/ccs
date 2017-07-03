@@ -6,24 +6,25 @@ block content
       h1= "EVENTS - Create New Event"
       p= "NOTE! Event Title, Date, Start Time and End Time are all required before you can successfully save"
       .error= message
+
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(name="newForm" action="", method="post", role="form" novalidate)
+      form.form-horizontal(name="newForm" action="", method="post", role="form")
         - if (error == "val")
-          .alert.alert-danger(role="alert") All fileds required, pleaset try again
+          .alert.alert-danger(role="alert") All fields required, please try again
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
               label Title
-                input#title.form-control.input-required(autofocus, name="title", ng-model="title", placeholder="Required", required)
+                input#eventTitle.form-control.input-invalid(autofocus=true, name="title",  placeholder="Required", required)
               label Category
                 input#category.form-control(name="category")
               label Date
-                input#date.form-control.input-required(name="date", ng-model="date", placeholder="MM/DD/YYYY", value=event.date, required)
+                input#eventDate.form-control.input-required.input-invalid( name="date",placeholder="MM/DD/YYYY", value=event.date, required)
               label Start Time
-                input#start.form-control.input-required(name="start", ng-model="start", placeholder="H:MM AM/PM (no preceding zero please)", value=event.time, required)
+                input#eventStart.form-control.input-required.input-invalid( name="start", placeholder="H:MM AM/PM (no preceding zero please)", value=event.time, required)
               label End Time
-                input#start.form-control.input-required(name="end", ng-model="end", placeholder="H:MM AM/PM (no preceding zero)", required)
+                input#eventEnd.form-control.input-required.input-invalid(name="end", placeholder="H:MM AM/PM (no preceding zero)", required)
               label Building
                 input#building.form-control(name="building", value=event.building)
               label Room
@@ -34,7 +35,7 @@ block content
               label HOST
                 input#hostName.form-control(name="hostName")
               label email
-                input#hostEmail.form-control(type="email" name="hostEmail", ng-model="hostEmail")
+                input#hostEmail.form-control.input-invalid(type="email" name="hostEmail")
               label Institution
                 input#hostInstitution.form-control(name="hostInstitution")
               label City
@@ -51,7 +52,7 @@ block content
               label Last
                 input#presenterLast.form-control(name="presenterLast")
               label email
-                input#presenterEmail.form-control(type="email" name="presenterEmail", ng-model="presenterEmail")
+                input#presenterEmail.form-control(type="email" name="presenterEmail")
               label Institution
                 input#presenterInstitution.form-control(name="presenterInstitution")
               label City
@@ -68,7 +69,7 @@ block content
               label Director
                 input#performerDirector.form-control(name="performerDirector")
               label email
-                input#performerEmail.form-control(type="email" name="performerEmail", ng-model="performerEmail")
+                input#performerEmail.form-control(type="email" name="performerEmail")
               label Institution
                 input#performerInstitution.form-control(name="performerInstitution")
               label City
@@ -82,5 +83,5 @@ block content
                 textarea#description.form-control(name="description", rows="7")
               p
               hr
-              a.button.btn.btn-default(onclick="window.history.back()" role='button') Cancel
+              a.button.btn.btn-default.no-prompt-required(onclick="window.history.back()" role='button') Cancel
               button.btn.btn-default.pull-right(type="Submit" value='Submit') Save
