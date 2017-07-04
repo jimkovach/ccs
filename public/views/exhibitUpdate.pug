@@ -9,7 +9,7 @@ block content
       p= pageHeader.strapline
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(action="/exhibitUpdate/" + exhibit._id method="post" role="form")
+      form.form-horizontal(id="newForm" action="/exhibitUpdate/" + exhibit._id method="post" role="form")
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12.col-md-12
@@ -26,7 +26,8 @@ block content
               label City
                 input#city.form-control(name="city", value=exhibit.city)
               label State
-                input#state.form-control(name="state", placeholder="ST", value=exhibit.state)
+                select#state.form-control(name="state", placeholder="ST", value=exhibit.state)
+                  +fillStates(exhibit.state)
               label Zip
                 input#zip.form-control(name="zip", value=exhibit.zip)
               label email

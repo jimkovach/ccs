@@ -1,5 +1,7 @@
 extends layout
 
+include _includes/sharedHTMLfunctions
+
 block content
   .row.page-header
     .col-lg-12
@@ -9,7 +11,7 @@ block content
 
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(name="newForm" action="", method="post", role="form")
+      form.form-horizontal(name="newForm" id="newForm" action="/new", method="post", role="form")
         - if (error == "val")
           .alert.alert-danger(role="alert") All fields required, please try again
         .col-xs-12.col-sm-6.col-md-4
@@ -20,13 +22,16 @@ block content
               label Category
                 input#category.form-control(name="category")
               label Date
-                input#eventDate.form-control.input-required.input-invalid( name="date",placeholder="MM/DD/YYYY", value=event.date, required)
+                select#eventDate.form-control.input-required.input-invalid( name="date",placeholder="MM/DD/YYYY", value=event.date, required)
+                  +fillDate
               label Start Time
-                input#eventStart.form-control.input-required.input-invalid( name="start", placeholder="H:MM AM/PM (no preceding zero please)", value=event.time, required)
+                select#eventStart.form-control.input-required.input-invalid( name="start", placeholder="H:MM AM/PM (no preceding zero please)", value=event.start, required)
+                  +fillStart()
               label End Time
                 input#eventEnd.form-control.input-required.input-invalid(name="end", placeholder="H:MM AM/PM (no preceding zero)", required)
               label Building
-                input#building.form-control(name="building", value=event.building)
+                select#building.form-control(name="building", value=event.building)
+                  +fillBuildings()
               label Room
                 input#room.form-control(name="room", value=event.room)
 
@@ -41,8 +46,8 @@ block content
               label City
                 input#hostCity.form-control(name="hostCity")
               label State
-                input#hostState.form-control(name="hostState", placeholder="ST")
-
+                select#hostState.form-control(name="hostState", placeholder="ST")
+                  +fillStates()
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             .col-xs-12.col-sm-12
@@ -58,7 +63,8 @@ block content
               label City
                 input#presenterCity.form-control(name="presenterCity")
               label State
-                input#presenterState.form-control(name="presenterState", placeholder="ST")
+                select#presenterState.form-control(name="presenterState", placeholder="ST")
+                  +fillStates()
             .col-xs-12.col-sm-12
             
         .col-xs-12.col-sm-6.col-md-4
@@ -75,7 +81,9 @@ block content
               label City
                 input#performerCity.form-control(name="performerCity")
               label State
-                input#performerState.form-control(name="performerState", placeholder="ST")
+                select#performerState.form-control(name="performerState", placeholder="ST")
+                  +fillStates
+
           .form-group
             .col-xs-12.col-sm-12
               p

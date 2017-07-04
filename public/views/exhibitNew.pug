@@ -8,7 +8,7 @@ block content
       .error= message
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(action="", method="post", role="form")
+      form.form-horizontal(id="newForm" action="", method="post", role="form")
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
@@ -25,7 +25,8 @@ block content
               label City
                 input#city.form-control(name="city")
               label State
-                input#state.form-control(name="state", placeholder="ST")
+                select#state.form-control(name="state", placeholder="ST")
+                  +fillStates()
               label Zip
                 input#zip.form-control(name="zip")
               label email

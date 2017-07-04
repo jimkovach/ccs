@@ -83,3 +83,47 @@ mixin justDate(d)
   -var year = dt.getFullYear();
   -var output = month + ' ' + day + ', ' + year;
   =output
+
+mixin fillDate()
+  -var dates = ["02/16/2017", "02/17/2017", "02/18/2017", "02/19/2017"];
+  for date in dates
+    if(date == event.date)
+      option(value= date selected)= date
+    else
+      option(value= date)= date
+
+mixin fillStart()
+  -var startTimes = ["8:30 AM", "9:50 AM", "11:00 AM", "12:15 PM", "1:30 PM", "3:00 PM", "3:30 PM", "5:30 PM", "7:00 PM", "8:00 PM"];
+  for start in startTimes
+    if(start == event.start)
+      option(value= start selected)= start
+    else
+      option(value= start)= start
+
+mixin fillStates(field)
+  -var states= ["",  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+  for state in states
+    if(state == field)
+      option(value= state selected)= state
+    else
+      option(value= state)= state
+
+mixin fillBuildings()
+  - var buildings= ["Hyatt", "Westin"]
+    for building in buildings
+      if(building == event.building)
+        option(value= building selected)= building
+      else
+        option(value= building)= building
+
+mixin fillRooms()
+  - var rooms = []
+    case event.building
+      when "Hyatt"
+        rooms= ["Cedar Ballroom AB", "Regency Ballroom ABC", "Regency Ballroom EFG", "Grand Ballroom ABC", "Grand Ballroom EFG", "Grand Ballroom I", "Grand Ballroom J", "Cottonowood", "Juniper", "Laurel", "Larch", "Madrona", "Auditorium", "Maple"]
+      when "Westin"
+        rooms= ["Fort Peck", "Grand ABC", "Lake Sammamish", "Lake Coeur d'Alene", "Lake WA A"]
+      default
+        rooms = ["huh"]
+  for room in rooms
+    option(value= room)= room

@@ -38,7 +38,7 @@ checkValidity("instrument");
 /*
 var buildingsAndRooms = {};
 buildingsAndRooms["Hyatt"] = ["Cedar Ballroom AB", "Regency Ballroom ABC", "Regency Ballroom EFG", "Grand Ballroom ABC", "Grand Ballroom EFG", "Grand Ballroom I", "Grand Ballroom J", "Cottonwood", "Juniper", "Laurel", "Larch", "Madrona", "Auditorium", "Maple"];
-buildingsAndRooms["Westin"] = ["Fort Peck", "Grand ABC", "Lake Sammamish", "Lake Coeur d'Alene", "Lake WA A"];
+buildingsAndRooms["Westin"] = ["Fort Peck", "Grand ABC", "Lake Sammamish", "Lake Coeur d'Alene", "Lake WA] ;
 
 var changeRoomList = function(){
 	var fString = flString + "CHANGE_ROOM_LIST(): ";
@@ -129,6 +129,21 @@ var fillOptions = function(){
 };
 */
 
+var exitOK = false;
+var newForm = document.querySelector('#newForm');
+
+newForm.addEventListener('submit', function() {
+	exitOK = true;
+});
+
+window.onbeforeunload = function() {
+	if(!exitOK){
+		confirmExit()
+	} else {
+		return;
+	}
+};
+
 var formState = "clean";
 console.log(flString + formState);
 var handleFormChange = function(){
@@ -140,11 +155,10 @@ var handleFormChange = function(){
 //var setConfirmUnload(true);
 
 //check if user really wants to leave a window.
-window.onbeforeunload = function(){
+function confirmExit(){
 	var fString = flString + "CONFIRM_EXIT: ";
 	console.log(fString);
 
-alert(this.id);
 	//var formState = "clean";
 
 	var message = fString + "You are trying to leave with unsaved data. Leave anyway?";

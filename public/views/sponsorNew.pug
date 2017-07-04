@@ -8,12 +8,12 @@ block content
       .error= message
   .row
     .col-xs-12.col-md-12
-      form.form-horizontal(action="", method="post", role="form", novalidate)
+      form.form-horizontal(id="newForm" action="", method="post", role="form", novalidate)
         .col-xs-12.col-sm-6.col-md-4
           .form-group
             col-xs-12.col-sm-12.col-md-12
               label Sponsor
-                input#sponsor.form-control.input-required(autofocus=truen name="sponsor", placeholder="Required", required)
+                input#sponsor.form-control.input-required(autofocus=true name="sponsor"  placeholder="Required", required)
               label Institution
                 input#institution.form-control(name="institution")
               p

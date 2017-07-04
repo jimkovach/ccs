@@ -8,7 +8,7 @@ block content
       h1= pageHeader.title
       p= pageHeader.strapline
   .row
-    form.form-horizontal(action="/sponsorUpdate/" + sponsor._id method="post" role="form")
+    form.form-horizontal(id="newForm", action="/sponsorUpdate/" + sponsor._id method="post" role="form")
       .form-group
         .col-xs-12.col-sm-12.col-md-6
           label Sponsor
