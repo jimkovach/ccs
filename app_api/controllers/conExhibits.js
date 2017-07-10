@@ -116,7 +116,7 @@ module.exports.exhibitsCreate = function(req, res) {
 module.exports.exhibitsUpdate = function(req, res) {
     var fString = flString + "EXHIBITS_UPDATE: ";
     if(!req.params.exhibitid){
-        console.log(fString + "NO REQ.PARAMS.EXHIBITID: " + req.params.exhibited);
+        console.log(fString + "NO REQ.PARAMS.EXHIBITID: " + req.params.exhibitid);
         sendJsonResponse(res, 404, {
             "message" : fString + "Not found, exhibitsid is required"
         });

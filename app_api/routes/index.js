@@ -10,6 +10,7 @@ var ctrlEvents = require(path + 'conEvents');
 var ctrlExhibits = require(path + 'conExhibits');
 var ctrlSponsors = require(path + 'conSponsors');
 var ctrlInstruments = require(path + 'conInstruments');
+var ctrlCcs = require(path + "conConferences");
 
 var ctrlAuth = require(path + 'authentication');
 
@@ -45,6 +46,12 @@ router.get('/instruments', ctrlInstruments.instrumentsReadAll);
 router.get('/instrumentsRead/:instrumentid', ctrlInstruments.instrumentsRead);
 router.post('/instrumentUpdate/:instrumentid', ctrlInstruments.instrumentsUpdate);
 router.get('/instrumentsDelete/:instrumentid', ctrlInstruments.instrumentsDelete);
+
+router.get("/ccs", ctrlCcs.ccsReadAll);
+router.get("/ccsRead/:conferenceid", ctrlCcs.ccsReadOne);
+router.post("/ccs/new", ctrlCcs.ccsCreate);
+router.get("/conferencesDelete/:conferenceid", ctrlCcs.conferencesDelete);
+router.post("/conferencesUpdate/:conferenceid", ctrlCcs.conferencesUpdate);
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);

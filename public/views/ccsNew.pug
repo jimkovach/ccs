@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+      .error= message
+  .row
+    .col-xs-12.col-md-12
+      form.form-horizontal(id="newForm", action="", method="post", role="form")
+        .col-xs-12.col-sm-6.col-md-4
+          .form-group
+            col-xs-12.col-sm-12.col-md012
+              label Year
+                input#year.form-control.input-required(type="Number", autofocus=true name="year", placeholder="Required", required)
+              label Title
+                input#title.form-control(name="title")
+              label Institution
+                input#institution.form-control(name="institution")
+              hr
+              a.button.btn.btn-default(onclick="window.history.back()" role="button") Cancel
+              button.btn.btn-default.pull-right(type="Submit" value="Submit") Save

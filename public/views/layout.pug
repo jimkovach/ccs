@@ -66,6 +66,7 @@ html
                   a(href='/sponsors') Sponsors
                 li
                   a(href="/sponsorConflicts") Conflicts
+
             li.dropdown
               a.btn.dropdown-toggle(type='button', data-toggle='dropdown') Instruments
               ul.dropdown-menu
@@ -100,6 +101,18 @@ html
                   a(href='/api/exhibits') Get Exhibits
                 li
                   a(href='/api/exhibitsRead/5918dd18604537059eba6534') Get Exhibit
+                li.divider
+                li.dropdown-header.menu-header Conference
+                li
+                  a(href="/api/ccs") Get Ccs
+                li
+                  a(href="/ccs") Start
+                li
+                  a(href="/ccs/new") New Conference
+
+            li.dropdown
+              a.btn.dropdown-toggle(type="button", data-toggle="dropdown") Setup
+              ul.dropdown-menu
 
     .container
       block content

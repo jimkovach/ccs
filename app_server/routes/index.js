@@ -15,6 +15,7 @@ var ctrlEvent = require(pth + 'conEvent.js');
 var ctrlExhibit = require(pth + 'conExhibit.js');
 var ctrlSponsor = require(pth + 'conSponsor.js');
 var ctrlInstrument = require(pth + 'conInst.js');
+var ctrlCcs = require(pth + "conConference");
 
 router.get('/', main.index);
 
@@ -62,5 +63,12 @@ router.post('/instrumentUpdate/:instrumentid', ctrlInstrument.doInstrumentUpdate
 router.get('/instrumentDelete/:instrumentid', ctrlInstrument.instrumentDelete);
 
 router.get('/tables', ctrlEvent.tables);
+
+router.get('/ccs', ctrlCcs.ccs);
+router.get('/ccs/new', ctrlCcs.conferenceNew);
+router.post("/ccs/new", ctrlCcs.doConferenceCreate);
+router.get('/conferenceDelete/:conferenceid', ctrlCcs.conferenceDelete);
+router.get("/conferenceUpdate/:conferenceid", ctrlCcs.conferenceUpdate);
+router.post("/conferenceUpdate/:conferenceid", ctrlCcs.doCcsUpdate);
 
 module.exports = router;

@@ -132,9 +132,11 @@ var fillOptions = function(){
 var exitOK = false;
 var newForm = document.querySelector('#newForm');
 
-newForm.addEventListener('submit', function() {
-	exitOK = true;
-});
+if(newForm){
+	newForm.addEventListener('submit', function() {
+		exitOK = true;
+	});
+}
 
 window.onbeforeunload = function() {
 	if(!exitOK){
@@ -173,9 +175,3 @@ function confirmExit(){
 	}
 };
 
-/* QUESTIONS
-
-1.	 CAN I set formState from window.onbeforeunload()?
-2. setConfirmUnload - 
-
-*/

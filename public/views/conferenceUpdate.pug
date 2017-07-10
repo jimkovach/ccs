@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .row.page.header
+    .col-lg-12
+      h1= pageHeader.title
+      p= pageHeader.strapline
+  .row
+    .col-xs-12.col-md-12
+      form.form-horizontal(id="newForm" action="/conferenceUpdate/" + conference._id method="post" role="form")
+        .col-xs-12.col-sm-6.col-md-4
+          .form-group
+            .col-xs-12.col-md-12.col-sm-12
+              label Year
+                input#year.form-control(autofocus="true" name="year", placeholder="Required", value=conference.year, required)
+              label Title
+                input#title.form-control(name="title", placeholder="title", value=conference.title)
+              label Institution
+                input#institution.form-control(name="institution" value=conference.institution)
+              hr
+              a.btn.btn-default(onclick="window.history.back()", role="button") Cancel
+              button.btn.btn-default.pull-right(type="submit" value="Submit") Save

@@ -66,4 +66,4 @@ require('./exhibitSchema.js');
 require('./users.js');
 require('./sponsorSchema.js');
 require('./instrumentSchema.js');
-require('./setupSchema.js');
+require('./conferenceSchema.js');

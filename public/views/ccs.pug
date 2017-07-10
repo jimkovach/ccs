@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+      .error= message
+
+  table.table.table-striped.table-responsive
+    thead.thead-inverse
+      th Details
+      th Year
+      th Title
+      th Institution
+      th Delete
+    tbody
+      each item in conferences
+        tr
+          td
+            a.btn.btn-glyphicon
+              span.glyphicon.glyphicon-zoom-in
+          td
+            a(href="/conferenceUpdate/" + item._id role="button")= item.year
+          td= item.title
+          td= item.institution
+          td
+            a.btn.btn-glyphicon(href="/conferenceDelete/" + item._id role="button")
+              span.glyphicon.glyphicon-trash

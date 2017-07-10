@@ -94,40 +94,6 @@ module.exports.eventsGetPerformerConflicts = function(req, res){
         });
 };
 
-/*
-module.exports.eventsGetCaag = function(req, res){
-    var fString = flString + "CAAG: ";
-    console.log(fString);
-    var findQuery = {"performerLast" : };
-    var events = [];
-    Event
-        .find(findQuery)
-        .exec(function(err, events){
-            if (err) {
-                sendJsonResponse(res, 404, err);
-            } else {
-                sendJsonResponse(res, 200, events);
-            }
-        });
-};
-
-module.exports.eventsGetCag = function(req, res){
-    var fString = flString + "CAG: ";
-    console.log(fString);
-    var findQuery = {"date" : "02/17/2017", "start" : "08:30 AM", "building" : "Westin"};
-    var events = [];
-    Event
-        .find(findQuery)
-        .exec(function(err, events){
-            if (err) {
-                sendJsonResponse(res, 404, err);
-            } else {
-                sendJsonResponse(res, 200, events);
-            }
-        });
-};
-*/
-
 module.exports.eventsGetPresenters = function(req, res) {
     var sortQuery = req.query.sort + " : " + 1;
     var findQuery = req.query.find;

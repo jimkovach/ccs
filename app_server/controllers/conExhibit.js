@@ -20,12 +20,6 @@ default:
     break;
 }
 
-/*
-if (process.env.NODE_ENV === 'production') {
-    apiOptions.server - "http://ccs.herokuapp.com";
-}
-*/
-
 var _showError = function(req, res, status) {
     var fString = flString + "_SHOWeRROR: ";
     console.log(fString);
@@ -173,7 +167,7 @@ var renderExhibits = function(req, res, exhibits, page, title, msg) {
     fString = flString + "RENDER_EXHIBITS: ";
     var message = msg;
     var textArray = ['txt', 'tab', 'comma', 'line', 'pdf'];
-        if(!title){
+    if(!title){
         title = utilities.toTitleCase(page);
     }
     if(!(exhibits instanceof Array)){

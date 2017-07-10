@@ -1,8 +1,7 @@
 var mongoose = require( "mongoose" );
 
 var timeSchema = new mongoose.Schema({
-    time : {type : String,
-        required : "a time is required"
+    time : {type : String
     },
     creationDate : {type : Date, "default" : Date.now},
     modificationDate : {type : Date, "default" : Date.now},
@@ -10,8 +9,7 @@ var timeSchema = new mongoose.Schema({
 });
 
 var dateSchema = new mongoose.Schema({
-    date : {type : String,
-            required : "a date is required"
+    date : {type : String
            },
     times : [timeSchema],
     creationDate : {type : Date, "default" : Date.now},
@@ -20,28 +18,27 @@ var dateSchema = new mongoose.Schema({
 });
 
 var roomSchema = new mongoose.Schema({
-    room : {type : String,
-        required : "a room is required"
+    room : {type : String
     },
     creationDate : {type : Date, "default" : Date.now},
     modificationDate : {type : Date, "default" : Date.now},
     modified : {tpe : Boolean, "default" : false}
 });
 
-var setupSchema = new mongoose.Schema({
+var conferenceSchema = new mongoose.Schema({
     year : {type : Number,
             min : 2017,
             required: "a year is required"
            },
+    title : String,
     institution : String,
     dates : [dateSchema],
     buildings : [{
-        building : String,
-        rooms : [roomSchema]
+        building : String
     }],
     creationDate : {type : Date, "default" : Date.now},
     modificationDate : { type : Date, "default" : Date.now},
     modified : {type : Boolean, "default" : false}
 });
 
-mongoose.model('Setup', setupSchema, 'setups');
+mongoose.model('Conference', conferenceSchema, 'conferences');
